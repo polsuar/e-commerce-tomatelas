@@ -49,6 +49,27 @@ const Register = () => {
                 value={lastName.value}
               />
             </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="street"
+                required
+                label="Calle"
+                onChange={firstName.onChange}
+                value={firstName.value}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                fullWidth
+                label="Altura"
+                name="province"
+                onChange={lastName.onChange}
+                value={lastName.value}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 required
