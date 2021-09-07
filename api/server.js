@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db");
 const { User } = require("./models");
+require("dotenv").config();
 
 app.use(express.json);
 
