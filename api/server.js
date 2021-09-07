@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
+const { User } = require("./models");
+
+app.use(express.json);
 
 const routes = require("./routes");
 app.use("/api", routes);
