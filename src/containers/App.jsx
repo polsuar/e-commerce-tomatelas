@@ -7,7 +7,6 @@ export default function App() {
   return (
     <div>
       <h1>Bienvenidos al e-commerce de Tomatelas! </h1>
-      <SingleProductView />
     </div>
   );
 }
