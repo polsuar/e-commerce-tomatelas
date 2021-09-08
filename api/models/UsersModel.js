@@ -10,7 +10,7 @@ class User extends S.Model {
 
 User.init(
   {
-    username: {
+    userName: {
       type: S.STRING,
       allowNull: false,
       unique: {
@@ -32,7 +32,7 @@ User.init(
     firstName: {
       type: S.STRING,
     },
-    LastName: {
+    lastName: {
       type: S.STRING,
     },
     gender: {
