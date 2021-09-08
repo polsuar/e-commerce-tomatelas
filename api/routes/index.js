@@ -7,6 +7,7 @@ const auth = require("../config/auth");
 
 router.use("/users", require("./users"));
 router.use("/productos", require("./products"));
+//router.use("/auth", require("));
 
 // Register
 router.post("/register", async (req, res) => {
