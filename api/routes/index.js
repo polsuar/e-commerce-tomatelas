@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const { User } = require("./models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+=======
+const { User } = require("../models");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
 const auth = require("../config/auth");
 
 router.use("/users", require("./users"));
@@ -29,12 +36,22 @@ router.post("/register", async (req, res) => {
 
     // Validate user input
     if (!(email && password && userName && firstName && lastName)) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
       res.status(400).send("All input is required");
     }
 
     // check if user already exist
     // Validate if user exist in our database
+<<<<<<< HEAD
     const oldUser = await User.findOne({ where: { email } });
+=======
+
+    const oldUser = await User.findOne({ where: { email } });
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
 
     if (oldUser) {
       return res.status(409).send("User Already Exist. Please Login");
@@ -56,6 +73,10 @@ router.post("/register", async (req, res) => {
       province,
       zipCode,
       phone,
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
     });
 
     // Create token
@@ -77,6 +98,10 @@ router.post("/register", async (req, res) => {
   // Our register logic ends here
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
 // Login
 router.post("/login", async (req, res) => {
   // Our login logic starts here
@@ -89,7 +114,13 @@ router.post("/login", async (req, res) => {
       res.status(400).send("All input is required");
     }
     // Validate if user exist in our database
+<<<<<<< HEAD
     const user = await User.findOne({ where: { userName } });
+=======
+
+    const user = await User.findOne({ where: { userName } });
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
@@ -113,6 +144,10 @@ router.post("/login", async (req, res) => {
   // Our register logic ends here
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9a8eb7dba6298628ffbdfc6a0a9aecefd9ac23f6
 router.get("/welcome", auth, (req, res) => {
   res.status(200).send(`Welcome ${req.user.user_id}`);
 });
