@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { User } = require("../models");
+const User = require("../models/UsersModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 
 // Login
 router.post("/login", async (req, res) => {
@@ -48,6 +47,7 @@ router.post("/login", async (req, res) => {
 
 // Register
 router.post("/register", async (req, res) => {
+  console.log("entre", req.body)
   // Our register logic starts here
   try {
     // Get user input
@@ -64,7 +64,7 @@ router.post("/register", async (req, res) => {
       zipCode,
       phone,
     } = req.body;
-
+    console.log("entre")
     // Validate user input
     if (!(email && password && userName && firstName && lastName)) {
 

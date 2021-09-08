@@ -1,11 +1,16 @@
 const express = require("express");
 const userRouter = express.Router();
-const models = require('../models')
-const auth = require("../config/auth");
-const User = models.User;
+const User = require('../models/UsersModel')
+// const auth = require("../config/auth");
 
 
-userRouter.get("/users", auth,(req, res, next) => {
+
+userRouter.get("/prueba", (req, res)=>{
+  res.status(200).send("hola")
+})
+
+userRouter.get("/", (req, res, next) => {
+  console.log("entre a user")
   User.findAll()
     .then((users) => {
       res.status(200).send(users)
@@ -14,7 +19,7 @@ userRouter.get("/users", auth,(req, res, next) => {
 });
 
 
-userRouter.get("/users/:id", auth,(req,res,next)=>{
+userRouter.get("/:id", (req,res,next)=>{
   User.findOne({
     where:{id:req.params.id}
   })
@@ -26,7 +31,7 @@ userRouter.get("/users/:id", auth,(req,res,next)=>{
     .catch(next);
 })
 
-userRouter.put("/users/:id", (req, res, next) => {
+userRouter.put("/:id", (req, res, next) => {
   User.update(req.body, {
     where: { id : req.params.id },
     returning: true,
