@@ -35,7 +35,7 @@ userRouter.put("/users/:id", (req, res, next) => {
     res.json(
       {
         message: 'Updated successfully',
-        article: data
+        user: data
       }
     ))
   .catch(next);
