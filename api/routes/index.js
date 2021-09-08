@@ -6,7 +6,6 @@ router.use("/users", require("./users"));
 router.use("/productos", require("./products"));
 router.use("/auth", require("./auth"));
 
-
 router.get("/welcome", auth, (req, res) => {
   res.status(200).send(`Welcome ${req.user.user_id}`);
 });

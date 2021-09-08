@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use("/api", routes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 
 db.sync({ force: false }).then(() => {
