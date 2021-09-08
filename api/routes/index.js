@@ -1,31 +1,40 @@
 const express = require("express");
 const router = express.Router();
-const {User} = require("./models");
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const { User } = require("./models");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
 
 router.use("/users", require("./users"));
 router.use("/productos", require("./products"));
 
-
-
 // Register
 router.post("/register", async (req, res) => {
-
   // Our register logic starts here
   try {
     // Get user input
-    const { userName, email, firstName, lastName, gender, password, street, city, province, zipCode, phone } = req.body;
+    const {
+      userName,
+      email,
+      firstName,
+      lastName,
+      gender,
+      password,
+      street,
+      city,
+      province,
+      zipCode,
+      phone,
+    } = req.body;
 
     // Validate user input
-    if (!(email && password && userName && firstName && lastName )) {
+    if (!(email && password && userName && firstName && lastName)) {
       res.status(400).send("All input is required");
     }
 
     // check if user already exist
     // Validate if user exist in our database
-    const oldUser = await User.findOne({ where:{email} });
+    const oldUser = await User.findOne({ where: { email } });
 
     if (oldUser) {
       return res.status(409).send("User Already Exist. Please Login");
@@ -46,7 +55,7 @@ router.post("/register", async (req, res) => {
       city,
       province,
       zipCode,
-      phone
+      phone,
     });
 
     // Create token
@@ -68,10 +77,8 @@ router.post("/register", async (req, res) => {
   // Our register logic ends here
 });
 
-  
-  // Login
+// Login
 router.post("/login", async (req, res) => {
-
   // Our login logic starts here
   try {
     // Get user input
@@ -82,7 +89,7 @@ router.post("/login", async (req, res) => {
       res.status(400).send("All input is required");
     }
     // Validate if user exist in our database
-    const user = await User.findOne({ where:{userName} });
+    const user = await User.findOne({ where: { userName } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
@@ -106,13 +113,8 @@ router.post("/login", async (req, res) => {
   // Our register logic ends here
 });
 
-
-router.get("/welcome", auth,  (req, res) => {
-  res.status(200).send(`Welcome ${req.user.user_id}` );
+router.get("/welcome", auth, (req, res) => {
+  res.status(200).send(`Welcome ${req.user.user_id}`);
 });
-
-
-
-
 
 module.exports = router;
