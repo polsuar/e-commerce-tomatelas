@@ -5,7 +5,7 @@ const auth = require("../config/auth");
 router.use("/users", require("./users"));
 router.use("/productos", require("./products"));
 router.use("/register", require("./register"));
-router.use("/login", require("./login"));
+router.use("/auth", require("./auth"));
 
 
 router.get("/welcome", auth, (req, res) => {
