@@ -2,6 +2,7 @@ import React from "react";
 import Register from "./Register";
 import Profile from "../components/Profile";
 import PrivateRoute from "../components/PrivateRoute";
+import Login from "../containers/Login";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -16,6 +17,10 @@ export default function App() {
         <PrivateRoute path="/profile">
           <Profile />
         </PrivateRoute>
+
+        <Route path="/login">
+          <Login />
+        </Route>
       </Router>
     </>
   );

@@ -2,9 +2,9 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
-
+import { Link as RouterLink } from "react-router-dom";
 import { useInput } from "../hooks/useInput";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-export default function Profile() {
+const Login = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -33,17 +33,7 @@ export default function Profile() {
     } else return;
   }, [user.id]);
 
-  return (
-    <>
-      <div>hola , estas en tu perfil de usuario</div>
+  return <>hola estas en login</>;
+};
 
-      <Link
-        to="/register"
-        style={{ color: "red" }}
-        activeStyle={{ color: "red" }}
-      >
-        <button>Ir a registro</button>
-      </Link>
-    </>
-  );
-}
+export default Login;
