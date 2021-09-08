@@ -1,8 +1,8 @@
 const express = require("express");
 const userRouter = express.Router();
-const models = require('../../db/models');
-const User = models.UsersModel;
+const models = require('../models')
 const auth = require("../config/auth");
+const User = models.User;
 
 
 userRouter.get("/users", auth,(req, res, next) => {
