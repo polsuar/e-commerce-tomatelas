@@ -1,12 +1,30 @@
 import React from "react";
+import Register from "./Register";
+import Profile from "../components/Profile";
+import PrivateRoute from "../components/PrivateRoute";
+import Login from "../containers/Login";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import SingleProductView from "../components/SingleProductView";
 import Ranceada from "../components/ranceada";
 
 export default function App() {
   return (
-    <div>
-      <h1>Bienvenidos al e-commerce de Tomatelas! </h1>
-    </div>
+    <>
+      <div>Bienvenidos al e-commerce de Tomatelas!</div>
+      <Router>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <PrivateRoute path="/profile">
+          <Profile />
+        </PrivateRoute>
+
+        <Route path="/login">
+          <Login />
+        </Route>
+      </Router>
+    </>
   );
 }
