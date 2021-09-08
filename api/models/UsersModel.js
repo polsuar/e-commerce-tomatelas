@@ -56,10 +56,10 @@ User.init(
       type: S.STRING,
     },
     zipcode: {
-      type: S.INTEGER,
+      type: S.STRING,
     },
     phone: {
-      type: S.INTEGER,
+      type: S.STRING,
     },
     salt: {
       type: S.STRING,
