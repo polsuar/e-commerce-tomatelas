@@ -7,7 +7,7 @@ const users = require("./seed");
 // require("dotenv").config();
 console.log(process.env.TOKEN_KEY);
 app.use(express.json);
-
+console.log("hola");
 app.use("/api", routes);
 
 const PORT = process.env.PUERTO || 3001;
