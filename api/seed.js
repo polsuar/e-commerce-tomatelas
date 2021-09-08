@@ -1,5 +1,6 @@
 var faker = require("faker");
 const User = require("./models/UsersModel");
+const Product = require("./models/ProductsModel");
 
 const users = [];
 
@@ -19,7 +20,9 @@ for (let i = 0; i < 10; i++) {
   });
 }
 // console.log(users);
-User.bulkCreate(users);
+User.bulkCreate(users)
+  .then(() => console.log("users create succesfully"))
+  .catch(() => console.log("error with users create"));
 
 const products = [];
 
@@ -35,5 +38,6 @@ for (let i = 0; i < 10; i++) {
   });
 }
 
-console.log(products);
-module.export = users;
+Product.bulkCreate(products)
+  .then(() => console.log("products create succesfully"))
+  .catch(() => console.log("error with products create"));
