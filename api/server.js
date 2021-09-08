@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
-const { User } = require("./models");
+const  User  = require("./models/UsersModel");
 const routes = require("./routes");
 
 // require("dotenv").config();
 
-app.use(express.json);
+app.use(express.json());
 
 app.use("/api", routes);
 
