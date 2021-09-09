@@ -15,6 +15,14 @@ import Profile from "../components/Profile";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 
+<<<<<<< HEAD
+=======
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import SingleProductView from "../components/SingleProductView";
+import Ranceada from "../components/ranceada";
+
+>>>>>>> ef03172d302ab142b5f88d254c938cda0cecf4ea
 export default function App() {
   return (
     <>
