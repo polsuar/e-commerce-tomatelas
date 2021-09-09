@@ -6,7 +6,7 @@ const users = [];
 
 for (let i = 0; i < 10; i++) {
   users.push({
-    username: faker.internet.userName(),
+    userName: faker.internet.userName(),
     email: faker.internet.email(),
     firstName: faker.name.findName(),
     LastName: faker.name.lastName(),
@@ -19,10 +19,10 @@ for (let i = 0; i < 10; i++) {
     phone: faker.phone.phoneNumber(),
   });
 }
-// console.log(users);
+
 User.bulkCreate(users)
   .then(() => console.log("users create succesfully"))
-  .catch(() => console.log("error with users create"));
+  .catch(() => console.log("error withe users creation"));
 
 const products = [];
 
