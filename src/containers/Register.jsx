@@ -32,7 +32,7 @@ const Register = () => {
 
     return (
       axios
-        .post("/api/auth/register", data)
+        .post("http://localhost:3001/api/auth/register", data)
         .then((r) => r.data)
         // .then((data) => dispatch(userLogin(data)))
         .catch((err) => console.log(err))
