@@ -6,7 +6,7 @@ const users = [];
 
 for (let i = 0; i < 10; i++) {
   users.push({
-    username: faker.internet.userName(),
+    userName: faker.internet.userName(),
     email: faker.internet.email(),
     firstName: faker.name.findName(),
     LastName: faker.name.lastName(),
