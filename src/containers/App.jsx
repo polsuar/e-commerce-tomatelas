@@ -14,28 +14,8 @@ import Register from "./Register";
 import Profile from "../components/Profile";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
-
-<<<<<<< HEAD
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
-//IMPORT DE PRUEBA
 import SingleProductView from "../components/SingleProductView";
 
-export default function App() {
-  return (
-    <>
-      <div>
-        Bienvenidos al e-commerce de Tomatelas!
-        <SingleProductView />
-      </div>
-      <Router>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <PrivateRoute path="/profile">
-          <Profile />
-        </PrivateRoute>
-=======
 export default function App() {
   return (
     <>
@@ -48,6 +28,7 @@ export default function App() {
           <Route path="/register">
             <Register />
           </Route>
+
           <PrivateRoute path="/profile">
             <Profile />
           </PrivateRoute>
@@ -55,7 +36,10 @@ export default function App() {
           <Route path="/login">
             <Login />
           </Route>
->>>>>>> 9ec906828119dfda4fdde13c3b7571a89eaf3c65
+
+          <Route path="/single-product">
+            <SingleProductView />
+          </Route>
 
           <Redirect from="/" to="/home" />
         </Switch>
