@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,20 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  paperLeft: {
+    flex: 1,
+    height: "100%",
+    margin: 10,
+    textAlign: "center",
+    padding: 10,
+  },
+  paperRight: {
+    height: 600,
+    flex: 4,
+    margin: 10,
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const SingleProductView = () => {
@@ -28,58 +43,55 @@ const SingleProductView = () => {
   return (
     <div>
       <Container maxWidth="sm">
-        <div class="visible-md">
-          <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+        {/* <div>
+          <nav role="navigation">
             <ol>
               <li>
                 <a href="/" title="Home">
-                  Home
+                  Home &gt;
                 </a>
               </li>
 
               <li>
-                <a href="/collections/andes-origen" aria-current="page">
-                  Andes Origen
-                </a>
+                <a href="/collections/andes-origen"> Andes Origen &gt;</a>
               </li>
             </ol>
           </nav>
-        </div>
-        <Paper className={classes.paper}>
+        </div> */}
+
+        <a href="javascript:history.back()">&lt; Volver atras</a>
+
+        <Paper className>
           <Grid container>
-            <Grid item xs={6}>
-              <figure class="product__image">
-                <img
+            <Grid item xs={6} className={classes.paperLeft}>
+              <figure>
+                {/* <img
                   src="//cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-rubia-473-siempreencasa_600x600.png?v=1629814628?nocache=0.22618285681204275"
+                  data-src=""
+                  alt="Cerveza Andes Origen Rubia Lata 473ml"
+                /> */}
+                <img
+                  src="//cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-rubia-473-siempreencasa_95x95@2x.png?v=1629814628?nocache=0.7664677045500179"
                   alt="Cerveza Andes Origen Rubia Lata 473ml"
                 />
               </figure>
             </Grid>
+            {/*  <Divider orientation="vertical" flexItem /> */}
 
-            <Grid item xs={6} justifyContent="flex-end">
-              <div class="product-item__variants-box newCard__right">
-                <h3>Cerveza Andes Origen Rubia </h3>
+            <Grid item xs={6} className={classes.paperRight}>
+              <div>
+                <h1>Cerveza Andes Origen Rubia </h1>
 
-                <span class="milliliters">473ml</span>
+                <span>473ml</span>
 
-                <p class="price__byUnit">
-                  <span class="unityPriceNew">$74,00 c/u</span>
+                <p>
+                  <span>$74,00 c/u</span>
                 </p>
                 <hgroup>
-                  <p
-                    class="price__price newCard-price__right price__28698065993833"
-                    data-price="44400"
-                  >
-                    $888
-                  </p>
+                  <p data-price="44400">$888</p>
 
-                  <span
-                    class="listPrice listPrice__28698065993833"
-                    data-listprice="63000"
-                  >
-                    $1260
-                  </span>
-                  <span class="discount">30% OFF</span>
+                  <span data-listprice="63000">$1260</span>
+                  <span>30% OFF</span>
                 </hgroup>
               </div>
               <IconButton color="primary" aria-label="add to shopping cart">

@@ -6,13 +6,16 @@ import Login from "../containers/Login";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+//IMPORT DE PRUEBA
 import SingleProductView from "../components/SingleProductView";
-import Ranceada from "../components/ranceada";
 
 export default function App() {
   return (
     <>
-      <div>Bienvenidos al e-commerce de Tomatelas!</div>
+      <div>
+        Bienvenidos al e-commerce de Tomatelas!
+        <SingleProductView />
+      </div>
       <Router>
         <Route path="/register">
           <Register />
