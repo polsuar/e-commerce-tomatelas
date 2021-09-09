@@ -68,4 +68,19 @@ productsRouter.delete("/:id", (req, res, next) => {
 })
 
 
+// productsRouter.get("/category/:id", (req,res,next)=>{
+//   const id = req.params.id;  
+//   Categories.findAll({
+//     where:{
+//       category_id:id
+//     },
+//     include: [{
+//       model: Product,
+//       required: true,
+//      }]
+//   }).then(prod => {
+//     res.send(prod );
+//   });
+// })
+
 module.exports = productsRouter;
