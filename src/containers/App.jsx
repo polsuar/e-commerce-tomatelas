@@ -14,6 +14,7 @@ import Register from "./Register";
 import Profile from "../components/Profile";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
+import SingleProductView from "../components/SingleProductView";
 
 export default function App() {
   return (
@@ -33,6 +34,10 @@ export default function App() {
 
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/single-product">
+            <SingleProductView />
           </Route>
 
           <Redirect from="/" to="/home" />
