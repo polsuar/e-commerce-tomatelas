@@ -1,13 +1,43 @@
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import Home from "./Home";
+import Navbar from "../components/Navbar";
 
-import Prueba from "../components/Prueba";
-import Cervezas from "../components/Cervezas";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "../themeConfig";
+import Register from "./Register";
+import Profile from "../components/Profile";
+import PrivateRoute from "../components/PrivateRoute";
+import Login from "../containers/Login";
 
 export default function App() {
   return (
-    <div>
-      <h1>Bienvenidos al e-commerce de Tomatelas! </h1>
-      <Cervezas />
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <Navbar />
+
+        <Switch>
+          <Route exact path="/home" render={() => <Home />} />
+
+          <Route path="/register">
+            <Register />
+          </Route>
+          <PrivateRoute path="/profile">
+            <Profile />
+          </PrivateRoute>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Redirect from="/" to="/home" />
+        </Switch>
+      </ThemeProvider>
+    </>
   );
 }
