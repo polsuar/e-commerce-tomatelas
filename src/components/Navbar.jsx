@@ -1,5 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductsByName, getAllProducts } from "../store/products";
+
 import {
   AppBar,
   Toolbar,
@@ -9,13 +12,13 @@ import {
   Badge,
   MenuItem,
   Menu,
+  InputBase,
 } from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 // ICONS
 import HomeIcon from "@material-ui/icons/Home";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
@@ -82,10 +85,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function Navbar() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [value, setValue] = useState("");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -102,6 +108,23 @@ export default function PrimarySearchAppBar() {
   };
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = (event) => {
+    const input = event.target.value;
+    setValue(input);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (value.length > 0) {
+      dispatch(getProductsByName(value));
+    } else {
+      console.log(value);
+      dispatch(getAllProducts());
+    }
+    //history ya esta definido.
+    //aca hay que hacer un history.push("/a donde este vista de productos buscados")
   };
 
   const menuId = "primary-search-account-menu";
@@ -160,7 +183,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
@@ -177,14 +200,19 @@ export default function PrimarySearchAppBar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <form onSubmit={handleSubmit}>
+              <InputBase //BARRA DE BUSQUEDA
+                placeholder="Search…"
+                value={value}
+                onChange={handleChange}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+              {"falta agregar boton de busqueda linea 202"}
+            </form>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

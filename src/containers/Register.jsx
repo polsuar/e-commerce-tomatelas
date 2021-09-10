@@ -11,9 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useForm, Controller } from "react-hook-form";
 //import { userLogin } from "../store/users";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { FormControl } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+
 import { userSignUp } from "../store/users";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
