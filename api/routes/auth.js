@@ -20,9 +20,8 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName } });
 
+    console.log("USUARIO DESDE BD: ", user);
     if (user && (await bcrypt.compare(password, user.password))) {
-      console.log("USUARIO DESDE BD: ", user);
-
       // Create token
       const token = jwt.sign(
         { user_id: user.id, userName },
