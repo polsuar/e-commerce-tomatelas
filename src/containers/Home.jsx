@@ -6,7 +6,6 @@ import FeaturedPost from "../components/FeaturedPost";
 import Sidebar from "../components/Sidebar";
 import Secciones from "../components/Secciones";
 import Products from "../components/Products";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProducts } from "../store/products";
 // ICONS
@@ -81,11 +80,6 @@ const sidebar = {
     { title: "Filtro", url: "#" },
     { title: "Filtro", url: "#" },
   ],
-  social: [
-    { name: "GitHub", icon: GitHubIcon },
-    { name: "Twitter", icon: TwitterIcon },
-    { name: "Facebook", icon: FacebookIcon },
-  ],
 };
 
 export default function Home() {
@@ -94,15 +88,6 @@ export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
-
-    // se repite codigo, se puede hacer solo dispatch
-    // axios
-    //   .get("/api/products/")
-    //   .then((res) => res.data)
-    //   .then((productos) => {
-    //     dispatch(getAllProducts(productos));
-    //   })
-    //   .catch((err) => console.log(err));
   }, []);
 
   return (
