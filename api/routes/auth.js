@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 // Login
 router.post("/login", async (req, res) => {
-
+  console.log("de server / ruta post ==> ", req.body);
   // Our login logic starts here
   try {
     // Get user input
@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName } });
 
-
+    console.log(user);
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
@@ -36,18 +36,17 @@ router.post("/login", async (req, res) => {
       // user
       res.status(200).json(user);
     }
-    // res.status(400).send("Invalid Credentials");
+    res.status(400).send("Invalid Credentials");
   } catch (err) {
     console.log(err);
+    res.status(400).send("Invalid Credentials");
   }
   // Our register logic ends here
 });
 
-
-
 // Register
 router.post("/register", async (req, res) => {
-  console.log("entre", req.body)
+  console.log("entre", req.body);
   // Our register logic starts here
   try {
     // Get user input
@@ -64,10 +63,9 @@ router.post("/register", async (req, res) => {
       zipCode,
       phone,
     } = req.body;
-    console.log("entre")
+    console.log("entre");
     // Validate user input
     if (!(email && password && userName && firstName && lastName)) {
-
       res.status(400).send("All input is required");
     }
 
@@ -75,7 +73,6 @@ router.post("/register", async (req, res) => {
     // Validate if user exist in our database
 
     const oldUser = await User.findOne({ where: { email } });
-
 
     if (oldUser) {
       return res.status(409).send("User Already Exist. Please Login");
@@ -97,7 +94,6 @@ router.post("/register", async (req, res) => {
       province,
       zipCode,
       phone,
-
     });
 
     // Create token
