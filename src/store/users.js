@@ -34,6 +34,7 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
     })
     .catch((error) => {
       console.log(error);
+
       // message.error({ content: "Missing credentials", key, duration: 2 });
     });
 });

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -12,12 +13,33 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { useForm, Controller } from "react-hook-form";
 //import { userLogin } from "../store/users";
 import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { userSignUp } from "../store/users";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormLabel from "@material-ui/core/FormLabel";
 
+import DisplaySnack from "../components/DisplaySnack";
+
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    marginTop: 200,
+    padding: 5,
+    alignItems: "center",
+  },
+  grid: {
+    padding: 10,
+  },
+  btnRegister: {
+    margin: 10,
+    marginTop: 30,
+  },
+});
+
 const Register = () => {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -27,6 +49,21 @@ const Register = () => {
     handleSubmit,
     formState: { errors }, // get the errors object
   } = useForm();
+
+  // handle errors
+  const [open, setOpen] = useState(false);
+
+  const handleOpenError = () => {
+    setOpen(true);
+  };
+
+  const handleCloseError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data, null, 2));
@@ -38,12 +75,17 @@ const Register = () => {
         .then(() => {
           return history.push("/login");
         })
-        .catch((err) => console.log(err))
-    );
-    // .then((data) => history.push
+        .catch((error) => {
+          if (error.response.data === "User Already Exist. Please Login") {
+            handleOpenError();
 
-    //dispatch(userSignUp(data)).then(() => history.push("/profile"));
-    //🔴 Do not call hooks in event handlers.  de la documentacion
+            console.log("ERROR => el usuario ya existe");
+          }
+        })
+        .then(() =>
+          DisplaySnack("el usuario ya existe", open, handleCloseError, "error")
+        )
+    );
   };
 
   /* PASOS DE REGISTRO 
@@ -56,18 +98,17 @@ street province city  zipcode  phone ;
   //4/ quieres subscribirte a nuestro newsletter de ofertas y novedades ?
 */
 
-  function onChangeInput() {
-    console.log("hola");
-  }
-
   console.log("ERRORS => ", errors);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={classes.container}>
+      <DisplaySnack />
+
       <div>
-        Registro
+        <h2>Registro</h2>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4} className={classes.grid}>
             <Grid item xs={6}>
               <Controller
                 name="userName"
@@ -258,8 +299,8 @@ street province city  zipcode  phone ;
             fullWidth
             variant="contained"
             color="primary"
-
             // disabled={!form.isValid}
+            className={classes.btnRegister}
           >
             Registrarse
           </Button>
