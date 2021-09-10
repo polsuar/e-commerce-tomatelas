@@ -13,6 +13,7 @@ Product.init(
       type: S.STRING,
     },
     category: {
+      //Esta prop se va a borrar para usar la creada por asociacion
       //A RESOLVER LOS TIPOS
       type: S.STRING,
     },
