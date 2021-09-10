@@ -43,7 +43,7 @@ export default function Album() {
           {products.map((product) => (
             <Grid item key={product.id} xs={12} sm={6} md={4}>
               <Card className={classes.card}>
-                <Link href={"#"}>
+                <Link href={`/products/${product.id}`}>
                   <CardMedia
                     className={classes.cardMedia}
                     image={product.img}

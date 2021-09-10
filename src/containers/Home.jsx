@@ -6,7 +6,6 @@ import FeaturedPost from "../components/FeaturedPost";
 import Sidebar from "../components/Sidebar";
 import Secciones from "../components/Secciones";
 import Products from "../components/Products";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProducts } from "../store/products";
 // ICONS
@@ -80,11 +79,6 @@ const sidebar = {
     { title: "Filtro", url: "#" },
     { title: "Filtro", url: "#" },
     { title: "Filtro", url: "#" },
-  ],
-  social: [
-    { name: "GitHub", icon: GitHubIcon },
-    { name: "Twitter", icon: TwitterIcon },
-    { name: "Facebook", icon: FacebookIcon },
   ],
 };
 

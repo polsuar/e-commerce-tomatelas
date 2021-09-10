@@ -6,13 +6,14 @@ import { getProductsByName, getAllProducts } from "../store/products";
 import {
   AppBar,
   Toolbar,
-  Button,
   IconButton,
   Typography,
   Badge,
   MenuItem,
   Menu,
   InputBase,
+  Divider,
+  Paper,
 } from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 // ICONS
@@ -36,12 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   search: {
-    position: "relative",
+    padding: "0px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400,
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
@@ -50,26 +50,16 @@ const useStyles = makeStyles((theme) => ({
       width: "auto",
     },
   },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
   },
-  inputRoot: {
-    color: "inherit",
+  iconButton: {
+    padding: 6,
   },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
+  divider: {
+    height: 28,
+    margin: 4,
   },
   sectionDesktop: {
     display: "none",
@@ -82,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+  },
+  homeLink: {
+    color: "white",
   },
 }));
 
@@ -185,35 +178,40 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <HomeIcon />
-          </IconButton>
+          <Link to="/" color="inherit" className={classes.homeLink}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <HomeIcon />
+            </IconButton>
+          </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             Tomatelas
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
+          <Paper
+            component="form"
+            className={classes.search}
+            onSubmit={handleSubmit}
+          >
+            <InputBase
+              className={classes.input}
+              placeholder="Search..."
+              inputProps={{ "aria-label": "search" }}
+              value={value}
+              onChange={handleChange}
+            />
+            <Divider className={classes.divider} orientation="vertical" />
+            <IconButton
+              type="submit"
+              className={classes.iconButton}
+              aria-label="search"
+            >
               <SearchIcon />
-            </div>
-            <form onSubmit={handleSubmit}>
-              <InputBase //BARRA DE BUSQUEDA
-                placeholder="Search…"
-                value={value}
-                onChange={handleChange}
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-              {"falta agregar boton de busqueda linea 202"}
-            </form>
-          </div>
+            </IconButton>
+          </Paper>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 17 new notifications" color="inherit">

@@ -36,9 +36,11 @@ export default function App() {
             <Login />
           </Route>
 
-          <Route path="/single-product">
-            <SingleProductView />
-          </Route>
+          <Route
+            exact
+            path="/products/:id"
+            render={({ match }) => <SingleProductView id={match.params.id} />}
+          />
 
           <Redirect from="/" to="/home" />
         </Switch>
