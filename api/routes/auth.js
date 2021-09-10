@@ -36,18 +36,17 @@ router.post("/login", async (req, res) => {
       // user
       res.status(200).json(user);
     }
-    // res.status(400).send("Invalid Credentials");
+    else res.status(400).send("Invalid Credentials");
   } catch (err) {
-    console.log(err);
+    res.status(409).send(err);
   }
-  // Our register logic ends here
+  // Our login logic ends here
 });
 
 
 
 // Register
 router.post("/register", async (req, res) => {
-  console.log("entre", req.body)
   // Our register logic starts here
   try {
     // Get user input
@@ -64,7 +63,6 @@ router.post("/register", async (req, res) => {
       zipCode,
       phone,
     } = req.body;
-    console.log("entre")
     // Validate user input
     if (!(email && password && userName && firstName && lastName)) {
 
@@ -114,9 +112,13 @@ router.post("/register", async (req, res) => {
     // return new user
     res.status(201).json(user);
   } catch (err) {
-    console.log(err);
+    res.status(409).send(err);
   }
   // Our register logic ends here
 });
+
+router.get("/logout", (req, res) => {
+  res.redirect('/')
+})
 
 module.exports = router;
