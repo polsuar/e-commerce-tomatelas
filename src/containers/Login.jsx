@@ -14,8 +14,23 @@ import { userLogin } from "../store/users";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  container: {
+    display: "flex",
+    marginTop: 200,
+    padding: 50,
+    alignItems: "center",
+  },
+  btnLogin: {
+    margin: 10,
+    marginTop: 30,
+  },
+});
 
 const Login = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   // const key = "login";
   const history = useHistory();
@@ -32,20 +47,19 @@ const Login = () => {
       password: password.value,
     };
 
-    dispatch(userLogin(data))
-      .then(() => {
-        history.push("/");
-      })
-      .catch((err) => console.log(err));
+    dispatch(userLogin(data)).then(() => {
+      history.push("/");
+    });
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={classes.container}>
       <div>
-        Login de usuario:
+        <h2> Login de usuario:</h2>
+
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Nombre de usuario"
@@ -71,7 +85,12 @@ const Login = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.btnLogin}
+              >
                 Entrá a tu cuenta
               </Button>
 
