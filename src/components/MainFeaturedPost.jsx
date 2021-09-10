@@ -6,7 +6,7 @@ import { Paper, Typography, Grid, Link } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {
     position: "relative",
-    backgroundColor: theme.palette.grey[800],
+    backgroundColor: theme.palette.grey[900],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
     backgroundImage: "url(https://source.unsplash.com/random)",

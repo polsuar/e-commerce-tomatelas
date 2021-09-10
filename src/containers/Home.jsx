@@ -6,6 +6,9 @@ import FeaturedPost from "../components/FeaturedPost";
 import Sidebar from "../components/Sidebar";
 import Secciones from "../components/Secciones";
 import Products from "../components/Products";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { listProducts } from "../store/products";
 // ICONS
 import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -39,26 +42,27 @@ const mainFeaturedPost = {
   title: "PROMO DEL MES",
   description:
     "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: "https://source.unsplash.com/random",
+  image: "https://images5.alphacoders.com/293/293049.jpg",
   imgText: "main image description",
   linkText: "Continue reading…",
 };
 
 const featuredPosts = [
   {
-    title: "PROMO 1",
-    date: "Valido hasta 03/10",
+    title: "Producto Destacado",
+    date: "Stock disponible",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
+    image: "http://codemag.mx/wp-content/uploads/2021/02/portada-3.jpg",
     imageText: "Image Text",
   },
   {
-    title: "PROMO 2",
+    title: "Promo",
     date: "Valido hasta 06/11",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
+    image:
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/184/535/products/previa51-986953418a31224c0116082471576575-640-0.png",
     imageText: "Image Text",
   },
 ];
@@ -86,6 +90,16 @@ const sidebar = {
 
 export default function Home() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    axios
+      .get("/api/products/")
+      .then((res) => res.data)
+      .then((productos) => {
+        dispatch(listProducts(productos));
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <React.Fragment>

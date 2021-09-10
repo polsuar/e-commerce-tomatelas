@@ -29,11 +29,12 @@ const products = [];
 for (let i = 0; i < 10; i++) {
   products.push({
     name: faker.commerce.productName(),
+    price: faker.datatype.number(1000),
     volume: faker.datatype.number(12),
     category: faker.commerce.department(),
     brand: faker.company.companyName(),
     stock: faker.datatype.number(50),
-    img: faker.image.food(),
+    img: "https://source.unsplash.com/random",
     description: faker.commerce.productDescription(),
   });
 }

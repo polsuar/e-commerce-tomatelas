@@ -9,13 +9,13 @@ import {
   Badge,
   MenuItem,
   Menu,
+  InputBase,
 } from "@material-ui/core";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 // ICONS
 import HomeIcon from "@material-ui/icons/Home";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
