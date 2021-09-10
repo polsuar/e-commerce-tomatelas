@@ -31,6 +31,9 @@ Product.init(
     description: {
       type: S.STRING,
     },
+    price: {
+      type: S.DECIMAL(10, 2),
+    },
   },
 
   { sequelize: db, modelName: "products" }
