@@ -94,15 +94,6 @@ export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
-
-    // se repite codigo, se puede hacer solo dispatch
-    // axios
-    //   .get("/api/products/")
-    //   .then((res) => res.data)
-    //   .then((productos) => {
-    //     dispatch(getAllProducts(productos));
-    //   })
-    //   .catch((err) => console.log(err));
   }, []);
 
   return (
