@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MainFeaturedPost from "../components/MainFeaturedPost";
@@ -8,7 +8,7 @@ import Secciones from "../components/Secciones";
 import Products from "../components/Products";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { listProducts } from "../store/products";
+import { getAllProducts } from "../store/products";
 // ICONS
 import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -89,16 +89,20 @@ const sidebar = {
 };
 
 export default function Home() {
+  const products = useSelector((state) => state.products);
   const classes = useStyles();
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    axios
-      .get("/api/products/")
-      .then((res) => res.data)
-      .then((productos) => {
-        dispatch(listProducts(productos));
-      })
-      .catch((err) => console.log(err));
+  useEffect(() => {
+    dispatch(getAllProducts());
+
+    // se repite codigo, se puede hacer solo dispatch
+    // axios
+    //   .get("/api/products/")
+    //   .then((res) => res.data)
+    //   .then((productos) => {
+    //     dispatch(getAllProducts(productos));
+    //   })
+    //   .catch((err) => console.log(err));
   }, []);
 
   return (

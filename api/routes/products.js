@@ -1,6 +1,7 @@
 const express = require("express");
 const productsRouter = express.Router();
 const Product = require("../models/ProductsModel");
+const { Op, fn, col } = require("sequelize");
 
 productsRouter.get("/", (req, res, next) => {
   Product.findAll()
@@ -10,12 +11,29 @@ productsRouter.get("/", (req, res, next) => {
     .catch(next);
 });
 
-productsRouter.get("/:id", (req, res, next) => {
+productsRouter.get("/id/:id", (req, res, next) => {
   Product.findOne({
     where: { id: req.params.id },
   })
     .then((product) => {
       if (!product) res.status(404);
+      res.send(product);
+    })
+    .catch(next);
+});
+
+productsRouter.get("/name/:name", (req, res, next) => {
+  Product.findAll({
+    where: {
+      name: {
+        [Op.substring]: req.params.name,
+      },
+    },
+    //aca falta logica para poder buscar sin case sensitive
+  })
+    .then((product) => {
+      if (!product) res.status(404);
+      console.log(product);
       res.send(product);
     })
     .catch(next);
