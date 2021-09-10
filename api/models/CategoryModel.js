@@ -13,7 +13,7 @@ Categories.init(
       allowNull: false,
     },
   },
-  { sequelize: db, modelName: "favorites" }
+  { sequelize: db, modelName: "category" }
 );
 
 module.exports = Categories;
