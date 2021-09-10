@@ -13,8 +13,10 @@ import { useForm, Controller } from "react-hook-form";
 //import { userLogin } from "../store/users";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
+import { FormControl } from "@material-ui/core";
 import { userSignUp } from "../store/users";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -28,15 +30,18 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("== DATOS DE REGISTRO ==> ", data);
+    console.log(JSON.stringify(data, null, 2));
 
     return (
       axios
-        .post("http://localhost:3001/api/auth/register", data)
-        .then((r) => r.data)
-        // .then((data) => dispatch(userLogin(data)))
+        .post("/api/auth/register", data)
+        //      .then((r) => r.data)
+        .then(() => {
+          return history.push("/login");
+        })
         .catch((err) => console.log(err))
     );
+    // .then((data) => history.push
 
     //dispatch(userSignUp(data)).then(() => history.push("/profile"));
     //🔴 Do not call hooks in event handlers.  de la documentacion
@@ -57,6 +62,7 @@ street province city  zipcode  phone ;
   }
 
   console.log("ERRORS => ", errors);
+
   return (
     <Container component="main" maxWidth="xs">
       <div>
@@ -65,19 +71,22 @@ street province city  zipcode  phone ;
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Controller
-                name="username"
+                name="userName"
                 control={control}
                 defaultValue=""
                 rules={{ required: true, maxLength: 15 }}
-                render={({ field: { onChange, value } }) => (
+                fullWidth
+                render={({ field: { value, onChange } }) => (
                   <TextField
                     value={value}
-                    label="Nombre de usuario"
                     onChange={onChange}
-                    fullWidth
+                    label="Nombre de usuario"
                   />
                 )}
               />
+              {errors.userName && (
+                <span role="alert">Campo de usuario requerido</span>
+              )}
             </Grid>
             <Grid item xs={6}>
               <Controller
@@ -85,45 +94,50 @@ street province city  zipcode  phone ;
                 control={control}
                 defaultValue=""
                 rules={{ required: true, maxLength: 30 }}
-                render={({ field: { onChange, value } }) => (
+                fullWidth
+                render={({ field: { value, onChange } }) => (
                   <TextField
                     value={value}
-                    label="email"
                     onChange={onChange}
-                    fullWidth
+                    label="Email (*)"
+                    type="email"
                   />
                 )}
               />
+              {errors.email && (
+                <span role="alert">Campo de email requerido</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Controller
                 name="password"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
+                rules={{ required: true, maxLength: 15 }}
+                fullWidth
+                render={({ field: { value, onChange } }) => (
                   <TextField
                     value={value}
-                    label="Password"
-                    type="password"
                     onChange={onChange}
-                    fullWidth
+                    label="Password (*)"
+                    type="password"
                   />
                 )}
               />
+
+              {errors.password && <span role="alert">Password requerido!</span>}
             </Grid>
 
             <Grid item xs={12} sm={2}>
-              <InputLabel id="select-label">Género</InputLabel>
-
               <Controller
                 name="gender"
                 control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select onChange={onChangeInput} value={value}>
-                    <MenuItem value={"man"}>Hombre</MenuItem>
-                    <MenuItem value={"woman"}>Mujer</MenuItem>
-                    <MenuItem value={"other"}>Otro</MenuItem>
+                defaultValue=""
+                render={({ field: { value, onChange } }) => (
+                  <Select onChange={onChange} value={value}>
+                    <MenuItem value="man">Hombre</MenuItem>
+                    <MenuItem value="woman">Mujer</MenuItem>
+                    <MenuItem value="other">Otro</MenuItem>
                   </Select>
                 )}
               />
@@ -131,116 +145,113 @@ street province city  zipcode  phone ;
 
             <Grid item xs={12} sm={5}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    value={value}
+                    onChange={onChange}
+                    label="Nombre completo"
+                  />
+                )}
                 name="firstName"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Nombre"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                rules={{ required: true, maxLength: 20 }}
+                fullWidth
               />
+              {errors.firstName && <span role="alert">Nombre requerido!</span>}
             </Grid>
             <Grid item xs={12} sm={5}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    value={value}
+                    onChange={onChange}
+                    label="Apellido (*)"
+                  />
+                )}
                 name="lastName"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Apellido"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                rules={{ required: true, maxLength: 20 }}
+                fullWidth
               />
+              {errors.lastName && <span role="alert">Apellido requerido!</span>}
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField value={value} onChange={onChange} label="Calle" />
+                )}
                 name="street"
                 control={control}
                 defaultValue=""
                 rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Calle"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    value={value}
+                    onChange={onChange}
+                    label="Provincia"
+                  />
+                )}
                 name="province"
                 control={control}
                 defaultValue=""
                 rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Provincia"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField value={value} onChange={onChange} label="Ciudad" />
+                )}
                 name="city"
                 control={control}
                 defaultValue=""
                 rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Ciudad"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    value={value}
+                    onChange={onChange}
+                    label="Codigo Postal"
+                  />
+                )}
                 name="zipcode"
                 control={control}
                 defaultValue=""
                 rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Codigo Postal"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller
+                render={({ field: { value, onChange } }) => (
+                  <TextField
+                    value={value}
+                    onChange={onChange}
+                    label="Telefono"
+                  />
+                )}
                 name="phone"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
-                render={({ field: { onChange, value } }) => (
-                  <TextField
-                    label="Telefono"
-                    value={value}
-                    onChange={onChange}
-                    fullWidth
-                  />
-                )}
+                rules={{ required: false, maxLength: 15 }}
+                fullWidth
               />
+              {errors.phone && (
+                <span role="alert">Ingresa 9 digitos maximos</span>
+              )}
             </Grid>
           </Grid>
           <Button
@@ -251,7 +262,7 @@ street province city  zipcode  phone ;
 
             // disabled={!form.isValid}
           >
-            Sign Up
+            Registrarse
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

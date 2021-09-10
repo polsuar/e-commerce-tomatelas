@@ -6,8 +6,6 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-export const userLogin = createAction("USER_LOGIN");
-
 export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
   const dispatch = useDispatch();
 
@@ -21,10 +19,34 @@ export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
   // return axios.post("/api/signup").then((r) => r.data);
 });
 
+export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
+  //  const key = "login";
+
+  return axios
+    .post("http://localhost:3001/api/auth/login", {
+      userName,
+      password,
+    })
+    .then((r) => {
+      //message.success({ content: "Login success!!", key, duration: 2 });
+      console.log("login success");
+      return r.data;
+    })
+    .catch((error) => {
+      console.log(error);
+      // message.error({ content: "Missing credentials", key, duration: 2 });
+    });
+});
+
 const userReducer = createReducer(
   {},
   {
-    [userLogin]: (state, action) => action.payload,
+    [userLogin.fulfilled]: (state, action) => {
+      if (action.payload) {
+        return action.payload;
+      }
+    },
+    [userLogin.rejected]: (state, action) => action.payload,
     // [userLogout.fulfilled]: (state, action) => {
     //   state = {};
     //   return state;
