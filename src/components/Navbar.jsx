@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const history = useHistory();
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -131,10 +132,21 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Ingresar</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Salir</MenuItem>
+      {user.userName ? (
+        <>
+          <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Salir</MenuItem>
+        </>
+      ) : (
+        <>
+          <Link to="/login">
+            <MenuItem onClick={handleMenuClose}>Ingresar</MenuItem>
+            <Link to="/register">
+              <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
+            </Link>
+          </Link>
+        </>
+      )}
     </Menu>
   );
 
