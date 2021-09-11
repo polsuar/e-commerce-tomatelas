@@ -250,7 +250,7 @@ const productos = [
   },
   {
     name: "Cerveza Budweiser",
-    price: 1.356,
+    price: 1356,
     volume: "473ml",
     brand: "Budweiser",
     stock: faker.datatype.number(50),
@@ -442,7 +442,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Pet",
-    price: 2.628,
+    price: 2628,
     volume: "3000ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -458,7 +458,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 1.296,
+    price: 1296,
     volume: "1500ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -466,7 +466,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 2.628,
+    price: 2628,
     volume: "3000ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -506,7 +506,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Glaciar Sin Gas",
-    price: 1.056,
+    price: 1056,
     volume: "2000ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -682,7 +682,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Raices - Tinto Malbec",
-    price: 4.224,
+    price: 4224,
     volume: "750ml",
     brand: "Novecento Raices",
     stock: faker.datatype.number(50),
@@ -690,7 +690,7 @@ const productos = [
   },
   {
     name: "Vino Novecento - Tinto Malbec",
-    price: 3.108,
+    price: 3108,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -722,7 +722,7 @@ const productos = [
   },
   {
     name: "Vino Novecento- Tinto Cabernet Sauvignon",
-    price: 3.108,
+    price: 3108,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -738,7 +738,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Chardonnay",
-    price: 3.108,
+    price: 3108,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -762,7 +762,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Chardonnay",
-    price: 6.924,
+    price: 6924,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -770,7 +770,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Cabernet",
-    price: 6.924,
+    price: 6924,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
