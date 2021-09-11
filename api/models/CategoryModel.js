@@ -7,6 +7,7 @@ Categories.init(
     category_id: {
       type: S.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
     },
     category_name: {
       type: S.STRING,

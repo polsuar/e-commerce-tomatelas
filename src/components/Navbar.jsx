@@ -135,16 +135,16 @@ export default function Navbar() {
       {user.userName ? (
         <>
           <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
-          <Link to="/register">
-            <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
-          </Link>
+          <MenuItem onClick={handleMenuClose}>Salir</MenuItem>
         </>
       ) : (
         <>
           <Link to="/login">
             <MenuItem onClick={handleMenuClose}>Ingresar</MenuItem>
+            <Link to="/register">
+              <MenuItem onClick={handleMenuClose}>Registrarse</MenuItem>
+            </Link>
           </Link>
-          <MenuItem onClick={handleMenuClose}>Salir</MenuItem>
         </>
       )}
     </Menu>
