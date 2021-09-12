@@ -753,7 +753,7 @@ const productos = [
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/vino-novecento-extra-brut-750-siempreencasa_600x600.png?v=1623877818?nocache=0.8555868228927663",
   },
   {
-    name: "Novecento Espumante Extra Dulce Night",
+    name: "Vino Novecento Espumante Extra Dulce Night",
     price: 3924,
     volume: "750ml",
     brand: "Novecento",
@@ -777,7 +777,7 @@ const productos = [
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/vino-dante-robino-cabernet-sauvignon-2018-750-siempreencasa_600x600.png?v=1623936349?nocache=0.13007130490414376",
   },
   {
-    name: "Espumante Dante Extra Brut",
+    name: "Vino Espumante Dante Extra Brut",
     price: 7836,
     volume: "750ml",
     brand: "Dante Robino",
@@ -809,7 +809,7 @@ const productos = [
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/vino-blasfemia-tinto-malbec-syrah-473-siempreencasa_c55c2edd-fefa-4a42-9f57-b1a931f37dc3_600x600.png?v=1623936167?nocache=0.6468051621831452",
   },
   {
-    name: "Salentein espumante Extra Brut",
+    name: "Vino Salentein espumante Extra Brut",
     price: 11640,
     volume: "750ml",
     brand: "Salentein",
