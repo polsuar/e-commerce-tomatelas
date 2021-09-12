@@ -28,6 +28,7 @@ userRouter.get("/:id", (req, res, next) => {
 });
 
 userRouter.put("/:id", (req, res, next) => {
+
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
@@ -40,5 +41,16 @@ userRouter.put("/:id", (req, res, next) => {
     )
     .catch(next);
 });
+
+
+userRouter.delete("/:id", (req, res, next) => {
+  const { id } = req.params;
+  User.destroy({
+    where: { id },
+  })
+    .then(res.sendStatus(202))
+    .catch(next);
+})
+
 
 module.exports = userRouter;
