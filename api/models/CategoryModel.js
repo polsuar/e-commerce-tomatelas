@@ -1,8 +1,8 @@
 const S = require("sequelize");
 const db = require("../db");
 
-class Categories extends S.Model {}
-Categories.init(
+class Category extends S.Model {}
+Category.init(
   {
     category_id: {
       type: S.INTEGER,
@@ -17,4 +17,4 @@ Categories.init(
   { sequelize: db, modelName: "category" }
 );
 
-module.exports = Categories;
+module.exports = Category;

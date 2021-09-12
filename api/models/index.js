@@ -1,7 +1,7 @@
 const User = require("./UsersModel");
 const Product = require("./ProductsModel");
 const Cart = require("./CartModel");
-const Categories = require("./CategoryModel");
+const Category = require("./CategoryModel");
 const Order = require("./OrdersModel");
 
 ///////////////////////////////FAVOTITES///////////////////////////////
@@ -9,8 +9,8 @@ User.belongsToMany(Product, { through: "favorites" });
 Product.belongsToMany(User, { through: "favorites" });
 
 //////////////////////////////CATEGORIES///////////////////////////////
-Product.belongsToMany(Categories, { through: "Products_Categories" });
-Categories.belongsToMany(Product, { through: "Products_Categories" });
+Product.belongsToMany(Category, { through: "product_category" });
+Category.belongsToMany(Product, { through: "product_category" });
 
 /////////////////////////////////CART//////////////////////////////////
 
@@ -31,7 +31,7 @@ User.hasMany(Order, {
 Order.hasOne(User);
 
 ///////////////////////////////REVIEWS/////////////////////////////////
-Product.belongsToMany(User, { through: "Review" });
-User.belongsToMany(Product, { through: "Review" });
+Product.belongsToMany(User, { through: "review" });
+User.belongsToMany(Product, { through: "review" });
 
 module.exports = { User, Product };

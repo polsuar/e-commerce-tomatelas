@@ -1,10 +1,13 @@
 const faker = require("faker");
 const User = require("./models/UsersModel");
 const Product = require("./models/ProductsModel");
-const Categorie = require("./models/CategoryModel");
+const Category = require("./models/CategoryModel");
 const data = require("./utils/Productos");
-const users = [];
+const db = require("./db");
+const { Op } = require("sequelize");
+require("./models/index");
 
+const users = [];
 for (let i = 0; i < 10; i++) {
   users.push({
     userName: faker.internet.userName(),
@@ -20,30 +23,6 @@ for (let i = 0; i < 10; i++) {
     phone: faker.phone.phoneNumber(),
   });
 }
-
-User.bulkCreate(users)
-  .then(() => console.log("users create succesfully"))
-  .catch(() => console.log("error withe users creation"));
-
-// const products = [];
-
-// for (let i = 0; i < 10; i++) {
-//   products.push({
-//     name: faker.commerce.productName(),
-//     price: faker.datatype.number(1000),
-//     volume: faker.datatype.number(12),
-//     category: faker.commerce.department(),
-//     brand: faker.company.companyName(),
-//     stock: faker.datatype.number(50),
-//     img: "https://source.unsplash.com/random",
-//     description: faker.commerce.productDescription(),
-//   });
-// }
-
-Product.bulkCreate(data)
-  .then(() => console.log("products create succesfully"))
-  .catch(() => console.log("error with products create"));
-
 const categories = [
   { category_name: "Cervezas" },
   { category_name: "Gaseosas" },
@@ -55,6 +34,93 @@ const categories = [
   { category_name: "Leches" },
 ];
 
-Categorie.bulkCreate(categories)
-  .then(() => console.log("categories create succesfully"))
-  .catch(() => console.log("error with categories create"));
+db.sync({ force: false })
+  .then(() => {
+    console.log("Conexion Establecida...");
+  })
+  .then(() => {
+    User.bulkCreate(users)
+      .then(() => console.log("users create succesfully"))
+      .catch(() => console.log("error withe users creation"));
+  })
+  .then(() => {
+    Product.bulkCreate(data)
+      .then(() => console.log("products create succesfully"))
+      .catch(() => console.log("error with products create"));
+  })
+  .then(() => {
+    Category.bulkCreate(categories)
+      .then(() => console.log("categories create succesfully"))
+      .catch(() => console.log("error with categories create"));
+  })
+  .then(async () => {
+    Product.findAll({
+      where: { name: { [Op.substring]: "Cerveza" } },
+    }).then((cervezas) => {
+      Category.findOne({ where: { category_name: "Cervezas" } }).then(
+        (category) => category.addProducts(cervezas)
+      );
+    });
+
+    Product.findAll({
+      where: { name: { [Op.substring]: "Vino" } },
+    }).then((vinos) => {
+      Category.findOne({ where: { category_name: "Vinos" } }).then((category) =>
+        category.addProducts(vinos)
+      );
+    });
+
+    Product.findAll({
+      where: { name: { [Op.substring]: "Gaseosa" } },
+    }).then((gaseosas) => {
+      Category.findOne({ where: { category_name: "Gaseosas" } }).then(
+        (category) => category.addProducts(gaseosas)
+      );
+    });
+
+    Product.findAll({
+      where: {
+        name: { [Op.startsWith]: "Agua", [Op.notILike]: "%Saborizada%" },
+      },
+    }).then((aguas) => {
+      Category.findOne({ where: { category_name: "Aguas" } }).then((category) =>
+        category.addProducts(aguas)
+      );
+    });
+
+    Product.findAll({
+      where: {
+        name: { [Op.substring]: "Agua Saborizada" },
+      },
+    }).then((aguasSaborizadas) => {
+      Category.findOne({ where: { category_name: "Aguas Saborizadas" } }).then(
+        (category) => category.addProducts(aguasSaborizadas)
+      );
+    });
+    Product.findAll({
+      where: {
+        name: { [Op.substring]: "isotónica" },
+      },
+    }).then((isotonicas) => {
+      Category.findOne({ where: { category_name: "Bebidas Isotónicas" } }).then(
+        (category) => category.addProducts(isotonicas)
+      );
+    });
+    Product.findAll({
+      where: { name: { [Op.substring]: "Energizante" } },
+    }).then((energizantes) => {
+      Category.findOne({
+        where: { category_name: "Bebidas Energizantes" },
+      }).then((category) => category.addProducts(energizantes));
+    });
+
+    Product.findAll({
+      where: {
+        name: { [Op.substring]: "Bebida vegetal" },
+      },
+    }).then((leches) => {
+      Category.findOne({
+        where: { category_name: "Leches" },
+      }).then((category) => category.addProducts(leches));
+    });
+  });

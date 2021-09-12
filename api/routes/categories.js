@@ -1,26 +1,16 @@
-// const express = require("express");
-// const categoriesRouter = express.Router();
-// const Products = require('../models/ProductsModel')
-// const Categories = require('../models/CategoriesModel');
+const express = require("express");
+const categoriesRoute = express.Router();
+const Product = require("../models/ProductsModel");
+const Category = require("../models/CategoryModel");
+const { Op } = require("sequelize");
+require("../models/index");
 
+categoriesRoute.get("/:id", async (req, res) => {
+  const category = await Category.findOne({
+    where: { category_id: req.params.id },
+  });
+  const products = await category.getProducts();
+  res.send(products);
+});
 
-// Categories.hasMany(Products, {
-//   foreignKey: 'category_id'
-// });
-
-// categoriesRouter.get("/", (req, res, next) => {
-//   Categories.findAll({
-//     attributes: ['category_id', 'category_name'],
-//     include: [{
-//       model: Product,
-//       required: true,
-//       attributes:[]
-//      }]
-//   })
-//     .then((categories) => {
-//       res.send(categories)
-//     })
-//     .catch(next);
-// });
-
-// module.exports = categoriesRouter;
+module.exports = categoriesRoute;
