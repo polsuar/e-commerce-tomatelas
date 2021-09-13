@@ -26,10 +26,9 @@ productsRouter.get("/name/:name", (req, res, next) => {
   Product.findAll({
     where: {
       name: {
-        [Op.substring]: req.params.name,
+        [Op.iLike]: `%${req.params.name}%`,
       },
     },
-    //aca falta logica para poder buscar sin case sensitive
   })
     .then((product) => {
       if (!product) res.status(404);
