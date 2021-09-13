@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/UsersModel");
+const Cart = require("../models/CartModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -36,8 +37,7 @@ router.post("/login", async (req, res) => {
       user.token = token;
       // user
       res.status(200).json(user);
-    }
-    else res.status(400).send("Invalid Credentials");
+    } else res.status(400).send("Invalid Credentials");
   } catch (err) {
     res.status(409).send(err);
   }
@@ -105,6 +105,9 @@ router.post("/register", async (req, res) => {
     // save user token
     user.token = token;
 
+    //create cart
+    Cart.create({ userId: user.id });
+
     // return new user
     res.status(201).json(user);
   } catch (err) {
@@ -114,7 +117,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.redirect('/')
-})
+  res.redirect("/");
+});
 
 module.exports = router;

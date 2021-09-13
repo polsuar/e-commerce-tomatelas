@@ -1,104 +1,120 @@
 const faker = require("faker");
 const productos = [
   {
-    name: "Cerveza Andes Origen Rubia Lata 473ml",
-    price: 1260,
+    name: "Cerveza Andes Origen Rubia",
+    price: 68,
     volume: "473ml",
     brand: "Andes Origen",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-rubia-473-siempreencasa_600x600.png?v=1629814628?nocache=0.6369898475256881",
   },
   {
-    name: "Cerveza Andes Origen Roja Lata 473ml",
-    price: 1452,
+    name: "Cerveza Andes Origen Roja",
+    price: 79,
     volume: "473ml",
     brand: "Andes Origen",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-roja-473-siempreencasa_600x600.png?v=1629814652?nocache=0.016790163864922603",
   },
   {
-    name: "Cerveza Andes Origen Rojita 269ml",
-    price: 756,
+    name: "Cerveza Andes Origen Rojita",
+    price: 63,
     volume: "269ml",
     brand: "Andes Origen",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-roja-473-siempreencasa_1_600x600.png?v=1629814593?nocache=0.8992631056597109",
   },
   {
-    name: "Cerveza Patagonia Amber Lager 473ml",
-    price: 2004,
+    name: "Cerveza Andes Origen IPA",
+    price: 79,
+    volume: "473ml",
+    brand: "Andes Origen",
+    stock: faker.datatype.number(50),
+    img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-ipa-473-siempreencasa_600x600.png?v=1629814661?nocache=0.09199500649431602",
+  },
+  {
+    name: "Cerveza Patagonia Amber Lager",
+    price: 104,
     volume: "473ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-amber-lager-473-siempreencasa_600x600.png?v=1629814706?nocache=0.2687801211893939",
   },
   {
-    name: "Cerveza Patagonia Weisse 473ml",
-    price: 2004,
+    name: "Cerveza Patagonia Weisse",
+    price: 104,
     volume: "473ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-weisse-473-siempreencasa_600x600.png?v=1629814719?nocache=0.16029481397351164",
   },
   {
-    name: "Cerveza Patagonia Hoppy Lager 269ml",
-    price: 748,
+    name: "Cerveza Patagonia IPA 24.7",
+    price: 104,
+    volume: "473ml",
+    brand: "Patagonia",
+    stock: faker.datatype.number(50),
+    img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-weisse-473-siempreencasa_600x600.png?v=1629814719?nocache=0.16029481397351164",
+  },
+  {
+    name: "Cerveza Patagonia Hoppy Lager",
+    price: 62.4,
     volume: "269ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-hoppy-lager-269-siempreencasa_cf0f3cf2-952e-442c-80f3-b2e64a559a06_600x600.png?v=1629814651?nocache=0.3685465266774337",
   },
   {
-    name: "Cerveza Patagonia Bohemian Pilsener 473ml",
-    price: 2004,
+    name: "Cerveza Patagonia Bohemian Pilsener",
+    price: 104,
     volume: "473ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/Pilsener_600x600.png?v=1623695814?nocache=0.31163187320144115",
   },
   {
-    name: "Cerveza Patagonia Amber Lager 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia Amber Lager",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-amber-lager-730-siempreencasa_600x600.png?v=1629814801?nocache=0.4774837773900711",
   },
   {
-    name: "Cerveza Patagonia Bohemian Pilsener 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia Bohemian Pilsener",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-bohemian-pilsener-730-siempreencasa_600x600.png?v=1629814805?nocache=0.4739649285432177",
   },
   {
-    name: "Cerveza Patagonia Hoppy Lager 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia Hoppy Lager",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-hoppy-lager-730-siempreencasa_600x600.png?v=1629814801?nocache=0.7328080749642243",
   },
   {
-    name: "Cerveza Patagonia IPA 24.7 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia IPA 24.7",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-ipa-24-7-730-siempreencasa_600x600.png?v=1629814810?nocache=0.7158171569925504",
   },
   {
-    name: "Cerveza Patagonia Weisse 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia Weisse",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-patagonia-weisse-730-siempreencasa_600x600.png?v=1629814805?nocache=0.8348183720193145",
   },
   {
-    name: "Cerveza Patagonia Vera IPA 730ml",
-    price: 3168,
+    name: "Cerveza Patagonia Vera IPA",
+    price: 172,
     volume: "730ml",
     brand: "Patagonia",
     stock: faker.datatype.number(50),
@@ -106,7 +122,7 @@ const productos = [
   },
   {
     name: "Cerveza Quilmes Clásica",
-    price: 996,
+    price: 60,
     volume: "473ml",
     brand: "Quilmes",
     stock: faker.datatype.number(50),
@@ -114,7 +130,7 @@ const productos = [
   },
   {
     name: "Cerveza Quilmes Bock",
-    price: 996,
+    price: 60,
     volume: "473ml",
     brand: "Quilmes",
     stock: faker.datatype.number(50),
@@ -122,7 +138,7 @@ const productos = [
   },
   {
     name: "Cerveza Quilmes Stout",
-    price: 996,
+    price: 60,
     volume: "473ml",
     brand: "Quilmes",
     stock: faker.datatype.number(50),
@@ -130,7 +146,7 @@ const productos = [
   },
   {
     name: "Cerveza Quilmes SIN ALCOHOL",
-    price: 996,
+    price: 60,
     volume: "473ml",
     brand: "Quilmes",
     stock: faker.datatype.number(50),
@@ -138,7 +154,7 @@ const productos = [
   },
   {
     name: "Cerveza Quilmes Red Lager",
-    price: 996,
+    price: 60,
     volume: "473ml",
     brand: "Quilmes",
     stock: faker.datatype.number(50),
@@ -146,7 +162,7 @@ const productos = [
   },
   {
     name: "Cerveza Temple Wolf",
-    price: 2028,
+    price: 110,
     volume: "473ml",
     brand: "Temple",
     stock: faker.datatype.number(50),
@@ -154,7 +170,7 @@ const productos = [
   },
   {
     name: "Cerveza Temple Honey",
-    price: 2028,
+    price: 110,
     volume: "473ml",
     brand: "Temple",
     stock: faker.datatype.number(50),
@@ -162,7 +178,7 @@ const productos = [
   },
   {
     name: "Cerveza Temple Scotish",
-    price: 2028,
+    price: 110,
     volume: "473ml",
     brand: "Temple",
     stock: faker.datatype.number(50),
@@ -170,7 +186,7 @@ const productos = [
   },
   {
     name: "Cerveza Stella Artois",
-    price: 3792,
+    price: 205,
     volume: "710ml",
     brand: "Stella Artois",
     stock: faker.datatype.number(50),
@@ -178,7 +194,7 @@ const productos = [
   },
   {
     name: "Cerveza Stella Noire",
-    price: 520,
+    price: 65,
     volume: "355ml",
     brand: "Stella Artois",
     stock: faker.datatype.number(50),
@@ -186,7 +202,7 @@ const productos = [
   },
   {
     name: "Cerveza Stella Artois",
-    price: 1594,
+    price: 86,
     volume: "473ml",
     brand: "Stella Artois",
     stock: faker.datatype.number(50),
@@ -194,7 +210,7 @@ const productos = [
   },
   {
     name: "Cerveza Stella Artois",
-    price: 1594,
+    price: 86,
     volume: "473ml",
     brand: "Stella Artois",
     stock: faker.datatype.number(50),
@@ -202,7 +218,7 @@ const productos = [
   },
   {
     name: "Cerveza Corona",
-    price: 1548,
+    price: 123,
     volume: "330ml",
     brand: "Corona",
     stock: faker.datatype.number(50),
@@ -210,7 +226,7 @@ const productos = [
   },
   {
     name: "Cerveza Corona",
-    price: 2712,
+    price: 147,
     volume: "710ml",
     brand: "Corona",
     stock: faker.datatype.number(50),
@@ -218,7 +234,7 @@ const productos = [
   },
   {
     name: "Cerveza Corona",
-    price: 612,
+    price: 64,
     volume: "269ml",
     brand: "Corona",
     stock: faker.datatype.number(50),
@@ -226,7 +242,7 @@ const productos = [
   },
   {
     name: "Cerveza Brahma Dorada",
-    price: 2592,
+    price: 125,
     volume: "710ml",
     brand: "Brahma",
     stock: faker.datatype.number(50),
@@ -234,15 +250,15 @@ const productos = [
   },
   {
     name: "Cerveza Brahma",
-    price: 1332,
+    price: 89,
     volume: "473ml",
-    brand: "Michelob",
+    brand: "Brahma",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-brahma-chopp-473-siempreencasa_600x600.png?v=1629814831?nocache=0.10166861924991721",
   },
   {
     name: "Cerveza Michelob Ultra",
-    price: 1680,
+    price: 112,
     volume: "410ml",
     brand: "Michelob",
     stock: faker.datatype.number(50),
@@ -250,7 +266,7 @@ const productos = [
   },
   {
     name: "Cerveza Budweiser",
-    price: 1356,
+    price: 74,
     volume: "473ml",
     brand: "Budweiser",
     stock: faker.datatype.number(50),
@@ -258,7 +274,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Black Pet",
-    price: 1296,
+    price: 97,
     volume: "1500ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -266,7 +282,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up LIGHT 1500ml",
-    price: 1560,
+    price: 91,
     volume: "1500ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -274,7 +290,7 @@ const productos = [
   },
   {
     name: "Gaseosa PDT Pomelo",
-    price: 1680,
+    price: 98,
     volume: "1500ml",
     brand: "Paso de los Toros",
     stock: faker.datatype.number(50),
@@ -282,7 +298,7 @@ const productos = [
   },
   {
     name: "Gaseosa PDT Tónica",
-    price: 552,
+    price: 32,
     volume: "269ml",
     brand: "Paso de los Toros",
     stock: faker.datatype.number(50),
@@ -290,7 +306,7 @@ const productos = [
   },
   {
     name: "Gaseosa PDT Pomelo",
-    price: 552,
+    price: 32,
     volume: "269ml",
     brand: "Paso de los Toros",
     stock: faker.datatype.number(50),
@@ -298,7 +314,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Black",
-    price: 684,
+    price: 40,
     volume: "354ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -306,7 +322,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi",
-    price: 684,
+    price: 40,
     volume: "354ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -314,7 +330,7 @@ const productos = [
   },
   {
     name: "Gaseosa Mirinda Naranja",
-    price: 1032,
+    price: 60,
     volume: "1500ml",
     brand: "Mirinda",
     stock: faker.datatype.number(50),
@@ -322,7 +338,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Pet",
-    price: 1560,
+    price: 91,
     volume: "1500ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -330,7 +346,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7Up",
-    price: 684,
+    price: 40,
     volume: "354ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -338,7 +354,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7Up Light",
-    price: 684,
+    price: 40,
     volume: "354ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -346,7 +362,7 @@ const productos = [
   },
   {
     name: "Gaseosa H2OH! Citrus",
-    price: 612,
+    price: 33,
     volume: "500ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
@@ -354,7 +370,7 @@ const productos = [
   },
   {
     name: "Gaseosa H2OH! Limoneto",
-    price: 612,
+    price: 33,
     volume: "500ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
@@ -362,7 +378,7 @@ const productos = [
   },
   {
     name: "Gaseosa H2OH! Citrus",
-    price: 1368,
+    price: 80,
     volume: "1500ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
@@ -370,23 +386,15 @@ const productos = [
   },
   {
     name: "Gaseosa H2OH! Limoneto",
-    price: 1368,
+    price: 80,
     volume: "1500ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/gaseosa-H2Oh-limoneto-pet-1500-siempreencasa_600x600.png?v=1629814646?nocache=0.1887086871252328",
   },
   {
-    name: "Gaseosa H2OH! Citrus",
-    price: 1368,
-    volume: "1500ml",
-    brand: "H2OH!",
-    stock: faker.datatype.number(50),
-    img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/gaseosa-H2Oh-citrus-pet-1500-siempreencasa_600x600.png?v=1629814642?nocache=0.5425059227541575",
-  },
-  {
     name: "Gaseosa H2OH! Limoneto",
-    price: 1744,
+    price: 109,
     volume: "2250ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
@@ -394,7 +402,7 @@ const productos = [
   },
   {
     name: "Gaseosa H2OH! Citrus",
-    price: 1744,
+    price: 109,
     volume: "2250ml",
     brand: "H2OH!",
     stock: faker.datatype.number(50),
@@ -402,7 +410,7 @@ const productos = [
   },
   {
     name: "Gaseosa PDT Tónica",
-    price: 1680,
+    price: 98,
     volume: "1500ml",
     brand: "Paso de los Toros",
     stock: faker.datatype.number(50),
@@ -410,7 +418,7 @@ const productos = [
   },
   {
     name: "Gaseosa PDT Pomelo",
-    price: 768,
+    price: 45,
     volume: "500ml",
     brand: "Paso de los Toros",
     stock: faker.datatype.number(50),
@@ -418,7 +426,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Black Pet",
-    price: 768,
+    price: 45,
     volume: "500ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -426,7 +434,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Pet",
-    price: 768,
+    price: 45,
     volume: "500ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -434,7 +442,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Pet",
-    price: 1473,
+    price: 122,
     volume: "2250ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -442,7 +450,7 @@ const productos = [
   },
   {
     name: "Gaseosa Pepsi Pet",
-    price: 2628,
+    price: 153,
     volume: "3000ml",
     brand: "Pepsi",
     stock: faker.datatype.number(50),
@@ -450,7 +458,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 768,
+    price: 45,
     volume: "500ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -458,7 +466,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 1296,
+    price: 97,
     volume: "1500ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -466,7 +474,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 2628,
+    price: 153,
     volume: "3000ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -474,7 +482,7 @@ const productos = [
   },
   {
     name: "Gaseosa 7up",
-    price: 1473,
+    price: 123,
     volume: "2250ml",
     brand: "7up",
     stock: faker.datatype.number(50),
@@ -482,15 +490,23 @@ const productos = [
   },
   {
     name: "Gaseosa 7up LIGHT",
-    price: 1473,
+    price: 123,
     volume: "2250ml",
     brand: "7up",
     stock: faker.datatype.number(50),
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/gaseosa-7up-sin-azucar-pet-2250-siempreencasa_600x600.png?v=1629814777?nocache=0.9837966133239158",
   },
   {
+    name: "Gaseosa 7up light",
+    price: 90,
+    volume: "500ml",
+    brand: "7up",
+    stock: faker.datatype.number(50),
+    img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/gaseosa-7up-sin-azucar-pet-500-siempreencasa_600x600.png?v=1629814594?nocache=0.43686502485604883",
+  },
+  {
     name: "Agua sin Gas Nestle Pureza Vital",
-    price: 2144,
+    price: 177,
     volume: "6300ml",
     brand: "Nestle Pureza Vital",
     stock: faker.datatype.number(50),
@@ -498,7 +514,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Glaciar Sin Gas",
-    price: 2364,
+    price: 197,
     volume: "6300ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -506,7 +522,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Glaciar Sin Gas",
-    price: 1056,
+    price: 796,
     volume: "2000ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -514,7 +530,7 @@ const productos = [
   },
   {
     name: "Agua Mineral con Gas Eco de los Andes",
-    price: 910,
+    price: 68,
     volume: "1500ml",
     brand: "Eco",
     stock: faker.datatype.number(50),
@@ -522,7 +538,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Eco de los Andes Sin Gas",
-    price: 993,
+    price: 75,
     volume: "2000ml",
     brand: "Eco",
     stock: faker.datatype.number(50),
@@ -530,7 +546,7 @@ const productos = [
   },
   {
     name: "Agua sin Gas Nestle Pureza Vital",
-    price: 839,
+    price: 60,
     volume: "1500ml",
     brand: "Nestle Pureza Vital",
     stock: faker.datatype.number(50),
@@ -538,7 +554,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Glaciar Sin Gas",
-    price: 912,
+    price: 69,
     volume: "1500ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -546,7 +562,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Eco de los Andes Sin Gas",
-    price: 922,
+    price: 69,
     volume: "1000ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -554,7 +570,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Glaciar Sin Gas",
-    price: 753,
+    price: 56,
     volume: "500ml",
     brand: "Glaciar",
     stock: faker.datatype.number(50),
@@ -562,7 +578,7 @@ const productos = [
   },
   {
     name: "Agua Mineral con Gas Eco de los Andes",
-    price: 726,
+    price: 51.49,
     volume: "500ml",
     brand: "Eco",
     stock: faker.datatype.number(50),
@@ -570,7 +586,7 @@ const productos = [
   },
   {
     name: "Agua Mineral Sin Gas Eco de los Andes",
-    price: 910,
+    price: 68.26,
     volume: "1500ml",
     brand: "Eco",
     stock: faker.datatype.number(50),
@@ -578,7 +594,7 @@ const productos = [
   },
   {
     name: "Agua Saborizada Awafrut Pomelo",
-    price: 972,
+    price: 60.83,
     volume: "1650ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
@@ -586,7 +602,7 @@ const productos = [
   },
   {
     name: "Agua Saborizada Awafrut Manzana",
-    price: 972,
+    price: 60.83,
     volume: "1650ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
@@ -594,7 +610,7 @@ const productos = [
   },
   {
     name: "Agua Saborizada Awafrut Naranja Durazno",
-    price: 972,
+    price: 60.83,
     volume: "1650ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
@@ -602,7 +618,7 @@ const productos = [
   },
   {
     name: "Agua Saborizada Awafrut Naranja Durazno",
-    price: 636,
+    price: 40.16,
     volume: "500ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
@@ -610,7 +626,7 @@ const productos = [
   },
   {
     name: "Agua Saborizada Awafrut Pomelo",
-    price: 636,
+    price: 40.16,
     volume: "500ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
@@ -618,7 +634,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Manzana",
-    price: 1188,
+    price: 65,
     volume: "500ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -626,7 +642,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Cool Blue",
-    price: 1188,
+    price: 65,
     volume: "500ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -634,7 +650,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Frutas Tropicales",
-    price: 1188,
+    price: 65,
     volume: "500ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -642,7 +658,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Naranja",
-    price: 1188,
+    price: 65,
     volume: "500ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -650,7 +666,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Manzana",
-    price: 2004,
+    price: 108,
     volume: "1250ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -658,7 +674,7 @@ const productos = [
   },
   {
     name: "Bebida isotónica Gatorade Manzana",
-    price: 2004,
+    price: 108,
     volume: "1250ml",
     brand: "Gatorade",
     stock: faker.datatype.number(50),
@@ -666,7 +682,7 @@ const productos = [
   },
   {
     name: "Bebida Energizante Red Bull",
-    price: 1200,
+    price: 100,
     volume: "250ml",
     brand: "Red Bull",
     stock: faker.datatype.number(50),
@@ -674,7 +690,7 @@ const productos = [
   },
   {
     name: "Bebida Energizante Red Bull Sin Azúcar",
-    price: 1200,
+    price: 100,
     volume: "250ml",
     brand: "Red Bull",
     stock: faker.datatype.number(50),
@@ -682,7 +698,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Raices - Tinto Malbec",
-    price: 4224,
+    price: 228.63,
     volume: "750ml",
     brand: "Novecento Raices",
     stock: faker.datatype.number(50),
@@ -690,7 +706,7 @@ const productos = [
   },
   {
     name: "Vino Novecento - Tinto Malbec",
-    price: 3108,
+    price: 168.63,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -698,7 +714,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Malbec",
-    price: 6924,
+    price: 375,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -706,7 +722,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Raices - Blanco",
-    price: 4224,
+    price: 228.63,
     volume: "750ml",
     brand: "Novecento Raices",
     stock: faker.datatype.number(50),
@@ -714,7 +730,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Raices - Tinto Cabernet",
-    price: 4224,
+    price: 228.63,
     volume: "750ml",
     brand: "Novecento Raices",
     stock: faker.datatype.number(50),
@@ -722,7 +738,7 @@ const productos = [
   },
   {
     name: "Vino Novecento- Tinto Cabernet Sauvignon",
-    price: 3108,
+    price: 168,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -730,7 +746,7 @@ const productos = [
   },
   {
     name: "Vino Capriccio Dolcezza",
-    price: 5860,
+    price: 293,
     volume: "750ml",
     brand: "Capriccio Dolcezza",
     stock: faker.datatype.number(50),
@@ -738,7 +754,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Chardonnay",
-    price: 3108,
+    price: 168.33,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -746,7 +762,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Espumante Extra Brut Night",
-    price: 3924,
+    price: 294.33,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -754,7 +770,7 @@ const productos = [
   },
   {
     name: "Vino Novecento Espumante Extra Dulce Night",
-    price: 3924,
+    price: 294.33,
     volume: "750ml",
     brand: "Novecento",
     stock: faker.datatype.number(50),
@@ -762,7 +778,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Chardonnay",
-    price: 6924,
+    price: 375,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -770,7 +786,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Cabernet",
-    price: 6924,
+    price: 375,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -778,7 +794,7 @@ const productos = [
   },
   {
     name: "Vino Espumante Dante Extra Brut",
-    price: 7836,
+    price: 454.5,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -786,7 +802,7 @@ const productos = [
   },
   {
     name: "Vino Blasfemia - Rosado",
-    price: 1044,
+    price: 86.58,
     volume: "269ml",
     brand: "Blasfemia",
     stock: faker.datatype.number(50),
@@ -794,7 +810,7 @@ const productos = [
   },
   {
     name: "Vino Blasfemia - Blanco",
-    price: 1044,
+    price: 86.58,
     volume: "269ml",
     brand: "Blasfemia",
     stock: faker.datatype.number(50),
@@ -802,7 +818,7 @@ const productos = [
   },
   {
     name: "Vino Blasfemia - Tinto",
-    price: 1044,
+    price: 86.58,
     volume: "269ml",
     brand: "Blasfemia",
     stock: faker.datatype.number(50),
@@ -810,7 +826,7 @@ const productos = [
   },
   {
     name: "Vino Salentein espumante Extra Brut",
-    price: 11640,
+    price: 793.16,
     volume: "750ml",
     brand: "Salentein",
     stock: faker.datatype.number(50),
@@ -818,7 +834,7 @@ const productos = [
   },
   {
     name: "Vino Callia Chardonnay",
-    price: 3780,
+    price: 258.33,
     volume: "750ml",
     brand: "Callia",
     stock: faker.datatype.number(50),
@@ -834,7 +850,7 @@ const productos = [
   },
   {
     name: "Vino Portillo Chardonnay",
-    price: 5040,
+    price: 344.33,
     volume: "750ml",
     brand: "Portillo",
     stock: faker.datatype.number(50),
@@ -842,7 +858,7 @@ const productos = [
   },
   {
     name: "Vino Salentein Reserve Chardonnay",
-    price: 11640,
+    price: 344.33,
     volume: "750ml",
     brand: "Salentein",
     stock: faker.datatype.number(50),
@@ -850,7 +866,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Reserva Malbec",
-    price: 13200,
+    price: 793.66,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -858,7 +874,7 @@ const productos = [
   },
   {
     name: "Vino Dante Robino Reserva Bonarda",
-    price: 13200,
+    price: 715,
     volume: "750ml",
     brand: "Dante Robino",
     stock: faker.datatype.number(50),
@@ -866,7 +882,7 @@ const productos = [
   },
   {
     name: "Bebida vegetal a base de Almendra sabor Original",
-    price: 2520,
+    price: 210,
     volume: "1000ml",
     brand: "Tratenfu",
     stock: faker.datatype.number(50),
@@ -874,7 +890,7 @@ const productos = [
   },
   {
     name: "Bebida vegetal a base de Almendra sabor Vainilla",
-    price: 2520,
+    price: 210,
     volume: "1000ml",
     brand: "Tratenfu",
     stock: faker.datatype.number(50),
@@ -882,7 +898,7 @@ const productos = [
   },
   {
     name: "Bebida vegetal a base de Almendra sabor Coco",
-    price: 2520,
+    price: 210,
     volume: "1000ml",
     brand: "Tratenfu",
     stock: faker.datatype.number(50),
