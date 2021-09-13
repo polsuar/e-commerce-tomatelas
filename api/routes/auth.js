@@ -21,6 +21,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ where: { userName } });
 
     console.log("USUARIO DESDE BD: ", user);
+
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
@@ -74,6 +75,7 @@ router.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ where: { email } });
 
     if (oldUser) {
+      console.log("USUARIO REPETIDO!!!! ======");
       return res.status(409).send("User Already Exist. Please Login");
     }
 

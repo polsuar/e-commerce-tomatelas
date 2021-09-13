@@ -20,20 +20,17 @@ export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
 });
 
 export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
-  //  const key = "login";
-
   return axios
     .post("http://localhost:3001/api/auth/login", {
       userName,
       password,
     })
     .then((r) => {
-      //message.success({ content: "Login success!!", key, duration: 2 });
       console.log("login success");
       return r.data;
     })
     .catch((error) => {
-      console.log(error);
+      console.log("ERROR EN ASYNCTHYUNK", error);
 
       // message.error({ content: "Missing credentials", key, duration: 2 });
     });

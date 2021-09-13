@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -6,14 +7,10 @@ import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useInput } from "../hooks/useInput";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import { useForm, Controller } from "react-hook-form";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 import { userLogin } from "../store/users";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -27,6 +24,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginTop: 30,
   },
+  snackbar: {
+    whiteSpace: "pre-wrap",
+  },
 });
 
 const Login = () => {
@@ -37,6 +37,22 @@ const Login = () => {
 
   const userName = useInput("userName");
   const password = useInput("password");
+  const [state, setState] = useState();
+  const [messageInfo, setMessageInfo] = useState(undefined);
+
+  React.useEffect(() => {
+    if (messageInfo) {
+      setState({ open: true });
+    }
+  }, [messageInfo]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setState({ open: false });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,15 +63,44 @@ const Login = () => {
       password: password.value,
     };
 
-    dispatch(userLogin(data)).then(() => {
-      history.push("/");
-    });
+    dispatch(userLogin(data))
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log("ERROR ===> ", error.response.data);
+        if (error.response.data === "Invalid Credentials") {
+          setMessageInfo(
+            "Credenciales invalidas, por favor verifica los campos ingresados."
+          );
+        }
+      });
   };
 
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
       <div>
         <h2> Login de usuario:</h2>
+
+        {messageInfo ? (
+          <Snackbar
+            open={state.open}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            className={classes.snackbar}
+          >
+            <Alert severity="error" onClose={handleClose}>
+              <div
+                style={{
+                  display: "flex",
+                  flexFlow: "column",
+                  alignItems: "center",
+                }}
+              >
+                {messageInfo}
+              </div>
+            </Alert>
+          </Snackbar>
+        ) : null}
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={2}>
