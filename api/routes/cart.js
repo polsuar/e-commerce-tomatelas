@@ -21,15 +21,18 @@ cartRoute.put("/:id/add", async (req, res) => {
 });
 
 cartRoute.put("/:id/put", async (req, res) => {
-  const { product, quantity } = req.body;
+  const [product, quantity] = req.body;
   const cart = await Cart.findOne({ where: { userId: req.params.id } });
-  console.log(products, cart);
+  const change = cart.cart_items.map((item) => {
+    if (item.id === product.id) item.quantity = quantity;
+  });
 
-  const change = await Cart.update(
-    { cart_items: products },
-    { where: { id: cart.id }, returning: true }
+  const update = await Cart.update(
+    { cart_items: change },
+    { where: { id: cart.id }, returning: true, plain: true }
   );
-  res.status(200).send(change);
+  console.log(update);
+  res.sendStatus(200);
 });
 
 module.exports = cartRoute;
