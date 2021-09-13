@@ -30,14 +30,20 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
     .then((r) => {
       //message.success({ content: "Login success!!", key, duration: 2 });
       console.log("login success");
+      localStorage.setItem("token", r.data.token)
       return r.data;
     })
     .catch((error) => {
       console.log(error);
-
       // message.error({ content: "Missing credentials", key, duration: 2 });
     });
 });
+
+export const userLogout = createAction("LOGOUT", () => {
+  localStorage.removeItem("token")
+  return {}
+})
+
 
 const userReducer = createReducer(
   {},
@@ -47,6 +53,7 @@ const userReducer = createReducer(
         return action.payload;
       }
     },
+    [userLogout]: (state, action) => action.payload,
     [userLogin.rejected]: (state, action) => action.payload,
     // [userLogout.fulfilled]: (state, action) => {
     //   state = {};
