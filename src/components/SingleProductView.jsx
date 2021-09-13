@@ -10,10 +10,14 @@ import {
   Typography,
   Button,
   Box,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 //import { grey } from "@material-ui/core/colors";
-import data from "../assets/data";
+//import data from "../assets/data";
 
 //const accent = grey["900"];
 
@@ -35,7 +39,11 @@ const useStyles = makeStyles((theme) => ({
     /*   padding: theme.spacing(2),
     textAlign: "center", */
     color: theme.palette.text.secondary,
+    margin: theme.spacing(1),
     //textAlign: "center",
+  },
+  margin: {
+    marginTop: theme.spacing(2),
   },
 
   paperLeft: {
@@ -63,6 +71,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-evenly",
   },
+  button: {
+    display: "block",
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    // margin: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
 const SingleProductView = ({ id }) => {
@@ -73,10 +89,21 @@ const SingleProductView = ({ id }) => {
     dispatch(getSelectedProduct(id));
   }, []);
 
-  const [contador, setContador] = useState(1);
-
   const classes = useStyles();
 
+  const [cantidad, setCantidad] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleChange = (event) => {
+    setCantidad(event.target.value);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  /* const [contador, setContador] = useState(1);
   const handleQuantity = (param) => {
     if (param === "decrement" && contador > 1) {
       setContador(contador - 1);
@@ -86,7 +113,7 @@ const SingleProductView = ({ id }) => {
       setContador(contador + 1);
       console.log(contador, "++++ENTRA AL CONTADOR");
     }
-  };
+  }; */
 
   return (
     <div className={classes.root}>
@@ -104,18 +131,55 @@ const SingleProductView = ({ id }) => {
               <Typography variant="h2" fontWeight="fontWeightBold" m={1}>
                 {product.name}
               </Typography>
-              <Grid item xs={6} className={classes.grey}>
-                <Typography variant="h5">{`${product.volume}ml`}</Typography>
-              </Grid>
-              <Typography color="primary" variant="h4">
-                {`$${product.price} c/u`}
+              <Typography variant="p" className={classes.grey}>
+                {product.volume}
               </Typography>
+              {/* <Grid item xs={6} className={classes.grey}>
+                <Typography variant="h5">{product.volume}</Typography>
+              </Grid> */}
+              <Grid className={classes.margin}>
+                <Typography color="primary" variant="h4">
+                  {`$${product.price * 6}`}
+                </Typography>
+                <Typography color="primary" variant="p">
+                  {" "}
+                  6 unidades{" "}
+                </Typography>
+                <Typography className={classes.grey} variant="p">
+                  {`$${product.price} por 1 unidad`}
+                </Typography>
+              </Grid>
               <Grid container spacing={2} className={classes.grey}>
                 <Grid item xs={6}>
                   <Typography variant="h5">Elegí la cantidad:</Typography>
                 </Grid>
                 <Grid container item xs={6} textAlign="center">
-                  <Grid item xs={3}>
+                  {/* <Button className={classes.button} onClick={handleOpen}>
+                    Open the select
+                  </Button> */}
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-controlled-open-select-label">
+                      Unidades
+                    </InputLabel>
+                    <Select
+                      labelId="demo-controlled-open-select-label"
+                      id="demo-controlled-open-select"
+                      open={open}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={cantidad}
+                      onChange={handleChange}
+                    >
+                      {/* <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem> */}
+                      <MenuItem value={6}>6 unidades</MenuItem>
+                      <MenuItem value={12}>12 unidades</MenuItem>
+                      <MenuItem value={18}>18 unidades</MenuItem>
+                      <MenuItem value={24}>24 unidades</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {/*  <Grid item xs={3}>
                     <Button
                       variant="outlined"
                       size="small"
@@ -143,12 +207,19 @@ const SingleProductView = ({ id }) => {
                     >
                       +
                     </Button>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
-              <IconButton color="primary" aria-label="add to shopping cart">
-                <AddShoppingCartIcon />
-              </IconButton>
+              <Grid
+                container
+                spacing={2}
+                // className={classes.grey}
+                justifyContent="center"
+              >
+                <IconButton color="primary" aria-label="add to shopping cart">
+                  <AddShoppingCartIcon fontSize="large" />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
         </Container>

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/UsersModel");
+const Cart = require("../models/CartModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -106,6 +107,9 @@ router.post("/register", async (req, res) => {
     // save user token
     user.token = token;
 
+    //create cart
+    Cart.create({ userId: user.id });
+
     // return new user
     res.status(201).json(user);
   } catch (err) {
@@ -114,8 +118,11 @@ router.post("/register", async (req, res) => {
   // Our register logic ends here
 });
 
+<<<<<<< HEAD
 router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+=======
+>>>>>>> d47667a22c3941c06fa8c57cf531e1981fba003c
 module.exports = router;

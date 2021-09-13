@@ -29,7 +29,7 @@ Product.init(
     },
     quantity: {
       type: S.INTEGER,
-      defaultValue: 1,
+      defaultValue: 6,
       allowNull: false,
     },
   },
