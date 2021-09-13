@@ -31,7 +31,7 @@ cartRoute.put("/:id/put", async (req, res) => {
     { cart_items: change },
     { where: { id: cart.id }, returning: true, plain: true }
   );
-  console.log(update);
+  console.log("aca", update);
   res.sendStatus(200);
 });
 
