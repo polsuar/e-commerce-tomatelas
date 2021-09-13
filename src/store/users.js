@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
   const dispatch = useDispatch();
@@ -26,29 +27,30 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
       password,
     })
     .then((r) => {
-      console.log("login success");
+      console.log(" USUARIO LOGUEADO CORRECTAMENTE => ", r);
+      //  history.push("/");
       return r.data;
-    })
-    .catch((error) => {
-      console.log("ERROR EN ASYNCTHYUNK", error);
-
-      // message.error({ content: "Missing credentials", key, duration: 2 });
     });
+  // .catch((error) => {
+  //   console.log("ERROR EN ASYNCTHYUNK", error.response.data);
+  //   const customError = {
+  //     name: "Custom axios error",
+  //     message: error.response.statusText,
+  //     data: error.response.data, // serializable
+  //   };
+  // return customError;
+  // message.error({ content: "Missing credentials", key, duration: 2 });
 });
 
 const userReducer = createReducer(
   {},
   {
     [userLogin.fulfilled]: (state, action) => {
-      if (action.payload) {
-        return action.payload;
-      }
+      return action.payload;
     },
-    [userLogin.rejected]: (state, action) => action.payload,
-    // [userLogout.fulfilled]: (state, action) => {
-    //   state = {};
-    //   return state;
-    // },
+    [userLogin.rejected]: (state, action) => {
+      return { ...state, error: "custom error" };
+    },
     [userSignUp.fulfilled]: (state, action) => action.payload,
     // [addUser.rejected]: (state,  action) => action.payload,
 

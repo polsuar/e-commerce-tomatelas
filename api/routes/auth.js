@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName } });
 
-    console.log("USUARIO DESDE BD: ", user);
+    // console.log("USUARIO DESDE BD: ", user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
@@ -36,9 +36,9 @@ router.post("/login", async (req, res) => {
       user.token = token;
       // user
       res.status(200).json(user);
-    }
-    else res.status(400).send("Invalid Credentials");
+    } else res.status(400).send("Invalid Credentials");
   } catch (err) {
+    console.log("ALGO SALIO MAL ====");
     res.status(409).send(err);
   }
   // Our login logic ends here
@@ -115,7 +115,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.redirect('/')
-})
+  res.redirect("/");
+});
 
 module.exports = router;

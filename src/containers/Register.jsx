@@ -80,7 +80,7 @@ const Register = () => {
         .catch((error) => {
           if (error.response.data === "User Already Exist. Please Login") {
             setMessageInfo(
-              "Error: el usuario ya existe.\nPor favor, utiliza otra casilla de mail."
+              "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."
             );
           }
         })

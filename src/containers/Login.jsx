@@ -10,7 +10,7 @@ import { useInput } from "../hooks/useInput";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import { userLogin } from "../store/users";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -25,6 +25,7 @@ const useStyles = makeStyles({
     marginTop: 30,
   },
   snackbar: {
+    marginTop: 80,
     whiteSpace: "pre-wrap",
   },
 });
@@ -34,24 +35,28 @@ const Login = () => {
   const dispatch = useDispatch();
   // const key = "login";
   const history = useHistory();
+  const user = useSelector((state) => state.user);
 
   const userName = useInput("userName");
   const password = useInput("password");
-  const [state, setState] = useState();
-  const [messageInfo, setMessageInfo] = useState(undefined);
+  const [open, setOpen] = useState({ open: false }); // toggles Snackbar
+  const [messageInfo, setMessageInfo] = useState("");
+
+  React.useEffect(() => {
+    if (user.id) {
+      history.push("/");
+    } else return;
+  }, [user.id]);
 
   React.useEffect(() => {
     if (messageInfo) {
-      setState({ open: true });
+      setOpen({ open: true });
     }
   }, [messageInfo]);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setState({ open: false });
+    setOpen({ open: false });
+    setMessageInfo("");
   };
 
   const handleSubmit = (e) => {
@@ -63,18 +68,31 @@ const Login = () => {
       password: password.value,
     };
 
-    dispatch(userLogin(data))
-      .then(() => {
-        history.push("/");
-      })
-      .catch((error) => {
-        console.log("ERROR ===> ", error.response.data);
-        if (error.response.data === "Invalid Credentials") {
-          setMessageInfo(
-            "Credenciales invalidas, por favor verifica los campos ingresados."
-          );
-        }
-      });
+    dispatch(userLogin(data)).then((data) => {
+      if (data.error.message) {
+        setMessageInfo(
+          "Credenciales invalidas. \nPor favor, verifica los datos ingresados..."
+        );
+      } else {
+        return data;
+      }
+    });
+    // .catch((error) => {
+    //   console.log("ERRORRRRRRR", error);
+    //   // if (data.error)   setMessageInfo("credneciales invalidas");
+    // });
+    // .catch((error) => {
+    //   console.log("ERROR ===> ", error.response.data);
+    // });
+    //   /*
+    //   if (error.response.data === "Invalid Credentials") {
+    //     setMessageInfo(
+    //       "Credenciales invalidas, por favor verifica los campos ingresados."
+    //     );
+    //   }
+    //   */
+    // }
+    //);
   };
 
   return (
@@ -84,7 +102,7 @@ const Login = () => {
 
         {messageInfo ? (
           <Snackbar
-            open={state.open}
+            open={open.open}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             className={classes.snackbar}
           >
