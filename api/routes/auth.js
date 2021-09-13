@@ -118,11 +118,4 @@ router.post("/register", async (req, res) => {
   // Our register logic ends here
 });
 
-<<<<<<< HEAD
-router.get("/logout", (req, res) => {
-  res.redirect("/");
-});
-
-=======
->>>>>>> d47667a22c3941c06fa8c57cf531e1981fba003c
 module.exports = router;

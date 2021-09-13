@@ -69,7 +69,7 @@ const Login = () => {
     };
 
     dispatch(userLogin(data)).then((data) => {
-      if (data.error.message) {
+      if (data.error) {
         setMessageInfo(
           "Credenciales invalidas. \nPor favor, verifica los datos ingresados..."
         );

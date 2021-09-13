@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
   const dispatch = useDispatch();
@@ -21,36 +20,40 @@ export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
 });
 
 export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
+  //  const key = "login";
+
   return axios
     .post("http://localhost:3001/api/auth/login", {
       userName,
       password,
     })
     .then((r) => {
-      console.log(" USUARIO LOGUEADO CORRECTAMENTE => ", r);
-      //  history.push("/");
+      //message.success({ content: "Login success!!", key, duration: 2 });
+      console.log("login success");
+      localStorage.setItem("token", r.data.token);
       return r.data;
     });
-  // .catch((error) => {
-  //   console.log("ERROR EN ASYNCTHYUNK", error.response.data);
-  //   const customError = {
-  //     name: "Custom axios error",
-  //     message: error.response.statusText,
-  //     data: error.response.data, // serializable
-  //   };
-  // return customError;
-  // message.error({ content: "Missing credentials", key, duration: 2 });
+});
+
+export const userLogout = createAction("LOGOUT", () => {
+  localStorage.removeItem("token");
+  return {};
 });
 
 const userReducer = createReducer(
   {},
   {
     [userLogin.fulfilled]: (state, action) => {
-      return action.payload;
+      if (action.payload) {
+        return action.payload;
+      }
     },
-    [userLogin.rejected]: (state, action) => {
-      return { ...state, error: "custom error" };
-    },
+    [userLogout]: (state, action) => action.payload,
+    [userLogin.rejected]: (state, action) => action.payload,
+    // [userLogout.fulfilled]: (state, action) => {
+    //   state = {};
+    //   return state;
+    // },
     [userSignUp.fulfilled]: (state, action) => action.payload,
     // [addUser.rejected]: (state,  action) => action.payload,
 
