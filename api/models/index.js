@@ -15,19 +15,15 @@ Category.belongsToMany(Product, { through: "product_category" });
 /////////////////////////////////CART//////////////////////////////////
 
 ///////////////cart & user//////////////
-User.hasOne(Cart, {
-  foreignKey: "user_id",
-});
+User.hasOne(Cart);
 Cart.belongsTo(User);
 
 ////////////////cart & product//////////
-Cart.belongsToMany(Product, { through: "cart_items" });
-Product.belongsToMany(Cart, { through: "cart_items" });
+Cart.belongsToMany(Product, { through: "cart_item" });
+Product.belongsToMany(Cart, { through: "cart_item" });
 
 ////////////////////////////////ORDERS/////////////////////////////////
-User.hasMany(Order, {
-  foreignKey: "user_id",
-});
+User.hasMany(Order);
 Order.hasOne(User);
 
 ///////////////////////////////REVIEWS/////////////////////////////////
