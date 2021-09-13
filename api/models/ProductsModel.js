@@ -12,11 +12,6 @@ Product.init(
       //CUANTO TIENE CADA LATA O BOTELLA
       type: S.STRING,
     },
-    category: {
-      //Esta prop se va a borrar para usar la creada por asociacion
-      //A RESOLVER LOS TIPOS
-      type: S.STRING,
-    },
     brand: {
       //MARCA
       type: S.STRING,
@@ -29,11 +24,13 @@ Product.init(
       //URL A CONSUMIR O VER COMO LO HACEMOS
       type: S.STRING,
     },
-    description: {
-      type: S.STRING,
-    },
     price: {
       type: S.DECIMAL(10, 2),
+    },
+    quantity: {
+      type: S.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
     },
   },
 

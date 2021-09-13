@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Link } from "@material-ui/core";
+const axios = require("axios");
 
 const useStyles = makeStyles((theme) => ({
   toolbarSecondary: {
@@ -18,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const { sections } = props;
+  //const [sections, setSections] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get("/api/category").then((response) => {
+  //     return setSections(response.data);
+  //   });
+  //   console.log(response.data);
+  // }, []);
 
   return (
     <React.Fragment>

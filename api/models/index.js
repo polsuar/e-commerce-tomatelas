@@ -1,26 +1,33 @@
 const User = require("./UsersModel");
 const Product = require("./ProductsModel");
 const Cart = require("./CartModel");
-const PayMethod = require("./PayMethodsModel");
-const Categories = require("./CategoryModel");
-const Orders = require("./OrdersModel");
+const Category = require("./CategoryModel");
+const Order = require("./OrdersModel");
 
-//FAVOTITES
+///////////////////////////////FAVOTITES///////////////////////////////
 User.belongsToMany(Product, { through: "favorites" });
+Product.belongsToMany(User, { through: "favorites" });
 
-//CATEGORIES
-Categories.hasMany(Product, {
-  foreignKey: "category_id",
-});
+//////////////////////////////CATEGORIES///////////////////////////////
+Product.belongsToMany(Category, { through: "product_category" });
+Category.belongsToMany(Product, { through: "product_category" });
 
-// CART
-User.hasOne(Cart, {
-  foreignKey: "user_id",
-});
+/////////////////////////////////CART//////////////////////////////////
 
-//ORDERS
-User.hasMany(Orders, {
-  foreignKey: "user_id",
-});
+///////////////cart & user//////////////
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+////////////////cart & product//////////
+Cart.belongsToMany(Product, { through: "cart_item" });
+Product.belongsToMany(Cart, { through: "cart_item" });
+
+////////////////////////////////ORDERS/////////////////////////////////
+User.hasMany(Order);
+Order.hasOne(User);
+
+///////////////////////////////REVIEWS/////////////////////////////////
+Product.belongsToMany(User, { through: "review" });
+User.belongsToMany(Product, { through: "review" });
 
 module.exports = { User, Product };
