@@ -30,6 +30,7 @@ Product.init(
     quantity: {
       type: S.INTEGER,
       defaultValue: 1,
+      allowNull: false,
     },
   },
 

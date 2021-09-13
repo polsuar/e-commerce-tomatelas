@@ -606,7 +606,7 @@ const productos = [
     volume: "500ml",
     brand: "Awafrut",
     stock: faker.datatype.number(50),
-    img: "https://lh3.googleusercontent.com/proxy/MunBDoNjC06mM0Y9oOl-E_NBrcyvvaG2_ohj2lgAAuB2DpvxUGqsIOe_iY-pFI5GDvOzSUbUQYQJEQ_lj_GKRAG8VG9ZB5Z7WMnnpqC53EHCJwH-h-xb2XNVl_F90ZXRWUspE_FfRGqC32BhjA",
+    img: "https://hiperlibertad.vteximg.com.br/arquivos/ids/173699-1000-1000/Agua-Saborizada-Awafrut-Naranja-Durazno-500-mL-1-13949.jpg?v=637485903522700000",
   },
   {
     name: "Agua Saborizada Awafrut Pomelo",
