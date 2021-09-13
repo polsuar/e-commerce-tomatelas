@@ -27,6 +27,10 @@ Product.init(
     price: {
       type: S.DECIMAL(10, 2),
     },
+    quantity: {
+      type: S.INTEGER,
+      defaultValue: 1,
+    },
   },
 
   { sequelize: db, modelName: "products" }

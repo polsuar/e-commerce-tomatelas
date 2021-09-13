@@ -17,7 +17,7 @@ const productos = [
     img: "https://cdn.shopify.com/s/files/1/0254/2947/5433/products/cerveza-andes-origen-roja-473-siempreencasa_600x600.png?v=1629814652?nocache=0.016790163864922603",
   },
   {
-    name: "Andes Origen Rojita 269ml",
+    name: "Cerveza Andes Origen Rojita 269ml",
     price: 756,
     volume: "269ml",
     brand: "Andes Origen",
