@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: "100%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
       width: "auto",
@@ -73,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  homeLink: {
+  navButton: {
     color: "white",
   },
 }));
@@ -197,7 +196,7 @@ export default function Navbar() {
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar>
-          <Link to="/" color="inherit" className={classes.homeLink}>
+          <Link to="/" className={classes.navButton}>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -233,11 +232,16 @@ export default function Navbar() {
           </Paper>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <Link to="/cart" className={classes.navButton}>
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
             <IconButton
               edge="end"
               aria-label="account of current user"
