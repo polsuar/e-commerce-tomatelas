@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,8 +15,17 @@ import Profile from "../components/Profile";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
+import { useDispatch } from "react-redux";
+import { setLocalUser } from "../store/users";
 
 export default function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) dispatch(setLocalUser(user));
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={theme}>
