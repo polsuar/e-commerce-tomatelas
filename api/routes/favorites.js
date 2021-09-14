@@ -21,14 +21,17 @@ router.put("/favorites", (req, res) => {
       .catch(() => res.status(500).send("Already added"));
   });
   */
+
 favoritesRoute.put("/:id", async (req, res) => {
   const { product } = req.query; // http://localhost:3001/api/favorites/4?product=2
 
   const user = await User.findOne({
     where: { id: req.params.id },
   });
-  const favorite = await user.addProduct(product);
-  res.send(products);
+  console.log(user);
+  console.log("PRODUCT", product);
+  const favorite = await user.addProducto(product);
+  res.send(favorite);
 });
 
 module.exports = favoritesRoute;

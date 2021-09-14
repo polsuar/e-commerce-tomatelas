@@ -152,14 +152,10 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: "El mail es requerido",
-                  maxLength: {
-                    value: 30,
-                    message: "Mail requerido: debe ser menos de 30 caracteres",
-                  },
                   pattern: {
                     value:
                       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "debes usar un mail valido",
+                    message: "Debes usar un mail valido, por favor corrigelo.",
                   },
                 }}
                 fullWidth
@@ -184,8 +180,9 @@ const Register = () => {
                 rules={{
                   required: "El password es requerido",
                   maxLength: {
-                    value: 15,
-                    message: "El password debe ser menos de 20 caracteres",
+                    value: 20,
+                    message:
+                      "El password debe ser menos de 20 caracteres y contener al menos una letra y un numero.",
                   },
                   pattern: {
                     value: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
@@ -238,11 +235,6 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: "El Nombre completo es requerido",
-                  maxLength: {
-                    value: 15,
-                    message:
-                      "El Nombre completo debe ser menos de 20 caracteres",
-                  },
                 }}
                 fullWidth
               />
@@ -262,10 +254,6 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: "El Apellido es requerido",
-                  maxLength: {
-                    value: 20,
-                    message: "El Apellido debe ser menos de 20 caracteres",
-                  },
                 }}
                 fullWidth
               />
@@ -282,10 +270,6 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: false,
-                  maxLength: {
-                    value: 20,
-                    message: "La calle debe ser menos de 20 caracteres",
-                  },
                 }}
                 fullWidth
               />
@@ -304,10 +288,6 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: false,
-                  maxLength: {
-                    value: 15,
-                    message: "La Provincia debe ser menos de 20 caracteres",
-                  },
                 }}
                 fullWidth
               />
@@ -322,10 +302,6 @@ const Register = () => {
                 defaultValue=""
                 rules={{
                   required: false,
-                  maxLength: {
-                    value: 15,
-                    message: "La Ciudad debe ser menos de 20 caracteres",
-                  },
                 }}
                 fullWidth
               />
@@ -345,7 +321,7 @@ const Register = () => {
                 rules={{
                   required: false,
                   maxLength: {
-                    value: 15,
+                    value: 20,
                     message: "El Codigo Postal debe ser menos de 20 caracteres",
                   },
                 }}
@@ -367,8 +343,8 @@ const Register = () => {
                 rules={{
                   required: false,
                   maxLength: {
-                    value: 15,
-                    message: "El telefono debe ser menos de 15 digitos",
+                    value: 20,
+                    message: "El telefono debe ser menos de 20 digitos",
                   },
                 }}
                 fullWidth
