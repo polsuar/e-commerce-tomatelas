@@ -36,6 +36,8 @@ export default function Album() {
   const classes = useStyles();
   const products = useSelector((state) => state.products);
 
+  const handleClick = () => {};
+
   return (
     <Grid item xs={12} md={10}>
       <Container className={classes.cardGrid} maxWidth="md">
@@ -57,7 +59,7 @@ export default function Album() {
                   <Typography>{`$${product.price}`}</Typography>
                 </CardContent>
                 <CardActions>
-                  <IconButton color="primary">
+                  <IconButton color="primary" onClick={handleClick}>
                     <AddShoppingCartIcon />
                   </IconButton>
                   <IconButton color="primary">
