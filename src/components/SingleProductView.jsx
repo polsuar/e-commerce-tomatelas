@@ -91,10 +91,12 @@ const SingleProductView = ({ id }) => {
 
   const classes = useStyles();
 
-  const [cantidad, setCantidad] = useState("");
+  const [quantity, setQuantity] = useState(product.quantity);
+  const [newPrice, setNewPrice] = useState(product.price * product.quantity);
+
   const [open, setOpen] = useState(false);
   const handleChange = (event) => {
-    setCantidad(event.target.value);
+    setQuantity(event.target.value);
   };
   const handleClose = () => {
     setOpen(false);
@@ -103,24 +105,54 @@ const SingleProductView = ({ id }) => {
     setOpen(true);
   };
 
-  /* const [contador, setContador] = useState(1);
-  const handleQuantity = (param) => {
-    if (param === "decrement" && contador > 1) {
-      setContador(contador - 1);
-      console.log(contador, "-----ENTRA AL CONTADOR");
+  const handlePrice = () => {
+    console.log(product.quantity, "----es cuan");
+    if (quantity === 6) {
+      return (
+        <Typography color="primary" variant="h4">
+          {`$${product.price * 6}`}
+          {/*  {newPrice} */}
+        </Typography>
+      );
     }
-    if (param === "increment" && contador < 1000) {
-      setContador(contador + 1);
-      console.log(contador, "++++ENTRA AL CONTADOR");
+    if (quantity === 12) {
+      return (
+        <Typography color="primary" variant="h4">
+          {`$${product.price * 12}`}
+          {/*   {newPrice} */}
+        </Typography>
+      );
     }
-  }; */
+    if (quantity === 18) {
+      return (
+        <Typography color="primary" variant="h4">
+          {`$${product.price * 18}`}
+        </Typography>
+      );
+    }
+    if (quantity === 24) {
+      return (
+        <Typography color="primary" variant="h4">
+          {`$${product.price * 24}`}
+        </Typography>
+      );
+    }
+  };
+
+  useEffect(
+    (e) => {
+      // console.log(e, "--------USEEFFECT");
+      setNewPrice(newPrice);
+      console.log(newPrice, "--------USEEFFECT");
+    },
+    [quantity]
+  );
 
   return (
     <div className={classes.root}>
+      <a href="javascript:history.back()">&lt; Volver atras</a>
       <Paper>
         <Container>
-          <a href="javascript:history.back()">&lt; Volver atras</a>
-
           <Grid container className={classes.paperContainer}>
             <Grid item xs={12} md={8} className={classes.paperLeft}>
               <figure>
@@ -134,29 +166,22 @@ const SingleProductView = ({ id }) => {
               <Typography variant="p" className={classes.grey}>
                 {product.volume}
               </Typography>
-              {/* <Grid item xs={6} className={classes.grey}>
-                <Typography variant="h5">{product.volume}</Typography>
-              </Grid> */}
+
               <Grid className={classes.margin}>
-                <Typography color="primary" variant="h4">
-                  {`$${product.price * 6}`}
-                </Typography>
+                {handlePrice()}
                 <Typography color="primary" variant="p">
-                  {" "}
-                  6 unidades{" "}
+                  {`${quantity} unidades`}
                 </Typography>
                 <Typography className={classes.grey} variant="p">
                   {`$${product.price} por 1 unidad`}
                 </Typography>
               </Grid>
+
               <Grid container spacing={2} className={classes.grey}>
                 <Grid item xs={6}>
                   <Typography variant="h5">Elegí la cantidad:</Typography>
                 </Grid>
                 <Grid container item xs={6} textAlign="center">
-                  {/* <Button className={classes.button} onClick={handleOpen}>
-                    Open the select
-                  </Button> */}
                   <FormControl className={classes.formControl}>
                     <InputLabel id="demo-controlled-open-select-label">
                       Unidades
@@ -167,55 +192,18 @@ const SingleProductView = ({ id }) => {
                       open={open}
                       onClose={handleClose}
                       onOpen={handleOpen}
-                      value={cantidad}
+                      value={quantity}
                       onChange={handleChange}
                     >
-                      {/* <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem> */}
                       <MenuItem value={6}>6 unidades</MenuItem>
                       <MenuItem value={12}>12 unidades</MenuItem>
                       <MenuItem value={18}>18 unidades</MenuItem>
                       <MenuItem value={24}>24 unidades</MenuItem>
                     </Select>
                   </FormControl>
-                  {/*  <Grid item xs={3}>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      color="primary"
-                      className={classes.margin}
-                      onClick={() => {
-                        handleQuantity("decrement");
-                      }}
-                    >
-                      -
-                    </Button>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography variant="h5">{contador}</Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      color="primary"
-                      className={classes.margin}
-                      onClick={() => {
-                        handleQuantity("increment");
-                      }}
-                    >
-                      +
-                    </Button>
-                  </Grid> */}
                 </Grid>
               </Grid>
-              <Grid
-                container
-                spacing={2}
-                // className={classes.grey}
-                justifyContent="center"
-              >
+              <Grid container spacing={2} justifyContent="center">
                 <IconButton color="primary" aria-label="add to shopping cart">
                   <AddShoppingCartIcon fontSize="large" />
                 </IconButton>

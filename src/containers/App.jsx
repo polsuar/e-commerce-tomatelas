@@ -28,6 +28,7 @@ export default function App() {
           <Route path="/register">
             <Register />
           </Route>
+
           <PrivateRoute path="/profile">
             <Profile />
           </PrivateRoute>

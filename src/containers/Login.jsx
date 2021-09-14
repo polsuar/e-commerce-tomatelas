@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -6,14 +7,10 @@ import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { useInput } from "../hooks/useInput";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import { useForm, Controller } from "react-hook-form";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 import { userLogin } from "../store/users";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -27,6 +24,10 @@ const useStyles = makeStyles({
     margin: 10,
     marginTop: 30,
   },
+  snackbar: {
+    marginTop: 80,
+    whiteSpace: "pre-wrap",
+  },
 });
 
 const Login = () => {
@@ -34,9 +35,29 @@ const Login = () => {
   const dispatch = useDispatch();
   // const key = "login";
   const history = useHistory();
+  const user = useSelector((state) => state.user);
 
   const userName = useInput("userName");
   const password = useInput("password");
+  const [open, setOpen] = useState({ open: false }); // toggles Snackbar
+  const [messageInfo, setMessageInfo] = useState("");
+
+  React.useEffect(() => {
+    if (user.id) {
+      history.push("/");
+    } else return;
+  }, [user.id]);
+
+  React.useEffect(() => {
+    if (messageInfo) {
+      setOpen({ open: true });
+    }
+  }, [messageInfo]);
+
+  const handleClose = (event, reason) => {
+    setOpen({ open: false });
+    setMessageInfo("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,8 +68,14 @@ const Login = () => {
       password: password.value,
     };
 
-    dispatch(userLogin(data)).then(() => {
-      history.push("/");
+    dispatch(userLogin(data)).then((data) => {
+      if (data.error) {
+        setMessageInfo(
+          "Credenciales invalidas. \nPor favor, verifica los datos ingresados..."
+        );
+      } else {
+        return data;
+      }
     });
   };
 
@@ -56,6 +83,26 @@ const Login = () => {
     <Container component="main" maxWidth="xs" className={classes.container}>
       <div>
         <h2> Login de usuario:</h2>
+
+        {messageInfo ? (
+          <Snackbar
+            open={open.open}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            className={classes.snackbar}
+          >
+            <Alert severity="error" onClose={handleClose}>
+              <div
+                style={{
+                  display: "flex",
+                  flexFlow: "column",
+                  alignItems: "center",
+                }}
+              >
+                {messageInfo}
+              </div>
+            </Alert>
+          </Snackbar>
+        ) : null}
 
         <form onSubmit={(e) => handleSubmit(e)}>
           <Grid container spacing={2}>
