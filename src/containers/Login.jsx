@@ -77,22 +77,6 @@ const Login = () => {
         return data;
       }
     });
-    // .catch((error) => {
-    //   console.log("ERRORRRRRRR", error);
-    //   // if (data.error)   setMessageInfo("credneciales invalidas");
-    // });
-    // .catch((error) => {
-    //   console.log("ERROR ===> ", error.response.data);
-    // });
-    //   /*
-    //   if (error.response.data === "Invalid Credentials") {
-    //     setMessageInfo(
-    //       "Credenciales invalidas, por favor verifica los campos ingresados."
-    //     );
-    //   }
-    //   */
-    // }
-    //);
   };
 
   return (
