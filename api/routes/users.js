@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const User = require("../models/UsersModel");
 const auth = require("../config/auth");
-const admin = require("../config/admin")
+const admin = require("../config/admin");
 
 userRouter.get("/prueba", (req, res) => {
   res.status(200).send("hola");
@@ -29,7 +29,6 @@ userRouter.get("/:id", (req, res, next) => {
 });
 
 userRouter.put("/:id", (req, res, next) => {
-
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
@@ -43,7 +42,6 @@ userRouter.put("/:id", (req, res, next) => {
     .catch(next);
 });
 
-
 userRouter.delete("/:id", (req, res, next) => {
   const { id } = req.params;
   User.destroy({
@@ -51,7 +49,7 @@ userRouter.delete("/:id", (req, res, next) => {
   })
     .then(res.sendStatus(202))
     .catch(next);
-})
+});
 
 userRouter.put("/promote/:id", [auth, admin], async (req, res) => {
   const { id } = req.params;
@@ -71,13 +69,13 @@ userRouter.put("/promote/:id", [auth, admin], async (req, res) => {
 userRouter.put("/revoke/:id", [auth, admin], async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
-  const adminId = req.body.id
+  const adminId = req.body.id;
   if (!user) {
     res.sendStatus(404);
   }
 
-  if(adminId === user.id){
-    return res.status(401).send("Can't revoke self-permissions")
+  if (adminId === user.id) {
+    return res.status(401).send("Can't revoke self-permissions");
   }
   user.isAdmin = false;
   const updatedUser = await user.save();

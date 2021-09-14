@@ -30,20 +30,15 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
     .then((r) => {
       //message.success({ content: "Login success!!", key, duration: 2 });
       console.log("login success");
-      localStorage.setItem("token", r.data.token)
+      localStorage.setItem("token", r.data.token);
       return r.data;
-    })
-    .catch((error) => {
-      console.log(error);
-      // message.error({ content: "Missing credentials", key, duration: 2 });
     });
 });
 
 export const userLogout = createAction("LOGOUT", () => {
-  localStorage.removeItem("token")
-  return {}
-})
-
+  localStorage.removeItem("token");
+  return {};
+});
 
 const userReducer = createReducer(
   {},

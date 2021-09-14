@@ -21,9 +21,9 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName } });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      console.log("USUARIO DESDE BD: ", user);
+    // console.log("USUARIO DESDE BD: ", user);
 
+    if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
         { user_id: user.id, userName },
@@ -39,6 +39,7 @@ router.post("/login", async (req, res) => {
       res.status(200).json(user);
     } else res.status(400).send("Invalid Credentials");
   } catch (err) {
+    console.log("ALGO SALIO MAL ====");
     res.status(409).send(err);
   }
   // Our login logic ends here
@@ -73,6 +74,7 @@ router.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ where: { email } });
 
     if (oldUser) {
+      console.log("USUARIO REPETIDO!!!! ======");
       return res.status(409).send("User Already Exist. Please Login");
     }
 
