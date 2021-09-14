@@ -60,7 +60,7 @@ router.post("/register", async (req, res) => {
       street,
       city,
       province,
-      zipCode,
+      zipcode,
       phone,
     } = req.body;
     // Validate user input
@@ -92,7 +92,7 @@ router.post("/register", async (req, res) => {
       street,
       city,
       province,
-      zipCode,
+      zipcode,
       phone,
     });
 

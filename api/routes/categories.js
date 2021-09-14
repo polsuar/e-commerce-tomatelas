@@ -18,4 +18,17 @@ categoriesRoute.get("/:id", async (req, res) => {
   res.send(products);
 });
 
+categoriesRoute.put("/add/:name", (req, res) => {
+  Category.create({ category_name: req.params.name }).then((category) =>
+    res.status(200).send(category)
+  );
+});
+
+categoriesRoute.delete("/:id", (req, res) => {
+  Category.destroy({ where: { category_id: req.params.id } }).then(
+    (deleteCategory) => res.status(200).send(deleteCategory)
+  );
+});
+//elimar, editar
+
 module.exports = categoriesRoute;
