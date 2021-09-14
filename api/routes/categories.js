@@ -30,6 +30,12 @@ categoriesRoute.delete("/:id", (req, res) => {
     (deleteCategory) => res.status(200).send(deleteCategory)
   );
 });
-//elimar, editar
+
+categoriesRoute.put("/:id", (req, res) => {
+  Category.update(
+    { category_name: req.body },
+    { where: { category_id: req.params.id }, returning: true, plain: true }
+  ).then((category) => res.status(200).send(category[1]));
+});
 
 module.exports = categoriesRoute;
