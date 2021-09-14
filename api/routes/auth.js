@@ -36,10 +36,11 @@ router.post("/login", async (req, res) => {
       // save user token
       user.token = token;
       // user
+      console.log("este es el user", user);
       res.status(200).json(user);
     } else res.status(400).send("Invalid Credentials");
   } catch (err) {
-    console.log("ALGO SALIO MAL ====");
+    console.log("ALGO SALIO MAL ====", err);
     res.status(409).send(err);
   }
   // Our login logic ends here
