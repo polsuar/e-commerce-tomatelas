@@ -24,6 +24,11 @@ Orders.init(
       type: S.DATE,
       // defaultValue:''
     },
+    state: {
+      type: S.STRING,
+      allowNull: false,
+      defaultValue: "pending",
+    },
   },
   { sequelize: db, modelName: "orders" }
 );
