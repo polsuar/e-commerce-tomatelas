@@ -85,14 +85,14 @@ const SingleProductView = ({ id }) => {
   const product = useSelector((state) => state.selectedProduct);
   const dispatch = useDispatch();
 
+  const [quantity, setQuantity] = useState(6);
+  //const [newPrice, setNewPrice] = useState(product.price * product.quantity);
+
   useEffect(() => {
     dispatch(getSelectedProduct(id));
   }, []);
 
   const classes = useStyles();
-
-  const [quantity, setQuantity] = useState(product.quantity);
-  const [newPrice, setNewPrice] = useState(product.price * product.quantity);
 
   const [open, setOpen] = useState(false);
   const handleChange = (event) => {
@@ -106,12 +106,12 @@ const SingleProductView = ({ id }) => {
   };
 
   const handlePrice = () => {
-    console.log(product.quantity, "----es cuan");
+    console.log(product.quantity, "----quantity");
+
     if (quantity === 6) {
       return (
         <Typography color="primary" variant="h4">
           {`$${product.price * 6}`}
-          {/*  {newPrice} */}
         </Typography>
       );
     }
@@ -119,7 +119,6 @@ const SingleProductView = ({ id }) => {
       return (
         <Typography color="primary" variant="h4">
           {`$${product.price * 12}`}
-          {/*   {newPrice} */}
         </Typography>
       );
     }
@@ -139,21 +138,13 @@ const SingleProductView = ({ id }) => {
     }
   };
 
-  useEffect(
-    (e) => {
-      // console.log(e, "--------USEEFFECT");
-      setNewPrice(newPrice);
-      console.log(newPrice, "--------USEEFFECT");
-    },
-    [quantity]
-  );
-
   return (
     <div className={classes.root}>
       <a href="javascript:history.back()">&lt; Volver atras</a>
       <Paper>
         <Container>
           <Grid container className={classes.paperContainer}>
+            <a href="javascript:history.back()">&lt; Volver atras</a>
             <Grid item xs={12} md={8} className={classes.paperLeft}>
               <figure>
                 <img src={product.img} alt={product.name} />
