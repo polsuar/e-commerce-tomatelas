@@ -10,6 +10,7 @@ cartRoute.get("/:id", async (req, res) => {
 });
 
 cartRoute.put("/:id/add", async (req, res) => {
+  // el producto ya debe tener la quantity seteada
   const products = req.body;
   const cart = await Cart.findOne({ where: { userId: req.params.id } });
   let change;
@@ -38,16 +39,27 @@ cartRoute.put("/:id/put", async (req, res) => {
     { cart_items: change },
     { where: { id: cart.id }, returning: true, plain: true }
   );
-  console.log(update);
-  res.sendStatus(200);
+  res.status(200).send(update[1]);
 });
 
-cartRoute.delete("/:id/delete", (req, res) => {
+cartRoute.delete("/:id/clear", (req, res) => {
   Cart.destroy({ where: { userId: req.params.id } }).then(() => {
     Cart.create({ where: { userId: req.params.id } });
   });
 
   res.sendStatus(200);
+});
+
+cartRoute.put("/:id/delete", async (req, res) => {
+  const [product] = req.body;
+  const cart = await Cart.findOne({ where: { userId: req.params.id } });
+  const change = cart.cart_items.filter((item) => item.id !== product.id);
+
+  const update = await Cart.update(
+    { cart_items: change },
+    { where: { id: cart.id }, returning: true, plain: true }
+  );
+  res.status(200).send(update[1]);
 });
 
 module.exports = cartRoute;
