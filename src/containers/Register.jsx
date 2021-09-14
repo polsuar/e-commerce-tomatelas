@@ -6,25 +6,18 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { useInput } from "../hooks/useInput";
 import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useForm, Controller } from "react-hook-form";
-//import { userLogin } from "../store/users";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { userSignUp } from "../store/users";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormLabel from "@material-ui/core/FormLabel";
-
-import DisplaySnack from "../components/DisplaySnack";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles({
   container: {
     display: "flex",
-    marginTop: 200,
+    marginTop: 150,
     padding: 5,
     alignItems: "center",
   },
@@ -35,77 +28,93 @@ const useStyles = makeStyles({
     margin: 10,
     marginTop: 30,
   },
+  snackbar: {
+    whiteSpace: "pre-wrap",
+  },
 });
 
 const Register = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const history = useHistory();
 
   const {
     control,
-    watch,
     handleSubmit,
     formState: { errors }, // get the errors object
   } = useForm();
 
-  // handle errors
-  const [open, setOpen] = useState(false);
+  const [state, setState] = useState();
+  const [messageInfo, setMessageInfo] = useState(undefined);
 
-  const handleOpenError = () => {
-    setOpen(true);
-  };
+  React.useEffect(() => {
+    if (errors || messageInfo) {
+      setState({ open: true });
+    }
+  }, [errors, messageInfo]);
 
-  const handleCloseError = (event, reason) => {
+  const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setOpen(false);
+    setState({ open: false });
   };
+
+  console.log("ERRORS => ", errors);
+  const propertyValues = Object.values(errors);
+  console.log(" properties => ", propertyValues);
+  const errorsArr = propertyValues.map((el) => el.message);
+  console.log(errorsArr);
 
   const onSubmit = (data) => {
     console.log(JSON.stringify(data, null, 2));
 
     return (
       axios
-        .post("/api/auth/register", data)
+        .post("http://localhost:3001/api/auth/register", data)
         //      .then((r) => r.data)
         .then(() => {
           return history.push("/login");
         })
         .catch((error) => {
           if (error.response.data === "User Already Exist. Please Login") {
-            handleOpenError();
-
-            console.log("ERROR => el usuario ya existe");
+            setMessageInfo(
+              "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."
+            );
           }
         })
-        .then(() =>
-          DisplaySnack("el usuario ya existe", open, handleCloseError, "error")
-        )
     );
   };
 
-  /* PASOS DE REGISTRO 
-1
- username = email = password =  
-  // 2 Datos personales
- firstName   lastName =  gender = 
-  // 3
-street province city  zipcode  phone ;
-  //4/ quieres subscribirte a nuestro newsletter de ofertas y novedades ?
-*/
-
-  console.log("ERRORS => ", errors);
-
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
-      <DisplaySnack />
-
       <div>
         <h2>Registro</h2>
+
+        {errorsArr.length > 0 || messageInfo ? (
+          <Snackbar
+            open={state.open}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            className={classes.snackbar}
+          >
+            <Alert severity="error" onClose={handleClose}>
+              <div
+                style={{
+                  display: "flex",
+                  flexFlow: "column",
+                  alignItems: "center",
+                }}
+              >
+                {messageInfo}
+                {errorsArr.reduce((acum, error) => {
+                  acum = acum + "- " + error + ".\n ";
+                  return acum;
+                }, "")}
+              </div>
+            </Alert>
+          </Snackbar>
+        ) : null}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4} className={classes.grid}>
@@ -114,26 +123,45 @@ street province city  zipcode  phone ;
                 name="userName"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 15 }}
+                rules={{
+                  required: "El nombre de usuario es requerido",
+                  maxLength: {
+                    value: 20,
+                    message:
+                      "El nombre de usuario debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
                 render={({ field: { value, onChange } }) => (
                   <TextField
                     value={value}
                     onChange={onChange}
                     label="Nombre de usuario"
+                    error={errors.firstName ? true : false}
                   />
                 )}
               />
-              {errors.userName && (
+              {/* {errors.userName && (
                 <span role="alert">Campo de usuario requerido</span>
-              )}
+              )} */}
             </Grid>
             <Grid item xs={6}>
               <Controller
                 name="email"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 30 }}
+                rules={{
+                  required: "El mail es requerido",
+                  maxLength: {
+                    value: 30,
+                    message: "Mail requerido: debe ser menos de 30 caracteres",
+                  },
+                  pattern: {
+                    value:
+                      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "debes usar un mail valido",
+                  },
+                }}
                 fullWidth
                 render={({ field: { value, onChange } }) => (
                   <TextField
@@ -144,16 +172,27 @@ street province city  zipcode  phone ;
                   />
                 )}
               />
-              {errors.email && (
+              {/* {errors.email && (
                 <span role="alert">Campo de email requerido</span>
-              )}
+              )} */}
             </Grid>
             <Grid item xs={12}>
               <Controller
                 name="password"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 15 }}
+                rules={{
+                  required: "El password es requerido",
+                  maxLength: {
+                    value: 15,
+                    message: "El password debe ser menos de 20 caracteres",
+                  },
+                  pattern: {
+                    value: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+                    message:
+                      "El password es requerido: al menos una letra y un numero",
+                  },
+                }}
                 fullWidth
                 render={({ field: { value, onChange } }) => (
                   <TextField
@@ -165,7 +204,9 @@ street province city  zipcode  phone ;
                 )}
               />
 
-              {errors.password && <span role="alert">Password requerido!</span>}
+              {/* {errors.password && (
+                <span role="alert">{errors.password.message}</span>
+              )} */}
             </Grid>
 
             <Grid item xs={12} sm={2}>
@@ -195,10 +236,17 @@ street province city  zipcode  phone ;
                 name="firstName"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 20 }}
+                rules={{
+                  required: "El Nombre completo es requerido",
+                  maxLength: {
+                    value: 15,
+                    message:
+                      "El Nombre completo debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
-              {errors.firstName && <span role="alert">Nombre requerido!</span>}
+              {/* {errors.firstName && <span role="alert">Nombre requerido!</span>} */}
             </Grid>
             <Grid item xs={12} sm={5}>
               <Controller
@@ -212,10 +260,16 @@ street province city  zipcode  phone ;
                 name="lastName"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: 20 }}
+                rules={{
+                  required: "El Apellido es requerido",
+                  maxLength: {
+                    value: 20,
+                    message: "El Apellido debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
-              {errors.lastName && <span role="alert">Apellido requerido!</span>}
+              {/* {errors.lastName && <span role="alert">Apellido requerido!</span>} */}
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -226,7 +280,13 @@ street province city  zipcode  phone ;
                 name="street"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
+                rules={{
+                  required: false,
+                  maxLength: {
+                    value: 20,
+                    message: "La calle debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
             </Grid>
@@ -242,7 +302,13 @@ street province city  zipcode  phone ;
                 name="province"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
+                rules={{
+                  required: false,
+                  maxLength: {
+                    value: 15,
+                    message: "La Provincia debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
             </Grid>
@@ -254,7 +320,13 @@ street province city  zipcode  phone ;
                 name="city"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
+                rules={{
+                  required: false,
+                  maxLength: {
+                    value: 15,
+                    message: "La Ciudad debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
             </Grid>
@@ -270,7 +342,13 @@ street province city  zipcode  phone ;
                 name="zipcode"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 20 }}
+                rules={{
+                  required: false,
+                  maxLength: {
+                    value: 15,
+                    message: "El Codigo Postal debe ser menos de 20 caracteres",
+                  },
+                }}
                 fullWidth
               />
             </Grid>
@@ -286,12 +364,18 @@ street province city  zipcode  phone ;
                 name="phone"
                 control={control}
                 defaultValue=""
-                rules={{ required: false, maxLength: 15 }}
+                rules={{
+                  required: false,
+                  maxLength: {
+                    value: 15,
+                    message: "El telefono debe ser menos de 15 digitos",
+                  },
+                }}
                 fullWidth
               />
-              {errors.phone && (
+              {/* {errors.phone && (
                 <span role="alert">Ingresa 9 digitos maximos</span>
-              )}
+              )} */}
             </Grid>
           </Grid>
           <Button

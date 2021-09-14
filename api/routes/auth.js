@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/UsersModel");
+const Cart = require("../models/CartModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -20,9 +21,9 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ where: { userName } });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      console.log("USUARIO DESDE BD: ", user);
+    // console.log("USUARIO DESDE BD: ", user);
 
+    if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
         { user_id: user.id, userName },
@@ -36,9 +37,9 @@ router.post("/login", async (req, res) => {
       user.token = token;
       // user
       res.status(200).json(user);
-    }
-    else res.status(400).send("Invalid Credentials");
+    } else res.status(400).send("Invalid Credentials");
   } catch (err) {
+    console.log("ALGO SALIO MAL ====");
     res.status(409).send(err);
   }
   // Our login logic ends here
@@ -73,6 +74,7 @@ router.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ where: { email } });
 
     if (oldUser) {
+      console.log("USUARIO REPETIDO!!!! ======");
       return res.status(409).send("User Already Exist. Please Login");
     }
 
@@ -105,6 +107,9 @@ router.post("/register", async (req, res) => {
     // save user token
     user.token = token;
 
+    //create cart
+    Cart.create({ userId: user.id });
+
     // return new user
     res.status(201).json(user);
   } catch (err) {
@@ -112,9 +117,5 @@ router.post("/register", async (req, res) => {
   }
   // Our register logic ends here
 });
-
-router.get("/logout", (req, res) => {
-  res.redirect('/')
-})
 
 module.exports = router;

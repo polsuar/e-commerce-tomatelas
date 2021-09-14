@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductsByName, getAllProducts } from "../store/products";
-
+import { userLogout } from "../store/users";
 import {
   AppBar,
   Toolbar,
@@ -85,6 +85,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [value, setValue] = useState("");
+  const token = localStorage.getItem("token");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -119,7 +120,11 @@ export default function Navbar() {
     //history ya esta definido.
     //aca hay que hacer un history.push("/a donde este vista de productos buscados")
   };
-
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(userLogout());
+    history.push("/");
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -131,10 +136,12 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user.userName ? (
+      {token ? (
         <>
-          <MenuItem onClick={handleMenuClose}>Mi cuenta</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Salir</MenuItem>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to="/profile">Mi cuenta</Link>
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>Salir</MenuItem>
         </>
       ) : (
         <>
