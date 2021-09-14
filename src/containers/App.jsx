@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from "./Home";
 import Navbar from "../components/Navbar";
+import Cart from "../components/Cart";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
@@ -34,6 +35,10 @@ export default function App() {
 
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/cart">
+            <Cart />
           </Route>
 
           <Route
