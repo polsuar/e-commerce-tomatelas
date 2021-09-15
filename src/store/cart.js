@@ -5,13 +5,13 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const addToCart = createAsyncThunk("addToCart", (id, product) => {
+/* export const addToCart = createAsyncThunk("addToCart", (id, product) => {
   return axios.put(`/api/cart/${id}/add`, product).then((res) => res.data);
 });
 
 export const getCart = createAsyncThunk("getCart", (id) => {
   return axios.get(`/api/cart/${id}`).then((res) => res.data);
-});
+}); */
 
 export const addToLocalCart = createAction("addToCart", (product) => {
   const cart = localStorage.getItem("cart");
@@ -38,13 +38,29 @@ export const setLocalCart = createAction("SETLOCALCART", (cart) => {
   return { payload: cart };
 });
 
+export const setQuantity = createAsyncThunk(
+  "SETQUANTITY",
+  ([productId, quantity], thunkAPI) => {
+    const cart = thunkAPI.getState().cart;
+    cart.forEach((cartItem) => {
+      // console.log(cartItem.id === productId);
+
+      if (cartItem.id === productId) cartItem.quantity = quantity;
+      // console.log(cartItem);
+    });
+    return {};
+  }
+);
+
 const initialState = [];
 
 const cartReducer = createReducer(initialState, {
   [addToLocalCart]: (state, action) => action.payload,
   [setLocalCart]: (state, action) => action.payload,
-  [addToCart.fulfilled]: (state, action) => action.payload,
-  [getCart.fulfilled]: (state, action) => action.payload,
+  [setQuantity.fullfilled]: (state, action) => action.payload,
+  [setQuantity.rejected]: (state, action) => console.log(action.error.message),
+  /* [addToCart.fulfilled]: (state, action) => action.payload,
+  [getCart.fulfilled]: (state, action) => action.payload, */
 });
 
 export default cartReducer;
