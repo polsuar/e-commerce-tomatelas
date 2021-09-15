@@ -51,7 +51,7 @@ userRouter.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-userRouter.put("/promote/:id", [auth, admin], async (req, res) => {
+userRouter.put("/promote/:id", [auth], async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
   if (!user) {
@@ -69,7 +69,7 @@ userRouter.put("/promote/:id", [auth, admin], async (req, res) => {
 userRouter.put("/revoke/:id", [auth, admin], async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
-  const adminId = req.body.id;
+  const adminId = req.user.user_id;
   if (!user) {
     res.sendStatus(404);
   }
