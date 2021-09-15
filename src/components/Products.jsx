@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { addToLocalCart } from "../store/cart";
 import {
   Card,
   CardActions,
@@ -35,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Album() {
   const classes = useStyles();
   const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
-  const handleClick = () => {};
+  const handleClick = (product) => {
+    dispatch(addToLocalCart(product));
+  };
 
   return (
     <Grid item xs={12} md={10}>
@@ -59,7 +63,10 @@ export default function Album() {
                   <Typography>{`$${product.price}`}</Typography>
                 </CardContent>
                 <CardActions>
-                  <IconButton color="primary" onClick={handleClick}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleClick(product)}
+                  >
                     <AddShoppingCartIcon />
                   </IconButton>
                   <IconButton color="primary">
