@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { addToLocalCart } from "../store/cart";
+import { addFavorite } from "../store/favorites";
+
 import {
   Card,
   CardActions,
@@ -36,10 +38,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Album() {
   const classes = useStyles();
   const products = useSelector((state) => state.products);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleClick = (product) => {
     dispatch(addToLocalCart(product));
+  };
+
+  const addFav = (productId) => {
+    dispatch(addFavorite({ userId: user.id, productId: productId }));
   };
 
   return (
@@ -70,7 +77,7 @@ export default function Album() {
                     <AddShoppingCartIcon />
                   </IconButton>
                   <IconButton color="primary">
-                    <FavoriteIcon />
+                    <FavoriteIcon onClick={() => addFav(product.id)} />
                   </IconButton>
                 </CardActions>
               </Card>
