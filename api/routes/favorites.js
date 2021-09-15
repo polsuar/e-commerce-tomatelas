@@ -46,7 +46,7 @@ favoritesRoute.delete("/:id", (req, res) => {
       console.log("USUARIO ===> ", user);
       user.removeProduct(productId);
     })
-    .then(() => res.sendStatus(200))
+    .then(() => res.status(200).send(productId))
     .catch(() => res.status(500).send("Already added"));
 });
 
@@ -60,8 +60,8 @@ favoritesRoute.delete("/all/:id", (req, res) => {
         user.removeProducts(products); // productos lista completa de productos
       });
     })
-    .then(() => res.sendStatus(200))
-    .catch(() => res.status(500).send("Already added"));
+    .then(() => res.status(200).send([]))
+    .catch(() => res.status(500).send("Error!"));
 });
 
 module.exports = favoritesRoute;

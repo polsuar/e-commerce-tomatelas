@@ -11,7 +11,6 @@ Product.belongsToMany(User, { through: "favorites" });
 //////////////////////////////CATEGORIES///////////////////////////////
 Product.belongsToMany(Category, { through: "product_category" });
 Category.belongsToMany(Product, { through: "product_category" });
-
 /////////////////////////////////CART//////////////////////////////////
 
 ///////////////cart & user//////////////
