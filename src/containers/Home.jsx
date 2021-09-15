@@ -8,10 +8,6 @@ import Secciones from "../components/Secciones";
 import Products from "../components/Products";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProducts } from "../store/products";
-// ICONS
-import GitHubIcon from "@material-ui/icons/GitHub";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {

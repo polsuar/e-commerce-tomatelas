@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { setQuantity } from "../store/cart";
 import {
   Container,
   Typography,
@@ -42,10 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles();
-  const products = useSelector((state) => state.products);
-  const [amount, setAmount] = useState(6);
+  const cart = useSelector((state) => state.cart);
+  const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
 
-  const handleChange = () => {};
+  const handleChange = (productId, e) => {
+    dispatch(setQuantity([productId, e.target.value]));
+  };
 
   return (
     <>
@@ -56,7 +60,7 @@ const Cart = () => {
         </Typography>
         <Table size="small">
           <TableBody>
-            {products.map((product) => (
+            {cart.map((product) => (
               <TableRow key={product.id}>
                 <TableCell>
                   <Avatar
@@ -77,8 +81,8 @@ const Cart = () => {
                       <InputLabel id="amount-label">Cantidad</InputLabel>
                       <Select
                         labelId="amount-label"
-                        value={amount}
-                        onChange={handleChange}
+                        value={product.quantity}
+                        onChange={(e) => handleChange(product.id, e)}
                         label="Cantidad"
                       >
                         <MenuItem value={6}>6</MenuItem>
@@ -92,7 +96,9 @@ const Cart = () => {
                     </FormControl>
                   }
                 </TableCell>
-                <TableCell align="right">{`$${product.price}`}</TableCell>
+                <TableCell align="right">{`$${
+                  product.price * product.quantity
+                }`}</TableCell>
                 <TableCell align="right">
                   <IconButton edge="end" color="inherit">
                     <DeleteIcon />
@@ -107,7 +113,7 @@ const Cart = () => {
                 align="right"
               >
                 <Typography component="h2" variant="h5" color="secondary">
-                  Total ${products[0].price}
+                  Total 12314123
                 </Typography>
               </TableCell>
               <TableCell align="right">
