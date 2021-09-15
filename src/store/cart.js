@@ -38,17 +38,16 @@ export const setLocalCart = createAction("SETLOCALCART", (cart) => {
   return { payload: cart };
 });
 
-export const setQuantity = createAsyncThunk(
+export const setQuantity = createAction(
   "SETQUANTITY",
-  ([productId, quantity], thunkAPI) => {
-    const cart = thunkAPI.getState().cart;
-    cart.forEach((cartItem) => {
-      // console.log(cartItem.id === productId);
-
-      if (cartItem.id === productId) cartItem.quantity = quantity;
-      // console.log(cartItem);
+  ([productId, quantity]) => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const newCart = cart.map((item) => {
+      if (item.id === productId) item.quantity = quantity;
+      return item;
     });
-    return {};
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    return { payload: newCart };
   }
 );
 
@@ -57,8 +56,10 @@ const initialState = [];
 const cartReducer = createReducer(initialState, {
   [addToLocalCart]: (state, action) => action.payload,
   [setLocalCart]: (state, action) => action.payload,
-  [setQuantity.fullfilled]: (state, action) => action.payload,
-  [setQuantity.rejected]: (state, action) => console.log(action.error.message),
+  [setQuantity]: (state, action) => {
+    console.log(action.payload);
+    return action.payload;
+  },
   /* [addToCart.fulfilled]: (state, action) => action.payload,
   [getCart.fulfilled]: (state, action) => action.payload, */
 });
