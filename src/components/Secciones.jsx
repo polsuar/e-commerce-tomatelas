@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Link } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { getProductsByCategory } from "../store/products";
 const axios = require("axios");
 
 const useStyles = makeStyles((theme) => ({
@@ -18,16 +20,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections } = props;
-  //const [sections, setSections] = useState([]);
+  const dispatch = useDispatch();
+  const [sections, setSections] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get("/api/category").then((response) => {
-  //     return setSections(response.data);
-  //   });
-  //   console.log(response.data);
-  // }, []);
-
+  useEffect(() => {
+    axios.get("/api/category").then((res) => {
+      console.log(res.data);
+      return setSections(res.data);
+    });
+  }, []);
+  const handleClick = (categoryId) => {
+    dispatch(getProductsByCategory(categoryId));
+  };
   return (
     <React.Fragment>
       <Toolbar
@@ -39,12 +43,12 @@ export default function Header(props) {
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={section.category_id}
+            onClick={() => handleClick(section.category_id)}
             variant="body2"
-            href={section.url}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {section.category_name}
           </Link>
         ))}
       </Toolbar>

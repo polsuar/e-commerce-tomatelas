@@ -38,6 +38,19 @@ productsRouter.get("/name/:name", (req, res, next) => {
     .catch(next);
 });
 
+productsRouter.get("/brand/:name", (req, res, next) => {
+  Product.findAll({
+    where: {
+      brand: req.params.name,
+    },
+  })
+    .then((products) => {
+      if (!products) res.status(404);
+      res.status(200).send(products);
+    })
+    .catch(next);
+});
+
 productsRouter.post("/", (req, res, next) => {
   const { name, volume, category, brand, stock, img, description } = req.body;
 
