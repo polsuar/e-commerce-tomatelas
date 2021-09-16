@@ -3,13 +3,9 @@ const userRouter = express.Router();
 const User = require("../models/UsersModel");
 const auth = require("../config/auth");
 const admin = require("../config/admin");
-
-userRouter.get("/prueba", (req, res) => {
-  res.status(200).send("hola");
-});
+const bcrypt = require("bcrypt");
 
 userRouter.get("/", (req, res, next) => {
-  console.log("entre a user");
   User.findAll()
     .then((users) => {
       res.status(200).send(users);
@@ -28,10 +24,38 @@ userRouter.get("/:id", (req, res, next) => {
     .catch(next);
 });
 
+// actualizar usuario
+
+userRouter.put("/update/:id", (req, res, next) => {
+  User.findOne({
+    where: { id: req.params.id },
+  }).then((user) => {
+    user
+      .hash(req.body.password, user.salt) // hasheo nuevo password con salt en BD
+      .then((hash) => {
+        User.update(
+          { ...req.body, password: hash },
+          {
+            where: { id: req.params.id },
+            returning: true,
+          }
+        ).then(([noData, data]) => {
+          res.json({
+            message: "Updated successfully",
+            user: data,
+          });
+        });
+      })
+      .catch(next);
+  });
+});
+
+// nuevo usuario
 userRouter.put("/:id", (req, res, next) => {
   User.update(req.body, {
     where: { id: req.params.id },
     returning: true,
+    plain: true,
   })
     .then(([noData, [data]]) =>
       res.json({

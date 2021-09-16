@@ -11,6 +11,7 @@ import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import { PersonPin, Help, ShoppingBasket } from "@material-ui/icons";
 import { getUserFavorites } from "../store/favorites";
 import Favorites from "./Favorites";
+import ProfileUserInfo from "./ProfileUserInfo";
 import {
   Card,
   CardActionArea,
@@ -106,73 +107,13 @@ export default function Profile() {
         </AppBar>
         <TabPanel value={value} index={0}>
           <Favorites />
-          {/* <Grid container spacing={3} className={classes.cardsContainer}>
-            <Grid item xs={12} md={6}>
-              Favoritos
-              {products?.map((product) => (
-                <>
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Link href={`/products/${product.id}`}>
-                          <CardMedia
-                            className={classes.cardMedia}
-                            image={product.img}
-                            title="Image title"
-                          />
-                        </Link>
-                        <CardContent className={classes.cardContent}>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {product.name}
-                          </Typography>
-                          <Typography>{product.price}</Typography>
-                        </CardContent>
-
-                        <Typography component="h2" variant="h5">
-                          Titulo
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          fecha
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          dedsc
-                        </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          Continue reading...
-                        </Typography>
-                      </CardContent>
-                    </div>
-                  </Card>
-
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          Titulo
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          fecha
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          dedsc
-                        </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          Continue reading...
-                        </Typography>
-                      </CardContent>
-                    </div>
-                  </Card>
-                </>
-              ))}
-            </Grid>
-          </Grid> */}
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          Item Two
+          otro
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <ProfileUserInfo />
         </TabPanel>
       </Container>
     </div>
