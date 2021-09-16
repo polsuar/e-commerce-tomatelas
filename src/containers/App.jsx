@@ -14,6 +14,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
 import Register from "./Register";
 import Profile from "../components/Profile";
+import Admin from "../components/Admin"
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
@@ -45,6 +46,10 @@ export default function App() {
 
           <PrivateRoute path="/profile">
             <Profile />
+          </PrivateRoute>
+
+          <PrivateRoute path="/admin">
+            <Admin />
           </PrivateRoute>
 
           <Route path="/login">
