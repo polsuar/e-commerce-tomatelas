@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const history = useHistory();
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -139,7 +140,13 @@ export default function Navbar() {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >
+    > {user.isAdmin?(
+      <>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to="/admin">Admin</Link>
+          </MenuItem>
+      </>
+      ) : null}
       {token ? (
         <>
           <MenuItem onClick={handleMenuClose}>
@@ -241,7 +248,7 @@ export default function Navbar() {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={cart.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>

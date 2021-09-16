@@ -12,6 +12,32 @@ export const getProductsByName = createAsyncThunk(
   }
 );
 
+export const removeProduct = createAsyncThunk(
+  "REMOVE_PRODUCT",
+  (productId) => {
+    return axios
+      .delete(`/api/products/${productId}`)
+      .then((res) => res.data); 
+  }
+);
+
+export const editProduct = createAsyncThunk(
+  "EDIT_PRODUCT",
+  (productId) => {
+    return axios
+      .put(`/api/products/${productId}`)
+      .then((res) => res.data); 
+  }
+);
+
+export const addProduct = createAsyncThunk(
+  "ADD_PRODUCT",
+  ({ productId }) => {
+    return axios
+      .post(`/api/products/${productId}`)
+      .then((res) => res.data); 
+    }
+);
 export const getProductsByCategory = createAsyncThunk(
   "GETPRODUCTSBYCATEGORY",
   (categotyId) => {
@@ -34,6 +60,10 @@ const initialState = [];
 const productsReducer = createReducer(initialState, {
   [getAllProducts.fulfilled]: (state, action) => action.payload,
   [getProductsByName.fulfilled]: (state, action) => action.payload,
+  [removeProduct.fulfilled]: (state, action) => {
+    return state.filter((prod) => prod.id !== action.payload);
+  },
+  [addProduct.fulfilled]: (state, action) => [...state, action.payload],
   [getProductsByCategory.fulfilled]: (state, action) => action.payload,
   [getProductsByBrand.fulfilled]: (state, action) => action.payload,
 });

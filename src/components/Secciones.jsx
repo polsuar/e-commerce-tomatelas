@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar, Link } from "@material-ui/core";
 import { useDispatch } from "react-redux";
@@ -15,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0,
+    cursor: "pointer",
   },
 }));
 
-export default function Header(props) {
+export default function Header() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [sections, setSections] = useState([]);
@@ -55,7 +55,3 @@ export default function Header(props) {
     </React.Fragment>
   );
 }
-
-Header.propTypes = {
-  sections: PropTypes.array,
-};

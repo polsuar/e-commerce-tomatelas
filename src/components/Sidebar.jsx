@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   sidebarSection: {
     marginTop: theme.spacing(3),
   },
+  links: {
+    cursor: "pointer",
+  },
 }));
 
 export default function Sidebar(props) {
@@ -36,6 +39,8 @@ export default function Sidebar(props) {
       </Typography>
       {brands.map((brand) => (
         <Link
+          color="inherit"
+          className={classes.links}
           display="block"
           variant="body1"
           key={brand.brand}

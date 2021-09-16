@@ -8,11 +8,13 @@ import {
 import Home from "./Home";
 import Navbar from "../components/Navbar";
 import Cart from "../components/Cart";
+import AfterCompra from "../components/AfterCompra";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
 import Register from "./Register";
 import Profile from "../components/Profile";
+import Admin from "../components/Admin"
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
@@ -46,12 +48,20 @@ export default function App() {
             <Profile />
           </PrivateRoute>
 
+          <PrivateRoute path="/admin">
+            <Admin />
+          </PrivateRoute>
+
           <Route path="/login">
             <Login />
           </Route>
 
           <Route path="/cart">
             <Cart />
+          </Route>
+
+          <Route path="/confirmacion">
+            <AfterCompra />
           </Route>
 
           <Route

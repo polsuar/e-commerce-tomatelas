@@ -8,10 +8,10 @@ import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
-import { PersonPin, Help, ShoppingBasket } from "@material-ui/icons";
+import { People, Category, ShoppingBasket,MenuBook } from "@material-ui/icons";
 import { getUserFavorites } from "../store/favorites";
-import Favorites from "./Favorites";
-import ProfileUserInfo from "./ProfileUserInfo";
+import AdminProducts from "../components/AdminProducts"
+import AdminUsers from "../components/AdminUsers"
 import {
   Card,
   CardActionArea,
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const users = useSelector((state) => state.users)
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -83,9 +84,8 @@ export default function Profile() {
   };
 
   React.useEffect(() => {
-    console.log(user.id);
-    dispatch(getUserFavorites(user.id));
-  }, [user.id]);
+  
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -100,20 +100,24 @@ export default function Profile() {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label="Favoritos" icon={<FavoriteIcon />} {...a11yProps(0)} />
+            <Tab label="Productos" icon={<MenuBook />} {...a11yProps(0)} />
             <Tab label="Ordenes" icon={<ShoppingBasket />} {...a11yProps(1)} />
-            <Tab label="Perfil" icon={<PersonPin />} {...a11yProps(2)} />
+            <Tab label="Categorias" icon={<Category />} {...a11yProps(2)} />
+            <Tab label="Usuarios" icon={<People />} {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Favorites />
+          <AdminProducts/>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          otro
+          Item Two
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ProfileUserInfo />
+          Item Three
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+        <AdminUsers/>
         </TabPanel>
       </Container>
     </div>
