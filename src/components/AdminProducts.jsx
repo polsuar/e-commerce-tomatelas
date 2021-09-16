@@ -1,9 +1,9 @@
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { removeProduct } from "../store/products";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { getAllProducts } from "../store/products";
 import {
   Typography,
   Table,
@@ -33,18 +33,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminProducts = () => {
-  const classes = useStyles();
-
-  //ejecuta
-  const dispatch = useDispatch();
-  
-  // trae lo del estado
   const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
+  const classes = useStyles();
 
   const handleChange = () => {};
 
   const handleDelete = (productId) => {
-    dispatch(removeProduct({ productId }));
+    console.log(productId)
+    dispatch(removeProduct( productId ));
   };
 
 
@@ -63,7 +63,7 @@ const AdminProducts = () => {
             <>
               <TableRow key={product.id}>
                 <TableCell>
-                  <Link href={`/products/${product.id}`}>
+                  <Link href={`/edit/products/${product.id}`}>
                     <Avatar
                       alt="Remy Sharp"
                       src={product.img}

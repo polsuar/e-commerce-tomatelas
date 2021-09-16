@@ -84,9 +84,8 @@ export default function Profile() {
   };
 
   React.useEffect(() => {
-    console.log(user.id);
-    dispatch(getUserFavorites(user.id));
-  }, [user.id]);
+  
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -117,7 +116,7 @@ export default function Profile() {
         <TabPanel value={value} index={2}>
           Item Three
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={3}>
         <AdminUsers/>
         </TabPanel>
       </Container>

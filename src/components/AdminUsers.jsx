@@ -1,9 +1,8 @@
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
-import { removeUser } from "../store/userlist";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import {getAllUsers, promoteAdmin, revokeAdmin, removeUser} from "../store/userlist"
 import {
   Typography,
   Table,
@@ -15,9 +14,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 // icons
-
-import DeleteIcon from "@material-ui/icons/Delete";
-import { RemoveCircleOutline } from "@material-ui/icons";
+import { Grade, GradeOutlined, Delete} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -32,19 +29,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdminProducts = () => {
-  const classes = useStyles();
-
-  //ejecuta
+const AdminUsers = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllUsers())
+  }, []);
+
 
   // trae lo del estado
   const users = useSelector((state) => state.userlist);
 
-  const handleChange = () => {};
+  const handlePromote = (userId) => {
+    dispatch(promoteAdmin( userId ));
+  };
+
+  const handleRevoke = (userId) => {
+    console.log("REVOKE")
+    dispatch(revokeAdmin( userId ));
+  };
 
   const handleDelete = (userId) => {
-    dispatch(removeUser({ userId }));
+    dispatch(removeUser( userId ));
   };
 
 
@@ -61,14 +67,24 @@ const AdminProducts = () => {
                 <TableCell align="right">{`${user.email}`}</TableCell>
                 <TableCell align="right">{`${user.firstName}`}</TableCell>
                 <TableCell align="right">{`${user.lastName}`}</TableCell>
-                <TableCell align="right">{`${user.street}`}</TableCell>
-                <TableCell align="right">{`${user.province}`}</TableCell>
-                <TableCell align="right">{`${user.city}`}</TableCell>
-                <TableCell align="right">{`${user.phone}`}</TableCell>
+                {user.isAdmin?(
+                <TableCell align="right">
+                <IconButton color="inherit">
+                  <Grade onClick={() => handleRevoke(user.id)} />
+                </IconButton>
+              </TableCell>                  
+                ):(
+                <TableCell align="right">
+                  <IconButton color="inherit">
+                    <GradeOutlined onClick={() => handlePromote(user.id)} />
+                  </IconButton>
+                </TableCell>
+
+                )}
 
                 <TableCell align="right">
                   <IconButton edge="end" color="inherit">
-                    <DeleteIcon onClick={() => handleDelete(user.id)} />
+                    <Delete onClick={() => handleDelete(user.id)} />
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -80,4 +96,4 @@ const AdminProducts = () => {
   );
 };
 
-export default AdminProducts;
+export default AdminUsers;

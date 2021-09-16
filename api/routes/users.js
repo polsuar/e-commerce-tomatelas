@@ -51,38 +51,39 @@ userRouter.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-userRouter.put("/promote/:id", [auth], async (req, res) => {
+userRouter.put("/promote/:id", (req, res) => {
   const { id } = req.params;
-  const user = await User.findByPk(id);
-  if (!user) {
-    res.sendStatus(404);
-  }
+  User.update({isAdmin: true},{where:{id:id}})
+  .then(()=> res.sendStatus(202))
+  .catch(err=> res.status(404).send(err))
 
-  user.isAdmin = true;
-  const newAdmin = await user.save();
-  return res.status(200).json({
-    message: "Updated successfully",
-    user: newAdmin,
-  });
 });
 
-userRouter.put("/revoke/:id", [auth, admin], async (req, res) => {
+userRouter.put("/revoke/:id", (req, res) => {
   const { id } = req.params;
-  const user = await User.findByPk(id);
-  const adminId = req.user.user_id;
-  if (!user) {
-    res.sendStatus(404);
-  }
+  User.update({isAdmin: false},{where:{id:id}})
+  .then(()=> res.sendStatus(202))
+  .catch(err=> res.status(404).send(err))
 
-  if (adminId === user.id) {
-    return res.status(401).send("Can't revoke self-permissions");
-  }
-  user.isAdmin = false;
-  const updatedUser = await user.save();
-  return res.status(200).json({
-    message: "Updated successfully",
-    user: updatedUser,
-  });
 });
+
+// userRouter.put("/revoke/:id", [auth, admin], async (req, res) => {
+//   const { id } = req.params;
+//   const user = await User.findByPk(id);
+//   const adminId = req.user.user_id;
+// //   if (!user) {
+// //     res.sendStatus(404);
+// //   }
+
+//   if (adminId === user.id) {
+//     return res.status(401).send("Can't revoke self-permissions");
+//   }
+//   user.isAdmin = false;
+//   const updatedUser = await user.save();
+//   return res.status(200).json({
+//     message: "Updated successfully",
+//     user: updatedUser,
+//   });
+// });
 
 module.exports = userRouter;
