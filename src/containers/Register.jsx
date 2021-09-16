@@ -62,11 +62,8 @@ const Register = () => {
     setState({ open: false });
   };
 
-  console.log("ERRORS => ", errors);
   const propertyValues = Object.values(errors);
-  console.log(" properties => ", propertyValues);
   const errorsArr = propertyValues.map((el) => el.message);
-  console.log(errorsArr);
 
   const sendEmail = (data) => {
     emailjs
@@ -108,6 +105,7 @@ const Register = () => {
           return history.push("/login");
         })
         .catch((error) => {
+          console.log("ERROR RESPONSE DATA ====>", error.response.data);
           if (error.response.data === "User Already Exist. Please Login") {
             setMessageInfo(
               "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."
@@ -122,7 +120,7 @@ const Register = () => {
       <div>
         <h2>Registro</h2>
 
-        {errorsArr.length > 0 || messageInfo ? (
+        {errorsArr?.length > 0 || messageInfo ? (
           <Snackbar
             open={state.open}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
