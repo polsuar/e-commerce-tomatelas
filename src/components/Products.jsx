@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Album() {
   const classes = useStyles();
   const products = useSelector((state) => state.products);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleClick = (product) => {
-    dispatch(addToLocalCart(product));
+    dispatch(addToLocalCart({ product, user }));
   };
 
   return (

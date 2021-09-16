@@ -10,6 +10,7 @@ import { useInput } from "../hooks/useInput";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import { userLogin } from "../store/users";
+import { getUserCart } from "../store/cart";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -74,6 +75,7 @@ const Login = () => {
           "Credenciales invalidas. \nPor favor, verifica los datos ingresados..."
         );
       } else {
+        dispatch(getUserCart(data.payload.id));
         return data;
       }
     });

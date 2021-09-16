@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductsByName, getAllProducts } from "../store/products";
 import { userLogout } from "../store/users";
+import { clearLocalCart } from "../store/cart";
 import {
   AppBar,
   Toolbar,
@@ -123,6 +124,7 @@ export default function Navbar() {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(userLogout());
+    dispatch(clearLocalCart());
     history.push("/");
   };
   const menuId = "primary-search-account-menu";
