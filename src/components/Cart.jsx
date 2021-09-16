@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setQuantity } from "../store/cart";
+import { setQuantity, deleteProduct } from "../store/cart";
 import {
   Container,
   Typography,
@@ -44,11 +44,18 @@ const useStyles = makeStyles((theme) => ({
 const Cart = () => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
   const [price, setPrice] = useState(0);
   const dispatch = useDispatch();
 
   const handleChange = (productId, e) => {
-    dispatch(setQuantity([productId, e.target.value]));
+    const quantity = e.target.value;
+    const id = user.id;
+    dispatch(setQuantity({ productId, quantity, id }));
+  };
+
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId));
   };
 
   return (
@@ -60,52 +67,53 @@ const Cart = () => {
         </Typography>
         <Table size="small">
           <TableBody>
-            {cart.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={product.img}
-                    className={classes.large}
-                  />
-                </TableCell>
-                <TableCell>
-                  {<Typography component="text">{product.name}</Typography>}
-                </TableCell>
-                <TableCell>
-                  {
-                    <FormControl
-                      variant="outlined"
-                      className={classes.formControl}
-                    >
-                      <InputLabel id="amount-label">Cantidad</InputLabel>
-                      <Select
-                        labelId="amount-label"
-                        value={product.quantity}
-                        onChange={(e) => handleChange(product.id, e)}
-                        label="Cantidad"
+            {cart &&
+              cart.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={product.img}
+                      className={classes.large}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {<Typography component="text">{product.name}</Typography>}
+                  </TableCell>
+                  <TableCell>
+                    {
+                      <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
                       >
-                        <MenuItem value={6}>6</MenuItem>
-                        <MenuItem value={12}>12</MenuItem>
-                        <MenuItem value={18}>18</MenuItem>
-                        <MenuItem value={24}>24</MenuItem>
-                      </Select>
-                      <Typography variant="span" className={classes.stock}>
-                        {product.stock} Disponibles
-                      </Typography>
-                    </FormControl>
-                  }
-                </TableCell>
-                <TableCell align="right">{`$${
-                  product.price * product.quantity
-                }`}</TableCell>
-                <TableCell align="right">
-                  <IconButton edge="end" color="inherit">
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+                        <InputLabel id="amount-label">Cantidad</InputLabel>
+                        <Select
+                          labelId="amount-label"
+                          value={product.quantity}
+                          onChange={(e) => handleChange(product.id, e)}
+                          label="Cantidad"
+                        >
+                          <MenuItem value={6}>6</MenuItem>
+                          <MenuItem value={12}>12</MenuItem>
+                          <MenuItem value={18}>18</MenuItem>
+                          <MenuItem value={24}>24</MenuItem>
+                        </Select>
+                        <Typography variant="span" className={classes.stock}>
+                          {product.stock} Disponibles
+                        </Typography>
+                      </FormControl>
+                    }
+                  </TableCell>
+                  <TableCell align="right">{`$${
+                    product.price * product.quantity
+                  }`}</TableCell>
+                  <TableCell align="right">
+                    <IconButton edge="end" color="inherit">
+                      <DeleteIcon onClick={() => handleDelete(product.id)} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
             <TableRow>
               <TableCell
                 className={classes.cartFooter}
