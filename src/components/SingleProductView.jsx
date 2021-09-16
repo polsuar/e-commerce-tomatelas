@@ -1,24 +1,32 @@
 import { useState, useEffect } from "react";
+import { useHistory, Route, Link as RouterLink } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { getSelectedProduct } from "../store/selectedProduct";
+import { addToLocalCart } from "../store/cart";
+import { addFavorite } from "../store/favorites";
+import { getProductsByBrand } from "../store/products";
 import {
   Grid,
   IconButton,
   Container,
   Paper,
   Typography,
-  Button,
   Box,
   InputLabel,
   MenuItem,
   FormControl,
   Select,
+  Breadcrumbs,
+  Link,
+  Button,
   Card,
   CardContent,
   CardMedia,
 } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,14 +112,14 @@ const useStyles = makeStyles((theme) => ({
   imagenContainer: {
     width: "50%",
     heigth: "100%",
-    // marginTop: theme.spacing(2),
+    //marginTop: theme.spacing(5),
     marginLeft: theme.spacing(5),
     // background: "red",
   },
   textoContainer: {
     width: "50%",
     heigth: "100%",
-    // marginTop: theme.spacing(2),
+    // marginTop: theme.spacing(5),
     marginRight: theme.spacing(10),
     // background: "#CCFAE1",
   },
@@ -120,9 +128,9 @@ const useStyles = makeStyles((theme) => ({
 const SingleProductView = ({ id }) => {
   const product = useSelector((state) => state.selectedProduct);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const [quantity, setQuantity] = useState(6);
-  //const [newPrice, setNewPrice] = useState(product.price * product.quantity);
 
   useEffect(() => {
     dispatch(getSelectedProduct(id));
@@ -132,6 +140,14 @@ const SingleProductView = ({ id }) => {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
+
+  const history = useHistory();
+
+  const handleClick = (brandName) => {
+    dispatch(getProductsByBrand(brandName));
+    console.info("You clicked a breadcrumb.", brandName);
+  };
+
   const handleChange = (event) => {
     setQuantity(event.target.value);
   };
@@ -140,6 +156,14 @@ const SingleProductView = ({ id }) => {
   };
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const addCar = (product) => {
+    dispatch(addToLocalCart({ product, user }));
+  };
+
+  const addFav = (productId) => {
+    dispatch(addFavorite({ userId: user.id, productId: productId }));
   };
 
   const handlePrice = () => {
@@ -172,146 +196,104 @@ const SingleProductView = ({ id }) => {
       );
     }
   };
-
   return (
     <div>
-      <Paper className={classes.otherMargin} elevation={3}>
-        <Container>
-          <Grid>
-            <a href="javascript:history.back()">&lt; Volver atras</a>
-          </Grid>
-          <Grid className={classes.mainContainer}>
-            <Grid className={classes.imagenContainer}>
-              <img
-                src={product.img}
-                alt={product.name}
-                style={{
-                  width: "80%",
-                  heigth: "100%",
-                  marginLeft: theme.spacing(20),
-                }}
-              />
+      <Route>
+        <Paper className={classes.otherMargin} elevation={3}>
+          <Container>
+            <Grid>
+              <a href="javascript:history.back()">&lt; Volver atras</a>
             </Grid>
-            <Grid className={classes.textoContainer}>
-              <Typography variant="h2">
-                <Box fontWeight="fontWeightMedium">{product.name}</Box>
-              </Typography>
-              <Typography variant="p" className={classes.grey}>
-                {product.volume}
-              </Typography>
-
-              <Grid className={classes.margin}>
-                {handlePrice()}
-                <Typography color="primary" variant="button">
-                  {`${quantity} unidades`}
-                </Typography>
-                <Typography className={classes.grey} variant="button">
-                  {`$${product.price} por 1 unidad`}
-                </Typography>
+            <Grid className={classes.mainContainer}>
+              <Grid className={classes.imagenContainer}>
+                <img
+                  src={product.img}
+                  alt={product.name}
+                  style={{
+                    width: "80%",
+                    heigth: "100%",
+                    marginLeft: theme.spacing(20),
+                  }}
+                />
               </Grid>
+              <Grid className={classes.textoContainer}>
+                <Breadcrumbs
+                  separator={<NavigateNextIcon fontSize="small" />}
+                  aria-label="breadcrumb"
+                >
+                  <Link color="inherit" to="/" onClick={() => handleClick()}>
+                    Home
+                  </Link>
+                  <Link
+                    color="inherit"
+                    to="/"
+                    //href="/getting-started/installation/"
+                    onClick={() => handleClick(product.brand)}
+                  >
+                    {product.brand}
+                  </Link>
+                  <Typography color="inherit">{product.name}</Typography>
+                </Breadcrumbs>
 
-              <Grid container className={classes.grey}>
-                <Grid item xs={6} spacing={5}>
-                  <Typography variant="h5">Elegí la cantidad:</Typography>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-controlled-open-select-label">
-                      Unidades
-                    </InputLabel>
-                    <Select
-                      labelId="demo-controlled-open-select-label"
-                      id="demo-controlled-open-select"
-                      open={open}
-                      onClose={handleClose}
-                      onOpen={handleOpen}
-                      value={quantity}
-                      onChange={handleChange}
+                <Typography variant="h2">
+                  <Box fontWeight="fontWeightMedium">{product.name}</Box>
+                </Typography>
+                <Typography variant="p" className={classes.grey}>
+                  {product.volume}
+                </Typography>
+
+                <Grid className={classes.margin}>
+                  {handlePrice()}
+                  <Typography color="primary" variant="button">
+                    {`${quantity} unidades`}
+                  </Typography>
+                  <Typography className={classes.grey} variant="button">
+                    {`$${product.price} por 1 unidad`}
+                  </Typography>
+                </Grid>
+
+                <Grid container className={classes.grey}>
+                  <Grid item xs={6} spacing={5}>
+                    <Typography variant="h5">Elegí la cantidad:</Typography>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="demo-controlled-open-select-label">
+                        Unidades
+                      </InputLabel>
+                      <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        open={open}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        value={quantity}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={6}>6 unidades</MenuItem>
+                        <MenuItem value={12}>12 unidades</MenuItem>
+                        <MenuItem value={18}>18 unidades</MenuItem>
+                        <MenuItem value={24}>24 unidades</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <IconButton
+                      color="primary"
+                      aria-label="add to shopping cart"
+                      onClick={() => addCar(product)}
                     >
-                      <MenuItem value={6}>6 unidades</MenuItem>
-                      <MenuItem value={12}>12 unidades</MenuItem>
-                      <MenuItem value={18}>18 unidades</MenuItem>
-                      <MenuItem value={24}>24 unidades</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <IconButton color="primary" aria-label="add to shopping cart">
-                    <AddShoppingCartIcon fontSize="large" />
-                  </IconButton>
+                      <AddShoppingCartIcon fontSize="large" />
+                    </IconButton>
+                    <IconButton color="primary">
+                      <FavoriteIcon onClick={() => addFav(product.id)} />
+                    </IconButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      </Paper>
+          </Container>
+        </Paper>
+      </Route>
     </div>
   );
 };
 export default SingleProductView;
-
-{
-  /* <div className={classes.root}>
-  <Paper>
-    <Container>
-      <a href="javascript:history.back()">&lt; Volver atras</a>
-      <Grid container className={classes.paperContainer}>
-        <Grid item xs={12} md={8} className={classes.paperLeft}>
-          <figure>
-            <img src={product.img} alt={product.name} />
-          </figure>
-        </Grid>
-        <Grid item xs={12} md={8} className={classes.paperRight}>
-          <Typography variant="h2" fontWeight="fontWeightBold" m={1}>
-            {product.name}
-          </Typography>
-          <Typography variant="p" className={classes.grey}>
-            {product.volume}
-          </Typography>
-
-          <Grid className={classes.margin}>
-            {handlePrice()}
-            <Typography color="primary" variant="p">
-              {`${quantity} unidades`}
-            </Typography>
-            <Typography className={classes.grey} variant="p">
-              {`$${product.price} por 1 unidad`}
-            </Typography>
-          </Grid>
-
-          <Grid container spacing={2} className={classes.grey}>
-            <Grid item xs={6}>
-              <Typography variant="h5">Elegí la cantidad:</Typography>
-            </Grid>
-            <Grid container item xs={6} textAlign="center">
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-controlled-open-select-label">
-                  Unidades
-                </InputLabel>
-                <Select
-                  labelId="demo-controlled-open-select-label"
-                  id="demo-controlled-open-select"
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={quantity}
-                  onChange={handleChange}
-                >
-                  <MenuItem value={6}>6 unidades</MenuItem>
-                  <MenuItem value={12}>12 unidades</MenuItem>
-                  <MenuItem value={18}>18 unidades</MenuItem>
-                  <MenuItem value={24}>24 unidades</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} justifyContent="center">
-            <IconButton color="primary" aria-label="add to shopping cart">
-              <AddShoppingCartIcon fontSize="large" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Container>
-  </Paper>
-</div>;
- */
-}

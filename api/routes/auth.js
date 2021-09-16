@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 
 // Login
 router.post("/login", async (req, res) => {
-  console.log("de server / ruta post ==> ", req.body);
   // Our login logic starts here
   try {
     // Get user input
@@ -20,8 +19,6 @@ router.post("/login", async (req, res) => {
     // Validate if user exist in our database
 
     const user = await User.findOne({ where: { userName } });
-
-    // console.log("USUARIO DESDE BD: ", user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
@@ -36,7 +33,6 @@ router.post("/login", async (req, res) => {
       // save user token
       user.token = token;
       // user
-      console.log("este es el user", user);
       res.status(200).json(user);
     } else res.status(400).send("Invalid Credentials");
   } catch (err) {

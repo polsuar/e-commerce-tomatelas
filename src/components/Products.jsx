@@ -58,7 +58,7 @@ export default function Products() {
   };
 
   const handleClick = (product) => {
-    dispatch(addToLocalCart(product));
+    dispatch(addToLocalCart({ product, user }));
   };
 
   const addFav = (productId) => {
