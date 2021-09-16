@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,8 +49,13 @@ const Cart = () => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
-  const [price, setPrice] = useState(0);
   const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const reducer = (accumulator, current) =>
+    accumulator + current.price * current.quantity;
+  let totalMoney = cart ? cart.reduce(reducer, 0) : 0;
+  console.log("moneyyy", totalMoney);
 
   const handleChange = (productId, e) => {
     const quantity = e.target.value;

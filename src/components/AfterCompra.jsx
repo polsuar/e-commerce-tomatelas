@@ -33,36 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const rows = [
-  {
-    date: "asd22",
-    name: "hola",
-    shipTo: "123asd",
-    amount: 12234,
-  },
-  {
-    date: "asd22",
-    name: "hola",
-    shipTo: "123asd",
-    paymentMethod: "nada",
-    amount: 12234,
-  },
-  {
-    date: "asd22",
-    name: "hola",
-    shipTo: "123asd",
-    paymentMethod: "nada",
-    amount: 12234,
-  },
-  {
-    date: "asd22",
-    name: "hola",
-    shipTo: "123asd",
-    paymentMethod: "nada",
-    amount: 12234,
-  },
-];
-
 const featuredPosts = [
   {
     id: 234,
@@ -84,6 +54,19 @@ const featuredPosts = [
 
 export default function AfterCompra() {
   const classes = useStyles();
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  const [envio, setEnvio] = useState(0);
+
+  useEffect(() => {
+    if (cart.length < 5) {
+      setEnvio(360);
+    } else if (cart.length < 8) {
+      setEnvio(580);
+    } else {
+      setEnvio(810);
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -101,12 +84,14 @@ export default function AfterCompra() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.shipTo}</TableCell>
-                <TableCell align="right">{`$${row.amount}`}</TableCell>
+            {cart.map((product) => (
+              <TableRow key={product.id}>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.quantity}</TableCell>
+                <TableCell>{product.brand}</TableCell>
+                <TableCell align="right">{`$${
+                  product.price * product.quantity
+                }`}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -119,14 +104,11 @@ export default function AfterCompra() {
                   <Typography component="h2" variant="h5">
                     <ShoppingBasketIcon color="primary" /> Resumen de compra
                   </Typography>
-                  <Typography component="subtitle1">
-                    # {featuredPosts[0].id}
-                  </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
                     Fecha: {featuredPosts[0].date}
                   </Typography>
                   <Typography variant="subtitle1" paragraph>
-                    {featuredPosts[0].products}
+                    Products {`(${cart.length})`}
                   </Typography>
                   <Typography variant="h6" paragraph>
                     Total: ${featuredPosts[0].total}
@@ -143,19 +125,15 @@ export default function AfterCompra() {
                   <Typography component="h2" variant="h5">
                     <RoomIcon color="primary" /> Envio
                   </Typography>
-                  <Typography component="subtitle1">
-                    {featuredPosts[1].street}
-                  </Typography>
+                  <Typography component="subtitle1">{user.street}</Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    {featuredPosts[1].province}, {featuredPosts[1].city}{" "}
-                    {featuredPosts[1].zipcode}
+                    {user.province}, {user.city} {user.zipcode}
                   </Typography>
                   <Typography variant="subtitle" paragraph>
-                    {featuredPosts[1].firstName} {featuredPosts[1].lastName} -{" "}
-                    {featuredPosts[1].phone}
+                    {user.firstName} {user.lastName} - {user.phone}
                   </Typography>
                   <Typography variant="h6" paragraph>
-                    Envio: ${featuredPosts[1].price}
+                    Envio: ${envio}
                   </Typography>
                 </CardContent>
               </div>
