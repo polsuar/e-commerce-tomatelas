@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setQuantity, deleteProduct } from "../store/cart";
+import { setQuantity, deleteProduct, clearLocalCart } from "../store/cart";
 import {
   Container,
   Typography,
@@ -39,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
   stock: {
     color: "#afafaf",
   },
+  comprar: {
+    textDecoration: "none",
+  },
 }));
 
 const Cart = () => {
@@ -56,6 +60,10 @@ const Cart = () => {
 
   const handleDelete = (productId) => {
     dispatch(deleteProduct(productId));
+  };
+
+  const handleDeleteAll = () => {
+    dispatch(clearLocalCart());
   };
 
   return (
@@ -115,20 +123,46 @@ const Cart = () => {
                 </TableRow>
               ))}
             <TableRow>
-              <TableCell
-                className={classes.cartFooter}
-                colSpan={4}
-                align="right"
-              >
-                <Typography component="h2" variant="h5" color="secondary">
-                  Total 12314123
-                </Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Button variant="contained" color="primary" size="large">
-                  Comprar
-                </Button>
-              </TableCell>
+              {cart[0] ? (
+                <>
+                  <TableCell align="left">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      onClick={handleDeleteAll}
+                    >
+                      Limpiar carrito
+                    </Button>
+                  </TableCell>
+                  <TableCell
+                    className={classes.cartFooter}
+                    colSpan={3}
+                    align="right"
+                  >
+                    <Typography component="h2" variant="h5" color="secondary">
+                      Total 12314123
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Link to="/confirmacion" className={classes.comprar}>
+                      <Button variant="contained" color="primary" size="large">
+                        Comprar
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </>
+              ) : (
+                <TableCell
+                  className={classes.cartFooter}
+                  colSpan={4}
+                  align="center"
+                >
+                  <Typography component="h2" variant="h5" color="secondary">
+                    Carrito vacío
+                  </Typography>
+                </TableCell>
+              )}
             </TableRow>
           </TableBody>
         </Table>
