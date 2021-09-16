@@ -8,6 +8,7 @@ import {
 import Home from "./Home";
 import Navbar from "../components/Navbar";
 import Cart from "../components/Cart";
+import AfterCompra from "../components/AfterCompra";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
@@ -57,6 +58,10 @@ export default function App() {
 
           <Route path="/cart">
             <Cart />
+          </Route>
+
+          <Route path="/confirmacion">
+            <AfterCompra />
           </Route>
 
           <Route

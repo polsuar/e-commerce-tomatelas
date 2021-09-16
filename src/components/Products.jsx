@@ -42,7 +42,7 @@ export default function Album() {
   const dispatch = useDispatch();
 
   const handleClick = (product) => {
-    dispatch(addToLocalCart(product));
+    dispatch(addToLocalCart({ product, user }));
   };
 
   const addFav = (productId) => {

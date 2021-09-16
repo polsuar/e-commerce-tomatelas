@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { getSelectedProduct } from "../store/selectedProduct";
+import { addToLocalCart } from "../store/cart";
+import { addFavorite } from "../store/favorites";
 import {
   Grid,
   IconButton,
@@ -22,6 +25,7 @@ import {
 } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
 const SingleProductView = ({ id }) => {
   const product = useSelector((state) => state.selectedProduct);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const [quantity, setQuantity] = useState(6);
 
@@ -135,8 +140,11 @@ const SingleProductView = ({ id }) => {
 
   const [open, setOpen] = useState(false);
 
+  const history = useHistory();
+
   const handleClick = (event) => {
     event.preventDefault();
+    history.push("/");
     console.info("You clicked a breadcrumb.");
   };
 
@@ -148,6 +156,14 @@ const SingleProductView = ({ id }) => {
   };
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const addCar = (product) => {
+    dispatch(addToLocalCart({ product, user }));
+  };
+
+  const addFav = (productId) => {
+    dispatch(addFavorite({ userId: user.id, productId: productId }));
   };
 
   const handlePrice = () => {
@@ -259,8 +275,15 @@ const SingleProductView = ({ id }) => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={6}>
-                  <IconButton color="primary" aria-label="add to shopping cart">
+                  <IconButton
+                    color="primary"
+                    aria-label="add to shopping cart"
+                    onClick={() => addCar(product)}
+                  >
                     <AddShoppingCartIcon fontSize="large" />
+                  </IconButton>
+                  <IconButton color="primary">
+                    <FavoriteIcon onClick={() => addFav(product.id)} />
                   </IconButton>
                 </Grid>
               </Grid>
