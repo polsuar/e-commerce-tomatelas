@@ -9,6 +9,7 @@ import {
   CardContent,
   CardMedia,
   Hidden,
+  Box,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -34,16 +35,13 @@ export default function FeaturedPost(props) {
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {post.title}
+                <Box fontWeight="fontWeightMedium">{post.title}</Box>
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {post.date}
               </Typography>
               <Typography variant="subtitle1" paragraph>
                 {post.description}
-              </Typography>
-              <Typography variant="subtitle1" color="primary">
-                Continue reading...
               </Typography>
             </CardContent>
           </div>
