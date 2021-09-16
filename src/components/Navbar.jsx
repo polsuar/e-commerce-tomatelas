@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const history = useHistory();
   const user = useSelector((state) => state.user);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -241,7 +242,7 @@ export default function Navbar() {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={cart.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
