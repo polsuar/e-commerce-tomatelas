@@ -1,4 +1,3 @@
-const { Group } = require("@material-ui/icons");
 const express = require("express");
 const Product = require("../models/ProductsModel");
 const brandRoute = express.Router();

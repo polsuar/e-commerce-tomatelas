@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import emailjs from "emailjs-com";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -67,14 +68,43 @@ const Register = () => {
   const errorsArr = propertyValues.map((el) => el.message);
   console.log(errorsArr);
 
+  const sendEmail = (data) => {
+    emailjs
+      .send(
+        "service_nwzoqrw",
+        "template_mrqbsy5",
+        data,
+        "user_XCxOcDMqNx5iPI6zMfMzI"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 2));
+    console.log("acaaaaa", JSON.stringify(data, null, 2));
 
     return (
       axios
         .post("http://localhost:3001/api/auth/register", data)
         //      .then((r) => r.data)
-        .then(() => {
+        .then((res) => {
+          const message = {
+            bodyMessage:
+              "Registro exitoso, esperamos que disfrutes de nuestros servicio ideado especialmente para ti =)",
+            subjectMessage: "Registro exitoso",
+            userName: res.data.userName,
+            email: res.data.email,
+          };
+          // message.userName = ;
+          // message.email = ;
+
+          sendEmail(message);
           return history.push("/login");
         })
         .catch((error) => {
