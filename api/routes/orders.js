@@ -1,8 +1,8 @@
 const express = require("express");
-const orderProducts = require("orderProducts");
+const orderRoute = express.Router();
 const Orders = require("../models/ProductsModel");
 
-orderProducts.get("/", (req, res) => {
+orderRoute.get("/", (req, res) => {
   Orders.findAll()
     .then((orders) => {
       console.log(orders);
@@ -13,7 +13,7 @@ orderProducts.get("/", (req, res) => {
     });
 });
 
-orderProducts.get("/user/:id", (req, res) => {
+orderRoute.get("/user/:id", (req, res) => {
   Orders.findAll({
     where: {
       user_id: req.params.id,
@@ -25,7 +25,7 @@ orderProducts.get("/user/:id", (req, res) => {
     });
 });
 
-orderProducts.get("/number/:id", (req, res) => {
+orderRoute.get("/number/:id", (req, res) => {
   Orders.findAll({
     where: {
       order_id: req.params.id,
@@ -37,11 +37,11 @@ orderProducts.get("/number/:id", (req, res) => {
     });
 });
 
-orderProducts.post("/add", (req, res) => {
+orderRoute.post("/add", (req, res) => {
   Orders.create(req.body).then(() => res.sendStatus(201));
 });
 
-orderProducts.put("/update/:id", (req, res) => {
+orderRoute.put("/update/:id", (req, res) => {
   Orders.update(
     { state: req.body.status },
     { where: { order_id: req.params.id } }
@@ -52,7 +52,7 @@ orderProducts.put("/update/:id", (req, res) => {
     });
 });
 
-orderProducts.delete("/delete/:id", (req, res) => {
+orderRoute.delete("/delete/:id", (req, res) => {
   Orders.destroy({ where: { order_id: req.params.id } })
     .then(() => res.sendStatus(202))
     .catch((error) => {
@@ -60,4 +60,4 @@ orderProducts.delete("/delete/:id", (req, res) => {
     });
 });
 
-module.exports = orderProducts;
+module.exports = orderRoute;
