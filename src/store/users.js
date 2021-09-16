@@ -43,7 +43,6 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
 export const userLogout = createAction("LOGOUT", () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-
   return {};
 });
 

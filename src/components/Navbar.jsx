@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProductsByName, getAllProducts } from "../store/products";
 import { userLogout } from "../store/users";
 import { clearLocalCart } from "../store/cart";
+import { clearState } from "../store/favorites";
 import {
   AppBar,
   Toolbar,
@@ -125,6 +126,7 @@ export default function Navbar() {
     e.preventDefault();
     dispatch(userLogout());
     dispatch(clearLocalCart());
+    dispatch(clearState());
     history.push("/");
   };
   const menuId = "primary-search-account-menu";
