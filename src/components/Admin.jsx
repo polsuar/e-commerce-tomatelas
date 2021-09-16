@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import { People, Category, ShoppingBasket,MenuBook } from "@material-ui/icons";
 import { getUserFavorites } from "../store/favorites";
-import Favorites from "./Favorites";
+import AdminProducts from "../components/AdminProducts"
 import {
   Card,
   CardActionArea,
@@ -107,7 +107,7 @@ export default function Profile() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Favorites />
+          <AdminProducts />
         </TabPanel>
 
         <TabPanel value={value} index={1}>

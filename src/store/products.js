@@ -12,14 +12,14 @@ export const getProductsByName = createAsyncThunk(
   }
 );
 
-export const removeProduct = createAsyncThunk(
-  "REMOVE_PRODUCT",
-  ({ userId, productId }) => {
-    return axios
-      .delete(`/api/favorites/${userId}?productId=${productId}`)
-      .then((res) => res.data); // devuelve productId
-  }
-);
+// export const removeProduct = createAsyncThunk(
+//   "REMOVE_PRODUCT",
+//   ({ userId, productId }) => {
+//     return axios
+//       .delete(`/api/products/${productId}?`)
+//       .then((res) => res.data); // devuelve productId
+//   }
+// );
 
 const initialState = [];
 
