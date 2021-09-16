@@ -35,31 +35,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const featuredPosts = [
-  {
-    id: 234,
-    products: "Products (4)",
-    date: "15 marzo, 2021",
-    total: 5600,
-  },
-  {
-    firstName: "Luca",
-    lastName: "Bogari",
-    street: "Tucuman 516",
-    province: "Rio Negro",
-    city: "Cipolletti",
-    zipcode: 8324,
-    phone: "2994694619",
-    price: 360,
-  },
-];
-
 export default function AfterCompra() {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [envio, setEnvio] = useState(0);
+  const [date, setDate] = useState("");
+
+  const reducer = (acum, current) => acum + current.price * current.quantity;
+  let total = cart ? cart.reduce(reducer, 0) : 0;
 
   useEffect(() => {
     if (cart.length < 5) {
@@ -69,6 +54,8 @@ export default function AfterCompra() {
     } else {
       setEnvio(810);
     }
+    const date = new Date();
+    setDate(date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
   }, []);
 
   const sendEmail = (data) => {
@@ -138,13 +125,13 @@ export default function AfterCompra() {
                     <ShoppingBasketIcon color="primary" /> Resumen de compra
                   </Typography>
                   <Typography variant="subtitle1" color="textSecondary">
-                    Fecha: {featuredPosts[0].date}
+                    Fecha: {date}
                   </Typography>
                   <Typography variant="subtitle1" paragraph>
                     Products {`(${cart.length})`}
                   </Typography>
                   <Typography variant="h6" paragraph>
-                    Total: ${featuredPosts[0].total}
+                    Total: ${total}
                   </Typography>
                 </CardContent>
               </div>
