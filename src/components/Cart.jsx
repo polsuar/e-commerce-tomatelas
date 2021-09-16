@@ -50,12 +50,9 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [totalPrice, setTotalPrice] = useState(0);
 
-  const reducer = (accumulator, current) =>
-    accumulator + current.price * current.quantity;
-  let totalMoney = cart ? cart.reduce(reducer, 0) : 0;
-  console.log("moneyyy", totalMoney);
+  const reducer = (acum, current) => acum + current.price * current.quantity;
+  let total = cart ? cart.reduce(reducer, 0) : 0;
 
   const handleChange = (productId, e) => {
     const quantity = e.target.value;
@@ -146,7 +143,7 @@ const Cart = () => {
                     align="right"
                   >
                     <Typography component="h2" variant="h5" color="secondary">
-                      Total 12314123
+                      Total ${total}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
