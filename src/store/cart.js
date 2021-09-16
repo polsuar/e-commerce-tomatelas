@@ -11,7 +11,7 @@ import axios from "axios";
 */
 export const getUserCart = createAsyncThunk("GETUSERCART", (id) => {
   return axios.get(`/api/cart/${id}`).then((res) => {
-    if (res.data.cart_items) {
+    if (res.data.cart_items.length > 0) {
       localStorage.setItem("cart", JSON.stringify(res.data.cart_items));
       return res.data.cart_items;
     } else {
@@ -55,7 +55,6 @@ export const setLocalCart = createAction("SETLOCALCART", (cart) => {
 });
 
 export const setQuantity = createAsyncThunk("SETQUANTITY", (data) => {
-  console.log(data);
   const { productId, quantity, id } = data;
   const cart = JSON.parse(localStorage.getItem("cart"));
   const newCart = cart.map((item) => {
