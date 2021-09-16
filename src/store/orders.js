@@ -5,8 +5,9 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const setOrder = createAsyncThunk("SETORDER", (cart) => {
-  return axios.get(`/api/orders/add`).then((res) => res.data);
+export const setOrder = createAsyncThunk("SETORDER", (data) => {
+  const { date, user, cart, precioFinal } = data;
+  return axios.post(`/api/orders/add`, data).then((res) => res.data);
 });
 
 const initialState = [];

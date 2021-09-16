@@ -77,13 +77,14 @@ export default function AfterCompra() {
   };
 
   const handleClick = () => {
-    dispatch(setOrder()).then(() => {
+    let precioFinal = total + envio;
+    dispatch(setOrder({ date, user, cart, precioFinal })).then(() => {
       const message = {
         bodyMessage:
           "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, no manejés y asi nos cuidarnos entre todos!",
         subjectMessage: "Compra realizada, orden",
-        userName: res.data.userName,
-        email: res.data.email,
+        // userName: res.data.userName,
+        // email: res.data.email,
       };
     });
   };
