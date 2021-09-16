@@ -137,7 +137,13 @@ export default function Navbar() {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >
+    > {user.isAdmin?(
+      <>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to="/admin">Admin</Link>
+          </MenuItem>
+      </>
+      ) : null}
       {token ? (
         <>
           <MenuItem onClick={handleMenuClose}>

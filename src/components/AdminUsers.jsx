@@ -1,7 +1,7 @@
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { removeProduct } from "../store/products";
+import { removeUser } from "../store/userlist";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -37,14 +37,14 @@ const AdminProducts = () => {
 
   //ejecuta
   const dispatch = useDispatch();
-  
+
   // trae lo del estado
-  const products = useSelector((state) => state.products);
+  const users = useSelector((state) => state.userlist);
 
   const handleChange = () => {};
 
-  const handleDelete = (productId) => {
-    dispatch(removeProduct({ productId }));
+  const handleDelete = (userId) => {
+    dispatch(removeUser({ userId }));
   };
 
 
@@ -52,35 +52,23 @@ const AdminProducts = () => {
     <>
       <Table size="small">
         <TableBody>
-          <TableRow>
-            <TableCell align="right">
-              <Button variant="contained" color="primary" size="large">
-                Agregar Producto
-              </Button>
-            </TableCell>
-          </TableRow>
-          {products?.map((product) => (
+          {users?.map((user) => (
             <>
-              <TableRow key={product.id}>
+              <TableRow key={user.id}>
                 <TableCell>
-                  <Link href={`/products/${product.id}`}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={product.img}
-                      className={classes.large}
-                    />
-                  </Link>
+                  {<Typography component="text">{user.userName}</Typography>}
                 </TableCell>
-                <TableCell>
-                  {<Typography component="text">{product.name}</Typography>}
-                </TableCell>
-                <TableCell align="right">{`${product.volume}`}</TableCell>
-                <TableCell align="right">{`${product.brand}`}</TableCell>
-                <TableCell align="right">{`${product.stock}`}</TableCell>
-                <TableCell align="right">{`$${product.price}`}</TableCell>
+                <TableCell align="right">{`${user.email}`}</TableCell>
+                <TableCell align="right">{`${user.firstName}`}</TableCell>
+                <TableCell align="right">{`${user.lastName}`}</TableCell>
+                <TableCell align="right">{`${user.street}`}</TableCell>
+                <TableCell align="right">{`${user.province}`}</TableCell>
+                <TableCell align="right">{`${user.city}`}</TableCell>
+                <TableCell align="right">{`${user.phone}`}</TableCell>
+
                 <TableCell align="right">
                   <IconButton edge="end" color="inherit">
-                    <DeleteIcon onClick={() => handleDelete(product.id)} />
+                    <DeleteIcon onClick={() => handleDelete(user.id)} />
                   </IconButton>
                 </TableCell>
               </TableRow>

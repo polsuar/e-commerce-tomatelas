@@ -20,6 +20,7 @@ import SingleProductView from "../components/SingleProductView";
 import { useDispatch } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
+import {getAllUsers} from "../store/userlist"
 
 export default function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function App() {
     if (user) dispatch(setLocalUser(user));
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) dispatch(setLocalCart(cart));
+    dispatch(getAllUsers)
   }, []);
 
   return (

@@ -11,6 +11,7 @@ import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import { People, Category, ShoppingBasket,MenuBook } from "@material-ui/icons";
 import { getUserFavorites } from "../store/favorites";
 import AdminProducts from "../components/AdminProducts"
+import AdminUsers from "../components/AdminUsers"
 import {
   Card,
   CardActionArea,
@@ -107,7 +108,7 @@ export default function Profile() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <AdminProducts />
+          <AdminProducts/>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
@@ -115,6 +116,9 @@ export default function Profile() {
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+        <AdminUsers/>
         </TabPanel>
       </Container>
     </div>
