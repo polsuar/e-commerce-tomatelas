@@ -12,7 +12,8 @@ cartRoute.get("/:id", async (req, res) => {
 cartRoute.put("/:id/add", async (req, res) => {
   // el producto ya debe tener la quantity seteada
   const products = req.body;
-  const cart = await Cart.findOne({ where: { userId: req.params.id } });
+  let cart = await Cart.findOne({ where: { userId: req.params.id } });
+  //if (!cart) cart = await Cart.create({ userId: req.params.id });
   const userCart = cart.cart_items;
   let change;
 

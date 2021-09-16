@@ -24,8 +24,7 @@ Order.init(
       allowNull: false,
     },
     created: {
-      type: S.DATE,
-      // defaultValue:''
+      type: S.STRING,
     },
     state: {
       type: S.STRING,

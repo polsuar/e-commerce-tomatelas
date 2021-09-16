@@ -35,11 +35,13 @@ orderRoute.get("/number/:id", (req, res) => {
 
 orderRoute.post("/add", (req, res) => {
   const { date, user, cart, precioFinal } = req.body;
+
   Order.create({
     user_id: user.id,
     userName: user.userName,
     products: cart,
     total_price: precioFinal,
+    created: date,
   }).then(() => res.sendStatus(201));
 });
 
