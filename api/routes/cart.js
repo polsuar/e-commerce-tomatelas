@@ -10,9 +10,10 @@ cartRoute.get("/:id", async (req, res) => {
 });
 
 cartRoute.put("/:id/add", async (req, res) => {
+  console.log("entre mal");
   // el producto ya debe tener la quantity seteada
   const products = req.body;
-  const cart = await Cart.findOne({ where: { userId: req.params.id } });
+  let cart = await Cart.findOne({ where: { userId: req.params.id } });
   const userCart = cart.cart_items;
   let change;
 
@@ -65,40 +66,3 @@ cartRoute.put("/:id/delete", async (req, res) => {
 });
 
 module.exports = cartRoute;
-/*
-if (cart.cart_items !== null) {
-    const newUserCart = [cart.cart_items].push(products);
-    change = products.length
-      ? await Cart.update(
-          { cart_items: [...cart.cart_items, ...products] },
-          { where: { id: cart.id }, returning: true }
-        )
-      : await Cart.update(
-          { cart_items: [...cart.cart_items, products] },
-          { where: { id: cart.id }, returning: true }
-        );
-  } else {
-    change = await Cart.update(
-      { cart_items: products },
-      { where: { id: cart.id }, returning: true }
-    );
-  } */
-
-/*
-  if (userCart > 0) {
-    change = products.length
-      ? await Cart.update(
-          { cart_items: [...userCart, ...products] },
-          { where: { id: cart.id }, returning: true }
-        )
-      : await Cart.update(
-          { cart_items: [...userCart, products] },
-          { where: { id: cart.id }, returning: true }
-        );
-  } else {
-    change = await Cart.update(
-      { cart_items: products },
-      { where: { id: cart.id }, returning: true }
-    );
-  }
-  */

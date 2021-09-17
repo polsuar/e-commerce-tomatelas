@@ -25,8 +25,9 @@ export const getUserCart = createAsyncThunk("GETUSERCART", (id) => {
 
 export const addToLocalCart = createAsyncThunk(
   "addToCart",
-  ({ product, user }) => {
-    console.log("---------------->", user.id);
+  (product, thunkAPI) => {
+    const { user } = thunkAPI.getState();
+    console.log("addtolocalCart", user.id);
     const cart = localStorage.getItem("cart");
     if (cart) {
       const carrito = JSON.parse(cart);
@@ -36,17 +37,18 @@ export const addToLocalCart = createAsyncThunk(
         console.log(
           "ESTE PRODUCTO YA FUE AGREGADO, MODIFIQUE LA CANTIDAD EN EL CARRITO"
         );
+        return;
       } else {
         carrito.push(product);
         localStorage.setItem("cart", JSON.stringify(carrito));
+        if (user.id) axios.put(`/api/cart/${user.id}/add`, product);
+        return carrito;
       }
-      if (user.id) axios.put(`/api/cart/${user.id}/add`, product);
-      return carrito;
     } else {
       localStorage.setItem("cart", JSON.stringify([product]));
+      if (user.id) axios.put(`/api/cart/${user.id}/add`, product);
+      return product;
     }
-    if (user.id) axios.put(`/api/cart/${user.id}/add`, product);
-    return product;
   }
 );
 
@@ -66,9 +68,10 @@ export const setQuantity = createAsyncThunk("SETQUANTITY", (data) => {
   return newCart;
 });
 
-export const clearLocalCart = createAction("CLEARLOCALCART", () => {
+export const clearLocalCart = createAsyncThunk("CLEARLOCALCART", (id) => {
   localStorage.removeItem("cart");
-  return { payload: [] };
+  axios.delete(`/api/cart/${id}/clear`);
+  return [];
 });
 
 export const deleteProduct = createAsyncThunk(
@@ -96,7 +99,7 @@ const cartReducer = createReducer(initialState, {
     return action.payload;
   },
   [getUserCart.fulfilled]: (state, action) => action.payload,
-  [clearLocalCart]: (state, action) => action.payload,
+  [clearLocalCart.fulfilled]: (state, action) => action.payload,
   [deleteProduct.fulfilled]: (state, action) => {
     console.log("actioooooon", action);
     return action.payload;

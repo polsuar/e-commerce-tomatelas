@@ -21,6 +21,7 @@ import SingleProductView from "../components/SingleProductView";
 import { useDispatch } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
+import AdminSingleProduct from "../components/AdminSingleProduct";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -69,7 +70,11 @@ export default function App() {
             path="/products/:id"
             render={({ match }) => <SingleProductView id={match.params.id} />}
           />
-
+          <Route
+            exact
+            path="/edit/products/:id"
+            render={({ match }) => <AdminSingleProduct id={match.params.id} />}
+          />
           <Redirect from="/" to="/home" />
         </Switch>
       </ThemeProvider>

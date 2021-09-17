@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { removeProduct } from "../store/products";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { getSelectedProduct } from "../store/selectedProduct";
 import { getAllProducts } from "../store/products";
 import {
   Typography,
@@ -40,7 +41,9 @@ const AdminProducts = () => {
   }, []);
   const classes = useStyles();
 
-  const handleChange = () => {};
+  const handleClick = (id) => {
+    dispatch(getSelectedProduct(id))
+  };
 
   const handleDelete = (productId) => {
     console.log(productId)
@@ -63,7 +66,7 @@ const AdminProducts = () => {
             <>
               <TableRow key={product.id}>
                 <TableCell>
-                  <Link href={`/edit/products/${product.id}`}>
+                  <Link onClick={()=>handleClick(product.id)} to={`/edit/products/${product.id}`}>
                     <Avatar
                       alt="Remy Sharp"
                       src={product.img}

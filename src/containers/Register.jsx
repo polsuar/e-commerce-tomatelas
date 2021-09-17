@@ -101,7 +101,7 @@ const Register = () => {
           // message.userName = ;
           // message.email = ;
 
-          sendEmail(message);
+          //sendEmail(message);
           return history.push("/login");
         })
         .catch((error) => {

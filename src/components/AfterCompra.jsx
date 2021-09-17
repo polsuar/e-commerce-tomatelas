@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { setOrder } from "../store/orders";
+import emailjs from "emailjs-com";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
   Table,
@@ -16,6 +18,7 @@ import {
 } from "@material-ui/core";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,8 +40,10 @@ export default function AfterCompra() {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [envio, setEnvio] = useState(0);
   const [date, setDate] = useState("");
+  const history = useHistory();
 
   const reducer = (acum, current) => acum + current.price * current.quantity;
   let total = cart ? cart.reduce(reducer, 0) : 0;
@@ -54,6 +59,41 @@ export default function AfterCompra() {
     const date = new Date();
     setDate(date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
   }, []);
+
+  const sendEmail = (data) => {
+    emailjs
+      .send(
+        "service_nwzoqrw",
+        "template_reczzzg",
+        data,
+        "user_XCxOcDMqNx5iPI6zMfMzI"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  const handleClick = () => {
+    let precioFinal = total + envio;
+    dispatch(setOrder({ date, user, cart, precioFinal })).then((res) => {
+      const message = {
+        bodyMessage:
+          "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, es mejor que no manejes asi nos cuidarnos entre todos!",
+        userName: user.userName,
+        email: user.email,
+        orderNumber: res.payload.order_id,
+        price: res.payload.total_price,
+        created: res.payload.created,
+        state: res.payload.state,
+      };
+      sendEmail(message);
+    });
+  };
 
   return (
     <React.Fragment>
@@ -132,6 +172,7 @@ export default function AfterCompra() {
           variant="contained"
           color="primary"
           size="large"
+          onClick={handleClick}
         >
           Confirmar compra
         </Button>
