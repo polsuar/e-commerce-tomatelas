@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getSelectedProduct } from "../store/selectedProduct";
-import {useInput} from "../hooks/useInput"
+import { useInput } from "../hooks/useInput";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import {editProduct} from "../store/products"
+import { editProduct } from "../store/products";
+import {useHistory} from "react-router-dom";
+
 import {
   Button,
   TextField,
@@ -16,7 +18,7 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mainContainer: {
     width: "90vw",
     heigth: "100vh",
@@ -28,8 +30,8 @@ const useStyles = makeStyles(() => ({
   imagenContainer: {
     width: "50%",
     heigth: "100%",
-    //marginTop: theme.spacing(5),
-    // marginLeft: theme.spacing(5),
+    marginTop: theme.spacing(5),
+    marginLeft: theme.spacing(5),
     // background: "red",
   },
   textoContainer: {
@@ -41,38 +43,51 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
-const AdminSingleProduct = ({id}) => {
+const AdminSingleProduct = ({ id }) => {
+  let history = useHistory();
   const product = useSelector((state) => state.selectedProduct);
   const dispatch = useDispatch();
-  const [value, setValue]= useState({})
-
+  const [edit, setEdit] = useState({});
   const classes = useStyles();
+
   useEffect(() => {
     dispatch(getSelectedProduct(id))
+    .then((res)=>
+    
+      setEdit({
+        name: res.payload.name,
+        volume: res.payload.volume,
+        brand: res.payload.brand,
+        stock: res.payload.stock,
+        img: res.payload.img,
+        price: res.payload.price,
+        category: res.payload.category,
+    })
+  )
+}, [])
   
-  }, []);
-  
-  const name = useInput('name');
-  const volume = useInput('volume');
-  const brand = useInput('brand');
-  const stock = useInput('stock');
-  const img = useInput('img');
-  const price = useInput('price');
-  const category = useInput('category'); 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setEdit((edit) => ({ ...edit, [id]: value }));
+  };
 
-const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(editProduct({
-            name: name.value,
-            volume: volume.value,
-            brand: brand.value,
-            stock: stock.value,
-            img: img.value,
-            price: price.value,
-            category: category.value
-        }))
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let data={
+      name: edit.name,
+      volume: edit.volume,
+      brand: edit.brand,
+      stock: edit.stock,
+      img: edit.img,
+      price: edit.price,
+      category: edit.category,
+    }
+    dispatch(editProduct(product.id)
+    );
+    history.push("/admin")
+  };
+
+
   return (
     <div>
       <Box>
@@ -82,32 +97,61 @@ const handleSubmit = (e) => {
               Producto
             </Typography>
           </Box>
-          <form   noValidate>
+          <form onSubmit={handleSubmit} >
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  {...name}
-                  value={product.name}
-                  required
+                  value={edit.name}
+                  onChange={handleChange}
                   id="name"
                   label="Nombre"
                   fullWidth
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField {...volume} value={product.volume} required id="volume" label="Volumen" fullWidth />
+                <TextField
+                  value={edit.volume}
+                  onChange={handleChange}
+                  id="volume"
+                  label="Volumen"
+                  fullWidth
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField {...brand} value={product.brand} required id="brand" label="Marca" fullWidth />
+                <TextField
+                  value={edit.brand}
+                  onChange={handleChange}
+                  id="brand"
+                  label="Marca"
+                  fullWidth
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField {...stock} value={product.stock} required id="stock" label="Stock" fullWidth />
+                <TextField
+                  value={edit.stock}
+                  onChange={handleChange}
+                  id="stock"
+                  label="Stock"
+                  fullWidth
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField {...img} value={product.img} required id="img" label="Imagen url" fullWidth />
+                <TextField
+                  value={edit.img}
+                  onChange={handleChange}
+                  id="img"
+                  label="Imagen url"
+                  fullWidth
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField {...price} value={product.price} required id="price" label="Precio" fullWidth />
+                <TextField
+                  value={edit.price}
+                  onChange={handleChange}
+                  id="price"
+                  label="Precio"
+                  fullWidth
+                />
               </Grid>
               <Box>
                 <Typography variant="h6" gutterBottom>
@@ -117,7 +161,6 @@ const handleSubmit = (e) => {
               <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                {...category}
               >
                 <MenuItem value={"Cervezas"}>Cervezas</MenuItem>
                 <MenuItem value={"Gaseosas"}>Gaseosas</MenuItem>
@@ -146,12 +189,12 @@ const handleSubmit = (e) => {
           </form>
         </Grid>
       </Box>
-      {/* <Container>
+      <Container>
       <Grid className={classes.mainContainer}>
             <Grid className={classes.imagenContainer}>
               <img
-                src={product.img}
-                alt={product.name}
+                src={edit.img}
+                alt={edit.name}
                 style={{
                   width: "80%",
                   heigth: "100%",
@@ -160,7 +203,7 @@ const handleSubmit = (e) => {
               />
             </Grid>
       </Grid>
-      </Container> */}
+      </Container>
     </div>
   );
 };
