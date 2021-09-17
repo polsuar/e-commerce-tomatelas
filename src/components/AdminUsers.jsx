@@ -45,7 +45,6 @@ const AdminUsers = () => {
   };
 
   const handleRevoke = (userId) => {
-    console.log("REVOKE")
     dispatch(revokeAdmin( userId ));
   };
 
