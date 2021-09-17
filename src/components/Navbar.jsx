@@ -120,6 +120,7 @@ export default function Navbar() {
       console.log(value);
       dispatch(getAllProducts());
     }
+    history.push("/");
   };
   const handleLogout = (e) => {
     e.preventDefault();
