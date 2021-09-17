@@ -8,7 +8,6 @@ brandRoute.get("/", async (req, res) => {
     attributes: ["brand"],
     group: ["brand"],
   }).then((brand) => {
-    console.log(brand);
     res.status(200).send(brand);
   });
 });

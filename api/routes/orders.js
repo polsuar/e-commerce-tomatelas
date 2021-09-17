@@ -1,20 +1,16 @@
 const express = require("express");
 const orderRoute = express.Router();
-const Orders = require("../models/ProductsModel");
+const Order = require("../models/OrdersModel");
 
 orderRoute.get("/", (req, res) => {
-  Orders.findAll()
-    .then((orders) => {
-      console.log(orders);
-      res.status(200).send(orders);
-    })
-    .catch((error) => {
-      res.status(404).send(error);
-    });
+  console.log("entre");
+  Order.findAll().then((order) => {
+    res.status(200).send(order);
+  });
 });
 
 orderRoute.get("/user/:id", (req, res) => {
-  Orders.findAll({
+  Order.findAll({
     where: {
       user_id: req.params.id,
     },
@@ -26,7 +22,7 @@ orderRoute.get("/user/:id", (req, res) => {
 });
 
 orderRoute.get("/number/:id", (req, res) => {
-  Orders.findAll({
+  Order.findAll({
     where: {
       order_id: req.params.id,
     },
@@ -38,11 +34,26 @@ orderRoute.get("/number/:id", (req, res) => {
 });
 
 orderRoute.post("/add", (req, res) => {
-  Orders.create(req.body).then(() => res.sendStatus(201));
+  const { date, user, cart, precioFinal } = req.body;
+
+  Order.create({
+    user_id: user.id,
+    userName: user.userName,
+    products: cart,
+    total_price: precioFinal,
+    created: date,
+  })
+    .then((order) => {
+      console.log(order);
+      return res.status(201).send(order);
+    })
+    .catch((error) => {
+      res.status(404).send(error);
+    });
 });
 
 orderRoute.put("/update/:id", (req, res) => {
-  Orders.update(
+  Order.update(
     { state: req.body.status },
     { where: { order_id: req.params.id } }
   )
@@ -53,7 +64,7 @@ orderRoute.put("/update/:id", (req, res) => {
 });
 
 orderRoute.delete("/delete/:id", (req, res) => {
-  Orders.destroy({ where: { order_id: req.params.id } })
+  Order.destroy({ where: { order_id: req.params.id } })
     .then(() => res.sendStatus(202))
     .catch((error) => {
       res.status(404).send(error);
