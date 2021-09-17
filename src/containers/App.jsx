@@ -23,6 +23,7 @@ import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
 import { getAllProducts } from "../store/products";
 import AdminSingleProduct from "../components/AdminSingleProduct";
+import AdminNewProduct from "../components/AdminNewProduct";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -77,6 +78,9 @@ export default function App() {
             path="/edit/products/:id"
             render={({ match }) => <AdminSingleProduct id={match.params.id} />}
           />
+          <Route  exact path="/create/products/">
+            <AdminNewProduct />
+          </Route> 
           <Redirect from="/" to="/home" />
         </Switch>
       </ThemeProvider>
