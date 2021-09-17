@@ -53,20 +53,21 @@ productsRouter.get("/brand/:name", (req, res, next) => {
     .catch(next);
 });
 
-productsRouter.post("/", (req, res, next) => {
-  const { name, volume, category, brand, stock, img, price } = req.body;
-
-  Product.create(req.body)
-    .then((data) => {
-      res.status(201).json({
-        message: "Created successfully",
-        product: data,
-      });
-    })
-    .catch(next);
+productsRouter.post("/", async (req, res) => {
+  try {
+    const { name, volume, category, brand, stock, img, price } = req.body;
+    const product = await Product.create(req.body)
+    const categoryId = await Category.findOne({
+      where: { category_name: category },
+    });
+    product.setCategories(categoryId);
+    return res.sendStatus(201);
+  } catch {
+    (error) => console.log(error);
+  }
 });
 
-productsRouter.put("/:id", async (req, res, next) => {
+productsRouter.put("/:id", async (req, res) => {
   try {
     const { name, volume, category, brand, stock, img, price } = req.body;
     await Product.update(req.body, {
