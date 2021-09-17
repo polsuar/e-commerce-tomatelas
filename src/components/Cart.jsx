@@ -118,8 +118,12 @@ const Cart = () => {
                     product.price * product.quantity
                   }`}</TableCell>
                   <TableCell align="right">
-                    <IconButton edge="end" color="inherit">
-                      <DeleteIcon onClick={() => handleDelete(product.id)} />
+                    <IconButton
+                      edge="end"
+                      color="inherit"
+                      onClick={() => handleDelete(product.id)}
+                    >
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
