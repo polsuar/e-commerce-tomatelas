@@ -5,7 +5,8 @@ import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import { People, Category, ShoppingBasket,MenuBook } from "@material-ui/icons";
 import AdminProducts from "../components/AdminProducts"
 import AdminUsers from "../components/AdminUsers"
-import AdminSingleProduct from "../components/AdminSingleProduct"
+import AdminCategories from "../components/AdminCategories"
+
 import {
   Container,
 } from "@material-ui/core";
@@ -97,10 +98,10 @@ export default function Admin() {
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          Item Two
+          Ordenes
         </TabPanel>
         <TabPanel value={value} index={2}>
-        <AdminSingleProduct/>
+        <AdminCategories/>
         </TabPanel>
         <TabPanel value={value} index={3}>
         <AdminUsers/>
