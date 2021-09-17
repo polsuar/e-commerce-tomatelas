@@ -15,6 +15,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Select from "@material-ui/core/Select";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Chip from "@material-ui/core/Chip";
+
 import FaceIcon from "@material-ui/icons/Face";
 import {
   Typography,
@@ -75,8 +76,15 @@ const ProfileUserInfo = () => {
     }
   }, [errors, messageInfo]);
 
+  const propertyValues = Object.values(errors);
+  const errorsArr = propertyValues?.map((el) => el.message);
+
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 2));
+    console.log("OBJETO ENVIADO => ", JSON.stringify(data, null, 2));
+
+    console.log("ARRAY CON ERRORES", errorsArr);
+
+    handleAlert();
 
     return (
       axios
@@ -84,7 +92,7 @@ const ProfileUserInfo = () => {
         //      .then((r) => r.data)
         .then((r) => {
           console.log("DATOS MODIFICADOS => NUEVO USUARIO: ====> ", r.data);
-          setMessageInfo(" ¡Datos modificados con éxito! ");
+          setMessageInfo("¡Datos modificados con éxito!");
         })
         .catch((error) => {
           console.log("ERROR RESPONSE DATA ====>", error.response.data);
@@ -96,6 +104,11 @@ const ProfileUserInfo = () => {
         })
     );
   };
+
+  const handleAlert = () => {
+    errorsArr.length > 0 ? setMessageInfo(errorsArr) : setMessageInfo("");
+  };
+
   const handleClose = () => {
     setStatus({ open: false });
     setMessageInfo("");
@@ -103,18 +116,24 @@ const ProfileUserInfo = () => {
     return;
   };
 
-  const propertyValues = Object.values(errors);
-  const errorsArr = propertyValues?.map((el) => el.message);
-
   return (
     <>
       {errorsArr.length > 0 || messageInfo ? (
         <Snackbar
           open={status.open}
+          autoHideDuration={3000}
+          onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           className={classes.snackbar}
         >
-          <Alert severity="error" onClose={handleClose}>
+          <Alert
+            severity={
+              messageInfo === "¡Datos modificados con éxito!"
+                ? "success"
+                : "error"
+            }
+            onClose={handleClose}
+          >
             <div
               style={{
                 display: "flex",

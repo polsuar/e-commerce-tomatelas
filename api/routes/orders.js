@@ -15,7 +15,7 @@ orderRoute.get("/user/:id", (req, res) => {
       user_id: req.params.id,
     },
   })
-    .then(() => res.sendStatus(200))
+    .then((order) => res.status(200).send(order))
     .catch((error) => {
       res.status(404).send(error);
     });

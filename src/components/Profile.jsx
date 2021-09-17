@@ -12,6 +12,8 @@ import { PersonPin, Help, ShoppingBasket } from "@material-ui/icons";
 import { getUserFavorites } from "../store/favorites";
 import Favorites from "./Favorites";
 import ProfileUserInfo from "./ProfileUserInfo";
+import UserOrders from "./UserOrders";
+
 import {
   Card,
   CardActionArea,
@@ -110,7 +112,7 @@ export default function Profile() {
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          otro
+          <UserOrders />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <ProfileUserInfo />
