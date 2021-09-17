@@ -42,7 +42,14 @@ orderRoute.post("/add", (req, res) => {
     products: cart,
     total_price: precioFinal,
     created: date,
-  }).then(() => res.sendStatus(201));
+  })
+    .then((order) => {
+      console.log(order);
+      return res.status(201).send(order);
+    })
+    .catch((error) => {
+      res.status(404).send(error);
+    });
 });
 
 orderRoute.put("/update/:id", (req, res) => {

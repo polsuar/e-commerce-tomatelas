@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,6 +43,7 @@ export default function AfterCompra() {
   const dispatch = useDispatch();
   const [envio, setEnvio] = useState(0);
   const [date, setDate] = useState("");
+  const history = useHistory();
 
   const reducer = (acum, current) => acum + current.price * current.quantity;
   let total = cart ? cart.reduce(reducer, 0) : 0;
@@ -78,13 +80,14 @@ export default function AfterCompra() {
 
   const handleClick = () => {
     let precioFinal = total + envio;
-    dispatch(setOrder({ date, user, cart, precioFinal })).then(() => {
+    dispatch(setOrder({ date, user, cart, precioFinal })).then((res) => {
       const message = {
         bodyMessage:
           "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, no manejés y asi nos cuidarnos entre todos!",
-        subjectMessage: "Compra realizada, orden",
-        // userName: res.data.userName,
-        // email: res.data.email,
+        subjectMessage: "Compra realizada!",
+        userName: user.userName,
+        email: user.email,
+        order: res.payload,
       };
     });
   };

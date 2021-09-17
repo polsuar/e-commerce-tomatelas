@@ -7,7 +7,9 @@ import axios from "axios";
 
 export const setOrder = createAsyncThunk("SETORDER", (data) => {
   const { date, user, cart, precioFinal } = data;
-  return axios.post(`/api/orders/add`, data).then((res) => res.data);
+  return axios.post(`/api/orders/add`, data).then((res) => {
+    return res.data;
+  });
 });
 
 const initialState = [];

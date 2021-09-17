@@ -147,7 +147,10 @@ const Cart = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Link to="/confirmacion" className={classes.comprar}>
+                    <Link
+                      to={user.id ? "/confirmacion" : "/login"}
+                      className={classes.comprar}
+                    >
                       <Button variant="contained" color="primary" size="large">
                         Comprar
                       </Button>

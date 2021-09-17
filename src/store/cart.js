@@ -26,7 +26,6 @@ export const getUserCart = createAsyncThunk("GETUSERCART", (id) => {
 export const addToLocalCart = createAsyncThunk(
   "addToCart",
   ({ product, user }) => {
-    console.log("---------------->", user.id);
     const cart = localStorage.getItem("cart");
     if (cart) {
       const carrito = JSON.parse(cart);
