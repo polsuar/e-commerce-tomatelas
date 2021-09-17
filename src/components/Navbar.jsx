@@ -249,10 +249,7 @@ export default function Navbar() {
             {user.userName ? <p>{user.userName}</p> : <p>Guess</p>}
 
             <Link to="/cart" className={classes.navButton}>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
+              <IconButton color="inherit">
                 <Badge badgeContent={cart.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
