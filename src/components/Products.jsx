@@ -83,7 +83,8 @@ export default function Products() {
   ////
 
   const handleClick = (product) => {
-    dispatch(addToLocalCart({ product, user }));
+    console.log("products");
+    dispatch(addToLocalCart(product));
     handleOpenCarrito();
   };
 
