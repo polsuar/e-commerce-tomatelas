@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { getSelectedProduct } from "../store/selectedProduct";
 import { addToLocalCart } from "../store/cart";
@@ -18,79 +17,29 @@ import {
   Select,
   Breadcrumbs,
   Link,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
 } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(10),
-    },
-    margin: {
-      margin: theme.spacing(3),
-    },
-
-    justifyContent: "center",
-  },
-
   grey: {
-    //padding: theme.spacing(2),
-    //textAlign: "center",
     color: theme.palette.text.secondary,
     marginTop: theme.spacing(5),
     margin: theme.spacing(1),
-    //textAlign: "center",
   },
+
   margin: {
     marginTop: theme.spacing(5),
   },
+
   otherMargin: {
     marginTop: theme.spacing(10),
     marginLeft: theme.spacing(10),
     marginRight: theme.spacing(10),
-    // background: "black",
   },
-  /* paperLeft: {
-    flex: 4,
-    height: "100%",
-    width: "50%",
-    margin: 30,
-    textAlign: "center",
-    padding: 10,
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
-    background: "red",
-  },
-  paperRight: {
-    height: "100%",
-    width: "50%",
-    flex: 4,
-    margin: 30,
-    paddingTop: "8rem",
-    padding: 30,
-    //alignItems: "center",
-    // display: "flex",
-    //justifyContent: "center",
-    //flexDirection: "column",
-    //textAlign: "center",
-    //color: theme.palette.text.secondary,
-    background: "#CCFAE1",
-  },
-  paperContainer: {
-    display: "flex",
-    justifyContent: "space-evenly",
-    // width: "100vw",
-    // height: "100vh",
-    // alignItems: "center",
-    background: "aqua",
-  }, */
+
   button: {
     display: "block",
     marginTop: theme.spacing(2),
@@ -105,22 +54,16 @@ const useStyles = makeStyles((theme) => ({
     heigth: "100vh",
     display: "flex",
     marginTop: theme.spacing(1),
-    //justifyContent: "space-evenly",
-    // background: "aqua",
   },
   imagenContainer: {
     width: "50%",
     heigth: "100%",
-    //marginTop: theme.spacing(5),
     marginLeft: theme.spacing(5),
-    // background: "red",
   },
   textoContainer: {
     width: "50%",
     heigth: "100%",
-    // marginTop: theme.spacing(5),
     marginRight: theme.spacing(10),
-    // background: "#CCFAE1",
   },
 }));
 
@@ -129,24 +72,17 @@ const SingleProductView = ({ id }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const [quantity, setQuantity] = useState(6);
-
   useEffect(() => {
     dispatch(getSelectedProduct(id));
   }, []);
 
   const classes = useStyles();
   const theme = useTheme();
-
-  const [open, setOpen] = useState(false);
-
   const history = useHistory();
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    history.push("/");
-    console.info("You clicked a breadcrumb.");
-  };
+  //Funcionalidad para el FORMCONTROL
+  const [quantity, setQuantity] = useState(6);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
@@ -157,15 +93,6 @@ const SingleProductView = ({ id }) => {
   const handleOpen = () => {
     setOpen(true);
   };
-
-  const addCar = (product) => {
-    dispatch(addToLocalCart({ product, user }));
-  };
-
-  const addFav = (productId) => {
-    dispatch(addFavorite({ userId: user.id, productId: productId }));
-  };
-
   const handlePrice = () => {
     if (quantity === 6) {
       return (
@@ -197,6 +124,23 @@ const SingleProductView = ({ id }) => {
     }
   };
 
+  //Funcionalidad para el BREADCRUMB
+  const handleClick = (event) => {
+    event.preventDefault();
+    history.push("/");
+    console.info("You clicked a breadcrumb.");
+  };
+
+  //Funcionalidad para AGREGAR AL CARRITO
+  const addCar = (product) => {
+    dispatch(addToLocalCart({ product, user }));
+  };
+
+  //Funcionalidad para AGREGAR A FAVORITOS
+  const addFav = (productId) => {
+    dispatch(addFavorite({ userId: user.id, productId: productId }));
+  };
+
   return (
     <div>
       <Paper className={classes.otherMargin} elevation={3}>
@@ -224,13 +168,7 @@ const SingleProductView = ({ id }) => {
                 <Link color="inherit" href="/home" onClick={handleClick}>
                   Home
                 </Link>
-                <Link
-                  color="inherit"
-                  //href="/getting-started/installation/"
-                  onClick={handleClick}
-                >
-                  {product.brand}
-                </Link>
+                <Typography color="inherit">{product.brand}</Typography>
                 <Typography color="inherit">{product.name}</Typography>
               </Breadcrumbs>
 

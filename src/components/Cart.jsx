@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,8 +49,10 @@ const Cart = () => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
-  const [price, setPrice] = useState(0);
   const dispatch = useDispatch();
+
+  const reducer = (acum, current) => acum + current.price * current.quantity;
+  let total = cart ? cart.reduce(reducer, 0) : 0;
 
   const handleChange = (productId, e) => {
     const quantity = e.target.value;
@@ -141,7 +143,7 @@ const Cart = () => {
                     align="right"
                   >
                     <Typography component="h2" variant="h5" color="secondary">
-                      Total 12314123
+                      Total ${total}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

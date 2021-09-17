@@ -12,6 +12,9 @@ Orders.init(
     user_id: {
       type: S.INTEGER,
     },
+    userName: {
+      type: S.STRING,
+    },
     products: {
       type: S.JSONB,
       primaryKey: true,
