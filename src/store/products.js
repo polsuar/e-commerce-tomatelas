@@ -32,7 +32,7 @@ export const editProduct = createAsyncThunk(
 
 export const addProduct = createAsyncThunk(
   "ADD_PRODUCT",
-  ({ productId }) => {
+  ( productId ) => {
     return axios
       .post(`/api/products/${productId}`)
       .then((res) => res.data); 
@@ -60,6 +60,7 @@ const initialState = [];
 const productsReducer = createReducer(initialState, {
   [getAllProducts.fulfilled]: (state, action) => action.payload,
   [getProductsByName.fulfilled]: (state, action) => action.payload,
+  [editProduct.fulfilled]: (state, action) => [...state, action.payload],
   [removeProduct.fulfilled]: (state, action) => {
     return state.filter((prod) => prod.id !== action.payload);
   },
