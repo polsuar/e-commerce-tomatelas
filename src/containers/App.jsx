@@ -78,9 +78,9 @@ export default function App() {
             path="/edit/products/:id"
             render={({ match }) => <AdminSingleProduct id={match.params.id} />}
           />
-          <Route  exact path="/create/products/">
+          <Route exact path="/create/products/">
             <AdminNewProduct />
-          </Route> 
+          </Route>
           <Redirect from="/" to="/home" />
         </Switch>
       </ThemeProvider>
