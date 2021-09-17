@@ -21,7 +21,6 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
-import { useHistory } from "react-router";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -53,7 +52,7 @@ export default function AfterCompra() {
   const [date, setDate] = useState("");
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
+  const handleClickAlert = () => {
     setOpen(true);
   };
 
@@ -192,7 +191,7 @@ export default function AfterCompra() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={handleClick}
+          onClick={handleClickAlert}
         >
           Confirmar compra
         </Button>
