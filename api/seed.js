@@ -23,6 +23,23 @@ for (let i = 0; i < 10; i++) {
     phone: faker.phone.phoneNumber(),
   });
 }
+const admin = {
+  userName: "admin",
+  email: "admin@gmail.com",
+  firstName: "admin",
+  LastName: "admin",
+  gender: "admin",
+  password: "$2b$16$y.E7pYNTKmuDjiNR.1s/LuxyOcC707LN38l30tN9QOQjNvB8up4Jy",
+  street: "admin",
+  province: "admin",
+  city: "admin",
+  zipcode: "admin",
+  phone: "admin",
+  salt: "$2b$16$y.E7pYNTKmuDjiNR.1s/Lu",
+  isAdmin: true,
+};
+users.push(admin);
+
 const categories = [
   { category_name: "Cervezas" },
   { category_name: "Gaseosas" },

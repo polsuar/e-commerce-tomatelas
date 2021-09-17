@@ -52,7 +52,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const reducer = (acum, current) => acum + current.price * current.quantity;
-  let total = cart ? cart.reduce(reducer, 0) : 0;
+  let total = cart[0] ? cart.reduce(reducer, 0) : 0;
 
   const handleChange = (productId, e) => {
     const quantity = e.target.value;
@@ -65,7 +65,7 @@ const Cart = () => {
   };
 
   const handleDeleteAll = () => {
-    dispatch(clearLocalCart());
+    dispatch(clearLocalCart(user.id));
   };
 
   return (
@@ -77,7 +77,7 @@ const Cart = () => {
         </Typography>
         <Table size="small">
           <TableBody>
-            {cart &&
+            {cart[0] &&
               cart.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell>
@@ -147,7 +147,10 @@ const Cart = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Link to="/confirmacion" className={classes.comprar}>
+                    <Link
+                      to={user.id ? "/confirmacion" : "/login"}
+                      className={classes.comprar}
+                    >
                       <Button variant="contained" color="primary" size="large">
                         Comprar
                       </Button>

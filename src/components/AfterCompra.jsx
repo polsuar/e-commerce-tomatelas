@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setOrder } from "../store/orders";
+import emailjs from "emailjs-com";
 import {
   Container,
   Table,
@@ -19,6 +21,7 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
+import { useHistory } from "react-router";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -45,6 +48,7 @@ export default function AfterCompra() {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const [envio, setEnvio] = useState(0);
   const [date, setDate] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -75,6 +79,41 @@ export default function AfterCompra() {
     const date = new Date();
     setDate(date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
   }, []);
+
+  const sendEmail = (data) => {
+    emailjs
+      .send(
+        "service_nwzoqrw",
+        "template_reczzzg",
+        data,
+        "user_XCxOcDMqNx5iPI6zMfMzI"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
+  const handleClick = () => {
+    let precioFinal = total + envio;
+    dispatch(setOrder({ date, user, cart, precioFinal })).then((res) => {
+      const message = {
+        bodyMessage:
+          "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, es mejor que no manejes asi nos cuidarnos entre todos!",
+        userName: user.userName,
+        email: user.email,
+        orderNumber: res.payload.order_id,
+        price: res.payload.total_price,
+        created: res.payload.created,
+        state: res.payload.state,
+      };
+      sendEmail(message);
+    });
+  };
 
   return (
     <React.Fragment>

@@ -36,10 +36,9 @@ const sections = [
 const mainFeaturedPost = {
   title: "PROMO DEL MES",
   description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
+    "GRAN PROMO MIX DE CERVEZAS. Llevate hoy tu combo Pack Budweiser Corona Mix X 24 Latas 473ml.",
   image: "https://images5.alphacoders.com/293/293049.jpg",
   imgText: "main image description",
-  linkText: "Continue reading…",
 };
 
 const featuredPosts = [
@@ -47,17 +46,18 @@ const featuredPosts = [
     title: "Producto Destacado",
     date: "Stock disponible",
     description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "http://codemag.mx/wp-content/uploads/2021/02/portada-3.jpg",
+      "¡Llevate nuestro producto destacado del mes! Cerveza Andes Origen en todas sus variedades.",
+    image:
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/178/126/products/dsc000081-eec626183b690c2ff316119455743769-1024-1024.jpg",
     imageText: "Image Text",
   },
   {
     title: "Promo",
     date: "Valido hasta 06/11",
     description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+      "Aprovechá el Combo Vino La Celia Pioneer Malbec X6 + Cabernet Franc X6 que te ofrece ¡Tomatelas!",
     image:
-      "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/184/535/products/previa51-986953418a31224c0116082471576575-640-0.png",
+      "https://lh3.googleusercontent.com/proxy/sB2TM_9x3pptzhkL35PPfWE9aQENwf8GfGXAS-nNrl5_NprT3WJqqhJFeQ3JANWKGOXDV2GvJTPX34wf9D3EqToh8zVvcrB_OP8I8h2uiSu7CgbmkCJ36GtnWExGTMIpjewUbNvt0eZpZGrq",
     imageText: "Image Text",
   },
 ];
@@ -82,9 +82,6 @@ export default function Home() {
   const products = useSelector((state) => state.products);
   const classes = useStyles();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllProducts());
-  }, []);
 
   return (
     <React.Fragment>

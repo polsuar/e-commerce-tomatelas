@@ -1,23 +1,12 @@
 import React from "react";
-import axios from "axios";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
-import { PersonPin, Help, ShoppingBasket } from "@material-ui/icons";
-import { getUserFavorites } from "../store/favorites";
-import Favorites from "./Favorites";
-import ProfileUserInfo from "./ProfileUserInfo";
+import { People, Category, ShoppingBasket,MenuBook } from "@material-ui/icons";
+import AdminProducts from "../components/AdminProducts"
+import AdminUsers from "../components/AdminUsers"
+import AdminSingleProduct from "../components/AdminSingleProduct"
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Hidden,
   Container,
 } from "@material-ui/core";
 function TabPanel(props) {
@@ -71,9 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+export default function Admin() {
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -83,9 +70,8 @@ export default function Profile() {
   };
 
   React.useEffect(() => {
-    console.log(user.id);
-    dispatch(getUserFavorites(user.id));
-  }, [user.id]);
+  
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -100,20 +86,24 @@ export default function Profile() {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label="Favoritos" icon={<FavoriteIcon />} {...a11yProps(0)} />
+            <Tab label="Productos" icon={<MenuBook />} {...a11yProps(0)} />
             <Tab label="Ordenes" icon={<ShoppingBasket />} {...a11yProps(1)} />
-            <Tab label="Perfil" icon={<PersonPin />} {...a11yProps(2)} />
+            <Tab label="Categorias" icon={<Category />} {...a11yProps(2)} />
+            <Tab label="Usuarios" icon={<People />} {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Favorites />
+          <AdminProducts/>
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          otro
+          Item Two
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ProfileUserInfo />
+        <AdminSingleProduct/>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+        <AdminUsers/>
         </TabPanel>
       </Container>
     </div>

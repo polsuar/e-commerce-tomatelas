@@ -1,8 +1,8 @@
 const S = require("sequelize");
 const db = require("../db");
 
-class Orders extends S.Model {}
-Orders.init(
+class Order extends S.Model {}
+Order.init(
   {
     order_id: {
       type: S.INTEGER,
@@ -11,6 +11,9 @@ Orders.init(
     },
     user_id: {
       type: S.INTEGER,
+    },
+    userName: {
+      type: S.STRING,
     },
     products: {
       type: S.JSONB,
@@ -21,8 +24,7 @@ Orders.init(
       allowNull: false,
     },
     created: {
-      type: S.DATE,
-      // defaultValue:''
+      type: S.STRING,
     },
     state: {
       type: S.STRING,
@@ -30,7 +32,7 @@ Orders.init(
       defaultValue: "pending",
     },
   },
-  { sequelize: db, modelName: "orders" }
+  { sequelize: db, modelName: "order" }
 );
 
-module.exports = Orders;
+module.exports = Order;

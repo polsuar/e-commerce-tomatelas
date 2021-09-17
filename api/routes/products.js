@@ -1,7 +1,9 @@
 const express = require("express");
 const productsRouter = express.Router();
 const Product = require("../models/ProductsModel");
+const Category = require("../models/CategoryModel");
 const { Op, fn, col } = require("sequelize");
+require("../models/index");
 
 productsRouter.get("/", (req, res, next) => {
   Product.findAll()
@@ -52,7 +54,7 @@ productsRouter.get("/brand/:name", (req, res, next) => {
 });
 
 productsRouter.post("/", (req, res, next) => {
-  const { name, volume, category, brand, stock, img, description } = req.body;
+  const { name, volume, category, brand, stock, img, price } = req.body;
 
   Product.create(req.body)
     .then((data) => {
@@ -64,22 +66,25 @@ productsRouter.post("/", (req, res, next) => {
     .catch(next);
 });
 
-productsRouter.put("/:id", (req, res, next) => {
-  const { name, volume, category, brand, stock, img, description } = req.body;
-
-  Product.update(req.body, {
-    where: { id: req.params.id },
-    returning: true,
-  })
-    .then(([noData, [data]]) =>
-      res.json({
-        message: "Updated successfully",
-        product: data,
-      })
-    )
-    .catch(next);
+productsRouter.put("/:id", async (req, res, next) => {
+  try {
+    const { name, volume, category, brand, stock, img, price } = req.body;
+    await Product.update(req.body, {
+      where: { id: req.params.id },
+      returning: true,
+      plain: true,
+    });
+    const product = await Product.findByPk(req.params.id);
+    const categoryId = await Category.findOne({
+      where: { category_name: category },
+    });
+    product.setCategories(categoryId);
+    return res.sendStatus(201);
+  } catch {
+    (error) => console.log(error);
+  }
 });
-
+//.then((data) => res.status(201).send(data[1]))
 productsRouter.delete("/:id", (req, res, next) => {
   const { id } = req.params;
   Product.destroy({

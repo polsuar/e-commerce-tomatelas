@@ -1,4 +1,3 @@
-const { Group } = require("@material-ui/icons");
 const express = require("express");
 const Product = require("../models/ProductsModel");
 const brandRoute = express.Router();
@@ -9,7 +8,6 @@ brandRoute.get("/", async (req, res) => {
     attributes: ["brand"],
     group: ["brand"],
   }).then((brand) => {
-    console.log(brand);
     res.status(200).send(brand);
   });
 });

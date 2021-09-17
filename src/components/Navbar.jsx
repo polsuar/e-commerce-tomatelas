@@ -120,8 +120,7 @@ export default function Navbar() {
       console.log(value);
       dispatch(getAllProducts());
     }
-    //history ya esta definido.
-    //aca hay que hacer un history.push("/a donde este vista de productos buscados")
+    history.push("/");
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -141,6 +140,14 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {" "}
+      {user.isAdmin ? (
+        <>
+          <MenuItem onClick={handleMenuClose}>
+            <Link to="/admin">Admin</Link>
+          </MenuItem>
+        </>
+      ) : null}
       {token ? (
         <>
           <MenuItem onClick={handleMenuClose}>
@@ -237,6 +244,8 @@ export default function Navbar() {
           </Paper>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {user.userName ? <p>{user.userName}</p> : <p>Guess</p>}
+
             <Link to="/cart" className={classes.navButton}>
               <IconButton color="inherit">
                 <Badge badgeContent={cart.length} color="secondary">
