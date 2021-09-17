@@ -76,8 +76,15 @@ const ProfileUserInfo = () => {
     }
   }, [errors, messageInfo]);
 
+  const propertyValues = Object.values(errors);
+  const errorsArr = propertyValues?.map((el) => el.message);
+
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 2));
+    console.log("OBJETO ENVIADO => ", JSON.stringify(data, null, 2));
+
+    console.log("ARRAY CON ERRORES", errorsArr);
+
+    handleAlert();
 
     return (
       axios
@@ -98,6 +105,10 @@ const ProfileUserInfo = () => {
     );
   };
 
+  const handleAlert = () => {
+    errorsArr.length > 0 ? setMessageInfo(errorsArr) : setMessageInfo("");
+  };
+
   const handleClose = () => {
     setStatus({ open: false });
     setMessageInfo("");
@@ -105,15 +116,12 @@ const ProfileUserInfo = () => {
     return;
   };
 
-  const propertyValues = Object.values(errors);
-  const errorsArr = propertyValues?.map((el) => el.message);
-
   return (
     <>
       {errorsArr.length > 0 || messageInfo ? (
         <Snackbar
           open={status.open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           className={classes.snackbar}
@@ -124,6 +132,7 @@ const ProfileUserInfo = () => {
                 ? "success"
                 : "error"
             }
+            onClose={handleClose}
           >
             <div
               style={{
