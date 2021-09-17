@@ -9,22 +9,24 @@ import Home from "./Home";
 import Navbar from "../components/Navbar";
 import Cart from "../components/Cart";
 import AfterCompra from "../components/AfterCompra";
+import ForBidden from "../components/ForBidden";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
 import Register from "./Register";
 import Profile from "../components/Profile";
-import Admin from "../components/Admin"
+import Admin from "../components/Admin";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
 import AdminSingleProduct from "../components/AdminSingleProduct";
 
 export default function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -50,7 +52,7 @@ export default function App() {
           </PrivateRoute>
 
           <PrivateRoute path="/admin">
-            <Admin />
+            {user.isAdmin ? <Admin /> : <ForBidden />}
           </PrivateRoute>
 
           <Route path="/login">

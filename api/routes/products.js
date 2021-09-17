@@ -32,7 +32,6 @@ productsRouter.get("/name/:name", (req, res, next) => {
   })
     .then((product) => {
       if (!product) res.status(404);
-      console.log(product);
       res.send(product);
     })
     .catch(next);
@@ -52,7 +51,7 @@ productsRouter.get("/brand/:name", (req, res, next) => {
 });
 
 productsRouter.post("/", (req, res, next) => {
-  const { name, volume, category, brand, stock, img, price} = req.body;
+  const { name, volume, category, brand, stock, img, price } = req.body;
 
   Product.create(req.body)
     .then((data) => {
@@ -65,7 +64,7 @@ productsRouter.post("/", (req, res, next) => {
 });
 
 productsRouter.put("/:id", (req, res, next) => {
-  const { name, volume, category, brand, stock, img, price} = req.body;
+  const { name, volume, category, brand, stock, img, price } = req.body;
 
   Product.update(req.body, {
     where: { id: req.params.id },

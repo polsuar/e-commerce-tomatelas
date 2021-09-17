@@ -3,7 +3,6 @@ const orderRoute = express.Router();
 const Order = require("../models/OrdersModel");
 
 orderRoute.get("/", (req, res) => {
-  console.log("entre");
   Order.findAll().then((order) => {
     res.status(200).send(order);
   });
@@ -44,7 +43,6 @@ orderRoute.post("/add", (req, res) => {
     created: date,
   })
     .then((order) => {
-      console.log(order);
       return res.status(201).send(order);
     })
     .catch((error) => {

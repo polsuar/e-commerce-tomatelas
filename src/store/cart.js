@@ -27,16 +27,12 @@ export const addToLocalCart = createAsyncThunk(
   "addToCart",
   (product, thunkAPI) => {
     const { user } = thunkAPI.getState();
-    console.log("addtolocalCart", user.id);
     const cart = localStorage.getItem("cart");
     if (cart) {
       const carrito = JSON.parse(cart);
       const isRepeat = carrito.some((item) => item.id === product.id);
 
       if (isRepeat) {
-        console.log(
-          "ESTE PRODUCTO YA FUE AGREGADO, MODIFIQUE LA CANTIDAD EN EL CARRITO"
-        );
         return;
       } else {
         carrito.push(product);
@@ -78,11 +74,9 @@ export const deleteProduct = createAsyncThunk(
   "DELETEPRODUCT",
   (productId, thunkAPI) => {
     const { cart, user } = thunkAPI.getState();
-    console.log("----------------->", cart);
     const newCart = cart.filter((item) => {
       return item.id !== productId;
     });
-    console.log(newCart, user);
     localStorage.setItem("cart", JSON.stringify(newCart));
     axios.put(`/api/cart/${user.id}/delete`, { productId });
     return newCart;
@@ -95,13 +89,11 @@ const cartReducer = createReducer(initialState, {
   [addToLocalCart.fulfilled]: (state, action) => action.payload,
   [setLocalCart]: (state, action) => action.payload,
   [setQuantity.fulfilled]: (state, action) => {
-    console.log("--------------->", action);
     return action.payload;
   },
   [getUserCart.fulfilled]: (state, action) => action.payload,
   [clearLocalCart.fulfilled]: (state, action) => action.payload,
   [deleteProduct.fulfilled]: (state, action) => {
-    console.log("actioooooon", action);
     return action.payload;
   },
   /* [addToCart.fulfilled]: (state, action) => action.payload,

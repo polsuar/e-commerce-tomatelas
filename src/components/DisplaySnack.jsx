@@ -3,7 +3,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
 const DisplaySnack = ({ msg, open, handleCloseError, severity }) => {
-  console.log("llegaron props", msg, open, severity);
   return (
     <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseError}>
       <Alert onClose={handleCloseError} severity={severity}>

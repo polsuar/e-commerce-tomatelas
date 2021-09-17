@@ -61,21 +61,12 @@ export default function AfterCompra() {
   }, []);
 
   const sendEmail = (data) => {
-    emailjs
-      .send(
-        "service_nwzoqrw",
-        "template_mrqbsy5",
-        data,
-        "user_XCxOcDMqNx5iPI6zMfMzI"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    emailjs.send(
+      "service_nwzoqrw",
+      "template_mrqbsy5",
+      data,
+      "user_XCxOcDMqNx5iPI6zMfMzI"
+    );
   };
 
   const handleClick = () => {

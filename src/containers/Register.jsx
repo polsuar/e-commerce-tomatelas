@@ -66,26 +66,15 @@ const Register = () => {
   const errorsArr = propertyValues.map((el) => el.message);
 
   const sendEmail = (data) => {
-    emailjs
-      .send(
-        "service_nwzoqrw",
-        "template_mrqbsy5",
-        data,
-        "user_XCxOcDMqNx5iPI6zMfMzI"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    emailjs.send(
+      "service_nwzoqrw",
+      "template_mrqbsy5",
+      data,
+      "user_XCxOcDMqNx5iPI6zMfMzI"
+    );
   };
 
   const onSubmit = (data) => {
-    console.log("acaaaaa", JSON.stringify(data, null, 2));
-
     return (
       axios
         .post("http://localhost:3001/api/auth/register", data)
@@ -105,7 +94,6 @@ const Register = () => {
           return history.push("/login");
         })
         .catch((error) => {
-          console.log("ERROR RESPONSE DATA ====>", error.response.data);
           if (error.response.data === "User Already Exist. Please Login") {
             setMessageInfo(
               "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."

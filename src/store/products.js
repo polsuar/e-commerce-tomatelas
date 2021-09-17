@@ -12,36 +12,20 @@ export const getProductsByName = createAsyncThunk(
   }
 );
 
-export const removeProduct = createAsyncThunk(
-  "REMOVE_PRODUCT",
-  (productId) => {
-    return axios
-      .delete(`/api/products/${productId}`)
-      .then((res) => res.data); 
-  }
-);
+export const removeProduct = createAsyncThunk("REMOVE_PRODUCT", (productId) => {
+  return axios.delete(`/api/products/${productId}`).then((res) => res.data);
+});
 
-export const editProduct = createAsyncThunk(
-  "EDIT_PRODUCT",
-  (productId) => {
-    return axios
-      .put(`/api/products/${productId}`)
-      .then((res) => res.data); 
-  }
-);
+export const editProduct = createAsyncThunk("EDIT_PRODUCT", (productId) => {
+  return axios.put(`/api/products/${productId}`).then((res) => res.data);
+});
 
-export const addProduct = createAsyncThunk(
-  "ADD_PRODUCT",
-  ( productId ) => {
-    return axios
-      .post(`/api/products/${productId}`)
-      .then((res) => res.data); 
-    }
-);
+export const addProduct = createAsyncThunk("ADD_PRODUCT", (productId) => {
+  return axios.post(`/api/products/${productId}`).then((res) => res.data);
+});
 export const getProductsByCategory = createAsyncThunk(
   "GETPRODUCTSBYCATEGORY",
   (categotyId) => {
-    console.log(categotyId);
     return axios.get(`/api/category/${categotyId}`).then((res) => res.data);
   }
 );

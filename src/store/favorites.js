@@ -8,7 +8,6 @@ import axios from "axios";
 export const getUserFavorites = createAsyncThunk(
   "GET_USER_FAVORITES",
   (userId) => {
-    console.log("USER ID EN ASYNCTHUNKS", userId);
     return axios.get(`/api/favorites/${userId}`).then((res) => res.data); //  ID=4
   }
 );

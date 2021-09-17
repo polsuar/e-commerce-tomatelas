@@ -60,10 +60,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginTop: theme.spacing(1),
   },
+
   imagenContainer: {
     width: "50%",
     heigth: "100%",
-    marginLeft: theme.spacing(5),
+    // marginLeft: theme.spacing(5),
   },
   textoContainer: {
     width: "50%",
@@ -135,7 +136,6 @@ const SingleProductView = ({ id }) => {
   const handleClick = (event) => {
     event.preventDefault();
     history.push("/");
-    console.info("You clicked a breadcrumb.");
   };
 
   //Alert en FAVS si NO HAY USUARIO
@@ -176,9 +176,7 @@ const SingleProductView = ({ id }) => {
 
   //Funcionalidad para AGREGAR AL CARRITO
   const addCar = (product) => {
-    // product.quantity = quantity;
-    console.log(product, "-----PRODUCT");
-    dispatch(addToLocalCart({ product, user }));
+    dispatch(addToLocalCart(product));
     handleOpenCarrito();
   };
 
@@ -267,7 +265,7 @@ const SingleProductView = ({ id }) => {
                   <IconButton
                     color="primary"
                     aria-label="add to shopping cart"
-                    onClick={() => addCar(product)} ///////////
+                    onClick={() => addCar(product)}
                   >
                     <AddShoppingCartIcon fontSize="large" />
                     <Snackbar

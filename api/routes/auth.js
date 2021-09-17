@@ -36,7 +36,6 @@ router.post("/login", async (req, res) => {
       res.status(200).json(user);
     } else res.status(400).send("Invalid Credentials");
   } catch (err) {
-    console.log("ALGO SALIO MAL ====", err);
     res.status(409).send(err);
   }
   // Our login logic ends here
@@ -71,7 +70,6 @@ router.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ where: { email } });
 
     if (oldUser) {
-      console.log("USUARIO REPETIDO!!!! ======");
       return res.status(409).send("User Already Exist. Please Login");
     }
 

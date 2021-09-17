@@ -25,7 +25,6 @@ favoritesRoute.post("/:id", (req, res) => {
     },
   })
     .then((product) => {
-      console.log("PRODUCTO => ", product);
       User.findOne({
         where: { id: req.params.id },
       }).then((user) => user.addProduct(product));
@@ -43,7 +42,6 @@ favoritesRoute.delete("/:id", (req, res) => {
     where: { id: req.params.id },
   })
     .then((user) => {
-      console.log("USUARIO ===> ", user);
       user.removeProduct(productId);
     })
     .then(() => res.status(200).send(productId))

@@ -64,7 +64,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(userName.value, password.value);
     const data = {
       userName: userName.value,
       password: password.value,

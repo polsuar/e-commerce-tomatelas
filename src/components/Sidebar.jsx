@@ -25,7 +25,6 @@ export default function Sidebar(props) {
     axios.get("/api/brand").then((res) => {
       setBrands(res.data);
     });
-    console.log("brands", brands);
   }, []);
 
   const handleClick = (brandName) => {

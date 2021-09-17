@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Paper, Typography, Grid, Link } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: "rgba(0,0,0,.3)",
+    backgroundColor: "rgba(0,0,0,.4)",
   },
   mainFeaturedPostContent: {
     position: "relative",
@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainFeaturedPost(props) {
   const classes = useStyles();
+  const theme = useTheme();
+
   const { post } = props;
 
   return (
@@ -41,13 +43,15 @@ export default function MainFeaturedPost(props) {
       className={classes.mainFeaturedPost}
       style={{ backgroundImage: `url(${post.image})` }}
     >
-      {
-        <img
-          style={{ display: "none" }}
-          src={post.image}
-          alt={post.imageText}
-        />
-      }
+      <div className={classes.overlay}>
+        {
+          <img
+            style={{ display: "none" }}
+            src={post.image}
+            alt={post.imageText}
+          />
+        }
+      </div>
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>

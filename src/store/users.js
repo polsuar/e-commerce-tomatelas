@@ -7,19 +7,16 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 export const setLocalUser = createAction("GETLOCALUSER", (user) => {
-  console.log("setLocalUser", user);
   return { payload: user };
 });
 
 export const userSignUp = createAsyncThunk("USER_SIGNUP", (obj) => {
   const dispatch = useDispatch();
 
-  console.log("OBJ => ", obj);
   return axios
     .post("http://localhost:3001/api/signup", obj)
     .then((r) => r.data)
-    .then((data) => dispatch(userLogin(data)))
-    .catch((err) => console.log(err));
+    .then((data) => dispatch(userLogin(data)));
 
   // return axios.post("/api/signup").then((r) => r.data);
 });
@@ -33,7 +30,6 @@ export const userLogin = createAsyncThunk("LOGIN", ({ userName, password }) => {
     })
     .then((r) => {
       //message.success({ content: "Login success!!", key, duration: 2 });
-      console.log("login success");
       localStorage.setItem("token", r.data.token);
       localStorage.setItem("user", JSON.stringify(r.data));
       return r.data;

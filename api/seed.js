@@ -35,23 +35,15 @@ const categories = [
 ];
 
 db.sync({ force: false })
+
   .then(() => {
-    console.log("Conexion Establecida...");
+    User.bulkCreate(users);
   })
   .then(() => {
-    User.bulkCreate(users)
-      .then(() => console.log("users create succesfully"))
-      .catch(() => console.log("error withe users creation"));
+    Product.bulkCreate(data);
   })
   .then(() => {
-    Product.bulkCreate(data)
-      .then(() => console.log("products create succesfully"))
-      .catch(() => console.log("error with products create"));
-  })
-  .then(() => {
-    Category.bulkCreate(categories)
-      .then(() => console.log("categories create succesfully"))
-      .catch(() => console.log("error with categories create"));
+    Category.bulkCreate(categories);
   })
   .then(async () => {
     Product.findAll({

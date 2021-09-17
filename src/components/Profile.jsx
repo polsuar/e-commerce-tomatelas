@@ -83,7 +83,6 @@ export default function Profile() {
   };
 
   React.useEffect(() => {
-    console.log(user.id);
     dispatch(getUserFavorites(user.id));
   }, [user.id]);
 

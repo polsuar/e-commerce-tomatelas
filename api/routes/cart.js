@@ -10,7 +10,6 @@ cartRoute.get("/:id", async (req, res) => {
 });
 
 cartRoute.put("/:id/add", async (req, res) => {
-  console.log("entre mal");
   // el producto ya debe tener la quantity seteada
   const products = req.body;
   let cart = await Cart.findOne({ where: { userId: req.params.id } });

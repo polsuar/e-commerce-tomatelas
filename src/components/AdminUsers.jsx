@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
-import {getAllUsers, promoteAdmin, revokeAdmin, removeUser} from "../store/userlist"
+import {
+  getAllUsers,
+  promoteAdmin,
+  revokeAdmin,
+  removeUser,
+} from "../store/userlist";
 import {
   Typography,
   Table,
@@ -14,7 +19,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 // icons
-import { Grade, GradeOutlined, Delete} from "@material-ui/icons";
+import { Grade, GradeOutlined, Delete } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -33,26 +38,23 @@ const AdminUsers = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllUsers())
+    dispatch(getAllUsers());
   }, []);
-
 
   // trae lo del estado
   const users = useSelector((state) => state.userlist);
 
   const handlePromote = (userId) => {
-    dispatch(promoteAdmin( userId ));
+    dispatch(promoteAdmin(userId));
   };
 
   const handleRevoke = (userId) => {
-    console.log("REVOKE")
-    dispatch(revokeAdmin( userId ));
+    dispatch(revokeAdmin(userId));
   };
 
   const handleDelete = (userId) => {
-    dispatch(removeUser( userId ));
+    dispatch(removeUser(userId));
   };
-
 
   return (
     <>
@@ -67,19 +69,18 @@ const AdminUsers = () => {
                 <TableCell align="right">{`${user.email}`}</TableCell>
                 <TableCell align="right">{`${user.firstName}`}</TableCell>
                 <TableCell align="right">{`${user.lastName}`}</TableCell>
-                {user.isAdmin?(
-                <TableCell align="right">
-                <IconButton color="inherit">
-                  <Grade onClick={() => handleRevoke(user.id)} />
-                </IconButton>
-              </TableCell>                  
-                ):(
-                <TableCell align="right">
-                  <IconButton color="inherit">
-                    <GradeOutlined onClick={() => handlePromote(user.id)} />
-                  </IconButton>
-                </TableCell>
-
+                {user.isAdmin ? (
+                  <TableCell align="right">
+                    <IconButton color="inherit">
+                      <Grade onClick={() => handleRevoke(user.id)} />
+                    </IconButton>
+                  </TableCell>
+                ) : (
+                  <TableCell align="right">
+                    <IconButton color="inherit">
+                      <GradeOutlined onClick={() => handlePromote(user.id)} />
+                    </IconButton>
+                  </TableCell>
                 )}
 
                 <TableCell align="right">

@@ -67,8 +67,6 @@ const ProfileUserInfo = () => {
   const [messageInfo, setMessageInfo] = useState("");
   const [showPass, setShowPass] = useState(false);
 
-  console.log(errors);
-
   React.useEffect(() => {
     if (errors || messageInfo) {
       setStatus({ open: true });
@@ -76,18 +74,14 @@ const ProfileUserInfo = () => {
   }, [errors, messageInfo]);
 
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data, null, 2));
-
     return (
       axios
         .put(`http://localhost:3001/api/users/update/${user.id}`, data)
         //      .then((r) => r.data)
         .then((r) => {
-          console.log("DATOS MODIFICADOS => NUEVO USUARIO: ====> ", r.data);
           setMessageInfo(" ¡Datos modificados con éxito! ");
         })
         .catch((error) => {
-          console.log("ERROR RESPONSE DATA ====>", error.response.data);
           if (error.response.data === "User Already Exist. Please Login") {
             setMessageInfo(
               "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."

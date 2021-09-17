@@ -42,14 +42,12 @@ const AdminProducts = () => {
   const classes = useStyles();
 
   const handleClick = (id) => {
-    dispatch(getSelectedProduct(id))
+    dispatch(getSelectedProduct(id));
   };
 
   const handleDelete = (productId) => {
-    console.log(productId)
-    dispatch(removeProduct( productId ));
+    dispatch(removeProduct(productId));
   };
-
 
   return (
     <>
@@ -66,7 +64,10 @@ const AdminProducts = () => {
             <>
               <TableRow key={product.id}>
                 <TableCell>
-                  <Link onClick={()=>handleClick(product.id)} to={`/edit/products/${product.id}`}>
+                  <Link
+                    onClick={() => handleClick(product.id)}
+                    to={`/edit/products/${product.id}`}
+                  >
                     <Avatar
                       alt="Remy Sharp"
                       src={product.img}
