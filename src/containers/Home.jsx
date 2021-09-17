@@ -82,9 +82,6 @@ export default function Home() {
   const products = useSelector((state) => state.products);
   const classes = useStyles();
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getAllProducts());
-  // }, []);
 
   return (
     <React.Fragment>
