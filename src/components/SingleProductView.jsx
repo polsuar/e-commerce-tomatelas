@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSelectedProduct } from "../store/selectedProduct";
+import {
+  getSelectedProduct,
+  setQuantityProduct,
+} from "../store/selectedProduct";
 import { addToLocalCart } from "../store/cart";
 import { addFavorite } from "../store/favorites";
 import {
@@ -87,6 +90,8 @@ const SingleProductView = ({ id }) => {
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
+    let ev = event.target.value;
+    dispatch(setQuantityProduct({ ev, product }));
     setQuantity(event.target.value);
   };
   const handleClose = () => {
@@ -133,13 +138,23 @@ const SingleProductView = ({ id }) => {
     console.info("You clicked a breadcrumb.");
   };
 
+  //Alert en FAVS si NO HAY USUARIO
+  const [favsAny, setFavsAny] = useState(false);
+  const handleOpenFavsAny = () => {
+    setFavsAny(true);
+  };
+  const handleCloseFavsAny = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setFavsAny(false);
+  };
+
   //Alert a carrito
   const [carrito, setCarrito] = useState(false);
-
   const handleOpenCarrito = () => {
     setCarrito(true);
   };
-
   const handleCloseCarrito = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -149,11 +164,9 @@ const SingleProductView = ({ id }) => {
 
   //Alert a favs
   const [favs, setFavs] = useState(false);
-
   const handleOpenFavs = () => {
     setFavs(true);
   };
-
   const handleCloseFavs = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -163,14 +176,20 @@ const SingleProductView = ({ id }) => {
 
   //Funcionalidad para AGREGAR AL CARRITO
   const addCar = (product) => {
+    // product.quantity = quantity;
+    console.log(product, "-----PRODUCT");
     dispatch(addToLocalCart({ product, user }));
     handleOpenCarrito();
   };
 
   //Funcionalidad para AGREGAR A FAVORITOS
   const addFav = (productId) => {
-    dispatch(addFavorite({ userId: user.id, productId: productId }));
-    handleOpenFavs();
+    if (!user.id) {
+      handleOpenFavsAny();
+    } else {
+      dispatch(addFavorite({ userId: user.id, productId: productId }));
+      handleOpenFavs();
+    }
   };
 
   return (
@@ -248,7 +267,7 @@ const SingleProductView = ({ id }) => {
                   <IconButton
                     color="primary"
                     aria-label="add to shopping cart"
-                    onClick={() => addCar(product)}
+                    onClick={() => addCar(product)} ///////////
                   >
                     <AddShoppingCartIcon fontSize="large" />
                     <Snackbar
@@ -262,6 +281,25 @@ const SingleProductView = ({ id }) => {
                     </Snackbar>
                   </IconButton>
                   <IconButton color="primary">
+                    <Snackbar
+                      open={favsAny}
+                      autoHideDuration={3000}
+                      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                      className={classes.snackbar}
+                      onClose={handleCloseFavsAny}
+                    >
+                      <Alert severity="error">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexFlow: "column",
+                            alignItems: "center",
+                          }}
+                        >
+                          Debes estar logueado! Por favor, accede a tu cuenta...
+                        </div>
+                      </Alert>
+                    </Snackbar>
                     <FavoriteIcon onClick={() => addFav(product.id)} />
                     <Snackbar
                       open={favs}

@@ -93,9 +93,10 @@ export default function Products() {
       setMessageInfo(
         "Debes estar logueado! \nPor favor, accede a tu cuenta..."
       );
+    } else {
+      dispatch(addFavorite({ userId: user.id, productId: productId }));
+      handleOpenFavs();
     }
-    dispatch(addFavorite({ userId: user.id, productId: productId }));
-    handleOpenFavs();
   };
 
   return (
