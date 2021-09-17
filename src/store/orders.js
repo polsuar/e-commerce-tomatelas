@@ -12,12 +12,12 @@ export const setOrder = createAsyncThunk("SETORDER", (data) => {
   });
 });
 
-export const getAllOrders = createAsyncThunk("SETORDER", (data) => {
-  const { date, user, cart, precioFinal } = data;
-  return axios.post(`/api/orders/add`, data).then((res) => {
-    return res.data;
-  });
-});
+// export const getAllOrders = createAsyncThunk("SETORDER", (data) => {
+//   const { date, user, cart, precioFinal } = data;
+//   return axios.post(`/api/orders/add`, data).then((res) => {
+//     return res.data;
+//   });
+// });
 
 const initialState = [];
 

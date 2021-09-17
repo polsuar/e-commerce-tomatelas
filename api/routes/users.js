@@ -27,27 +27,32 @@ userRouter.get("/:id", (req, res, next) => {
 // actualizar usuario
 
 userRouter.put("/update/:id", (req, res, next) => {
-  User.findOne({
-    where: { id: req.params.id },
-  }).then((user) => {
-    user
-      .hash(req.body.password, user.salt) // hasheo nuevo password con salt en BD
-      .then((hash) => {
-        User.update(
-          { ...req.body, password: hash },
-          {
-            where: { id: req.params.id },
-            returning: true,
-          }
-        ).then(([noData, data]) => {
-          res.json({
-            message: "Updated successfully",
-            user: data,
+  console.log(req.body.password);
+  if (req.body.password) {
+    User.findOne({
+      where: { id: req.params.id },
+    }).then((user) => {
+      user
+        .hash(req.body.password, user.salt) // hasheo nuevo password con salt en BD
+        .then((hash) => {
+          User.update(
+            { ...req.body, password: hash },
+            {
+              where: { id: req.params.id },
+              returning: true,
+            }
+          ).then(([noData, data]) => {
+            res.json({
+              message: "Updated successfully",
+              user: data,
+            });
           });
-        });
-      })
-      .catch(next);
-  });
+        })
+        .catch(next);
+    });
+  } else {
+    console.log("NO INGRESO PASSWORD");
+  }
 });
 
 // nuevo usuario
@@ -77,18 +82,16 @@ userRouter.delete("/:id", (req, res, next) => {
 
 userRouter.put("/promote/:id", (req, res) => {
   const { id } = req.params;
-  User.update({isAdmin: true},{where:{id:id}})
-  .then(()=> res.sendStatus(202))
-  .catch(err=> res.status(404).send(err))
-
+  User.update({ isAdmin: true }, { where: { id: id } })
+    .then(() => res.sendStatus(202))
+    .catch((err) => res.status(404).send(err));
 });
 
 userRouter.put("/revoke/:id", (req, res) => {
   const { id } = req.params;
-  User.update({isAdmin: false},{where:{id:id}})
-  .then(()=> res.sendStatus(202))
-  .catch(err=> res.status(404).send(err))
-
+  User.update({ isAdmin: false }, { where: { id: id } })
+    .then(() => res.sendStatus(202))
+    .catch((err) => res.status(404).send(err));
 });
 
 // userRouter.put("/revoke/:id", [auth, admin], async (req, res) => {
