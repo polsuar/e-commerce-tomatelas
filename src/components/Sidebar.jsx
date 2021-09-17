@@ -15,11 +15,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Sidebar(props) {
+export default function Sidebar() {
   const classes = useStyles();
   const [brands, setBrands] = useState([]);
   const dispatch = useDispatch();
-  //const { archives, social } = props;
 
   useEffect(() => {
     axios.get("/api/brand").then((res) => {

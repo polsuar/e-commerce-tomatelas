@@ -14,6 +14,7 @@ import {
   Button,
   Avatar,
   IconButton,
+  TableHead,
 } from "@material-ui/core";
 // icons
 
@@ -42,33 +43,45 @@ const AdminProducts = () => {
   const classes = useStyles();
 
   const handleClick = (id) => {
-    dispatch(getSelectedProduct(id))
+    dispatch(getSelectedProduct(id));
   };
 
   const handleDelete = (productId) => {
-    console.log(productId)
-    dispatch(removeProduct( productId ));
+    console.log(productId);
+    dispatch(removeProduct(productId));
   };
-
 
   return (
     <>
+      <Link to={`/create/products/`}>
+        <Button variant="contained" color="primary" size="large">
+          Agregar Producto
+        </Button>
+      </Link>
       <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="center">Descripción</TableCell>
+            <TableCell align="center">Volumen</TableCell>
+            <TableCell align="center">Marca</TableCell>
+            <TableCell align="center">Stock</TableCell>
+            <TableCell align="center">Precio</TableCell>
+            <TableCell align="center">Delete</TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell align="right">
-                <Link to={`/create/products/`}>
-              <Button variant="contained" color="primary" size="large">
-                  Agregar Producto
-              </Button>
-                  </Link>
-            </TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
           {products?.map((product) => (
             <>
               <TableRow key={product.id}>
                 <TableCell>
-                  <Link onClick={()=>handleClick(product.id)} to={`/edit/products/${product.id}`}>
+                  <Link
+                    onClick={() => handleClick(product.id)}
+                    to={`/edit/products/${product.id}`}
+                  >
                     <Avatar
                       alt="Remy Sharp"
                       src={product.img}
@@ -77,13 +90,13 @@ const AdminProducts = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  {<Typography component="text">{product.name}</Typography>}
+                  <TableCell align="right">{`${product.name}`}</TableCell>
                 </TableCell>
-                <TableCell align="right">{`${product.volume}`}</TableCell>
-                <TableCell align="right">{`${product.brand}`}</TableCell>
-                <TableCell align="right">{`${product.stock}`}</TableCell>
-                <TableCell align="right">{`$${product.price}`}</TableCell>
-                <TableCell align="right">
+                <TableCell align="center">{`${product.volume}`}</TableCell>
+                <TableCell align="center">{`${product.brand}`}</TableCell>
+                <TableCell align="center">{`${product.stock}`}</TableCell>
+                <TableCell align="center">{`$${product.price}`}</TableCell>
+                <TableCell align="center">
                   <IconButton edge="end" color="inherit">
                     <DeleteIcon onClick={() => handleDelete(product.id)} />
                   </IconButton>

@@ -86,33 +86,29 @@ const Register = () => {
   const onSubmit = (data) => {
     console.log("acaaaaa", JSON.stringify(data, null, 2));
 
-    return (
-      axios
-        .post("http://localhost:3001/api/auth/register", data)
-        //      .then((r) => r.data)
-        .then((res) => {
-          const message = {
-            bodyMessage:
-              "Registro exitoso, esperamos que disfrutes de nuestros servicio ideado especialmente para ti =)",
-            subjectMessage: "Registro exitoso",
-            userName: res.data.userName,
-            email: res.data.email,
-          };
-          // message.userName = ;
-          // message.email = ;
+    return axios
+      .post("http://localhost:3001/api/auth/register", data)
 
-          //sendEmail(message);
-          return history.push("/login");
-        })
-        .catch((error) => {
-          console.log("ERROR RESPONSE DATA ====>", error.response.data);
-          if (error.response.data === "User Already Exist. Please Login") {
-            setMessageInfo(
-              "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."
-            );
-          }
-        })
-    );
+      .then((res) => {
+        const message = {
+          bodyMessage:
+            "Registro exitoso, esperamos que disfrutes de nuestros servicio ideado especialmente para ti =)",
+          subjectMessage: "Registro exitoso",
+          userName: res.data.userName,
+          email: res.data.email,
+        };
+
+        sendEmail(message);
+        return history.push("/login");
+      })
+      .catch((error) => {
+        console.log("ERROR RESPONSE DATA ====>", error.response.data);
+        if (error.response.data === "User Already Exist. Please Login") {
+          setMessageInfo(
+            "Error: el usuario ya existe.\nPor favor, utiliza una casilla de mail diferente u otro nombre de usuario."
+          );
+        }
+      });
   };
 
   return (
