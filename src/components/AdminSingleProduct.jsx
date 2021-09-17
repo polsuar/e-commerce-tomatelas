@@ -72,19 +72,14 @@ const AdminSingleProduct = ({ id }) => {
     setEdit((edit) => ({ ...edit, [id]: value }));
   };
 
+  const handleSelect = (e) => {
+    setEdit((select) => ({ ...select, category: e.target.value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    let data = {
-      name: edit.name,
-      volume: edit.volume,
-      brand: edit.brand,
-      stock: edit.stock,
-      img: edit.img,
-      price: edit.price,
-      category: edit.category,
-    };
-    dispatch(editProduct(product.id));
-    history.push("/admin");
+    const id = product.id;
+    dispatch(editProduct({ id, edit })).then(() => history.push("/admin"));
   };
 
   return (
@@ -158,6 +153,7 @@ const AdminSingleProduct = ({ id }) => {
                     </Typography>
                   </Box>
                   <Select
+                    onChange={handleSelect}
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
                   >
@@ -190,15 +186,15 @@ const AdminSingleProduct = ({ id }) => {
           </Grid>
 
           <Grid className={classes.imagenContainer}>
-              <img
-                src={edit.img}
-                alt={edit.name}
-                style={{
-                  width: "80%",
-                  heigth: "100%",
-                  // marginLeft: theme.spacing(20),
-                }}
-              />
+            <img
+              src={edit.img}
+              alt={edit.name}
+              style={{
+                width: "80%",
+                heigth: "100%",
+                // marginLeft: theme.spacing(20),
+              }}
+            />
           </Grid>
         </Grid>
       </Container>

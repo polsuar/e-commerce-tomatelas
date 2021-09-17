@@ -122,6 +122,7 @@ export default function Navbar() {
       console.log(value);
       dispatch(getAllProducts());
     }
+    history.push("/");
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -245,6 +246,8 @@ export default function Navbar() {
           </Paper>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {user.userName ? <p>{user.userName}</p> : <p>Guess</p>}
+
             <Link to="/cart" className={classes.navButton}>
               <IconButton
                 aria-label="show 17 new notifications"
