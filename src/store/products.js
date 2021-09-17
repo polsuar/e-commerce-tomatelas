@@ -34,7 +34,6 @@ export const addProduct = createAsyncThunk("ADD_PRODUCT", (edit) => {
 export const getProductsByCategory = createAsyncThunk(
   "GETPRODUCTSBYCATEGORY",
   (categotyId) => {
-    console.log(categotyId);
     return axios.get(`/api/category/${categotyId}`).then((res) => res.data);
   }
 );
