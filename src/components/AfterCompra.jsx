@@ -21,7 +21,6 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
-import { useHistory } from "react-router";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
