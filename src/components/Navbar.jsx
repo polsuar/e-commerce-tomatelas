@@ -5,6 +5,8 @@ import { getProductsByName, getAllProducts } from "../store/products";
 import { userLogout } from "../store/users";
 import { clearLocalCart } from "../store/cart";
 import { clearState } from "../store/favorites";
+import Chip from "@material-ui/core/Chip";
+import FaceIcon from "@material-ui/icons/Face";
 import {
   AppBar,
   Toolbar,
@@ -261,7 +263,12 @@ export default function Navbar() {
               onClick={handleProfileMenuOpen}
               color="secondary"
             >
-              <AccountCircleIcon />
+              <Chip
+                icon={<FaceIcon className={classes.navButton} />}
+                label={user.id ? user.userName : "Tu cuenta"}
+                variant="outlined"
+                className={classes.navButton}
+              />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -277,6 +284,7 @@ export default function Navbar() {
           </div>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
       {renderMenu}
     </div>

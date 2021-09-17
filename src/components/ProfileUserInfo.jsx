@@ -15,6 +15,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Select from "@material-ui/core/Select";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Chip from "@material-ui/core/Chip";
+
 import FaceIcon from "@material-ui/icons/Face";
 import {
   Typography,
@@ -84,7 +85,7 @@ const ProfileUserInfo = () => {
         //      .then((r) => r.data)
         .then((r) => {
           console.log("DATOS MODIFICADOS => NUEVO USUARIO: ====> ", r.data);
-          setMessageInfo(" ¡Datos modificados con éxito! ");
+          setMessageInfo("¡Datos modificados con éxito!");
         })
         .catch((error) => {
           console.log("ERROR RESPONSE DATA ====>", error.response.data);
@@ -96,6 +97,7 @@ const ProfileUserInfo = () => {
         })
     );
   };
+
   const handleClose = () => {
     setStatus({ open: false });
     setMessageInfo("");
@@ -111,10 +113,18 @@ const ProfileUserInfo = () => {
       {errorsArr.length > 0 || messageInfo ? (
         <Snackbar
           open={status.open}
+          autoHideDuration={5000}
+          onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           className={classes.snackbar}
         >
-          <Alert severity="error" onClose={handleClose}>
+          <Alert
+            severity={
+              messageInfo === "¡Datos modificados con éxito!"
+                ? "success"
+                : "error"
+            }
+          >
             <div
               style={{
                 display: "flex",

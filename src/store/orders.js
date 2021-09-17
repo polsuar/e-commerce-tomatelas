@@ -12,10 +12,17 @@ export const setOrder = createAsyncThunk("SETORDER", (data) => {
   });
 });
 
+export const getUserOrders = createAsyncThunk("GET_USER_ORDERS", (userId) => {
+  return axios.get(`/api/orders/user/${userId}`).then((res) => {
+    return res.data;
+  });
+});
+
 const initialState = [];
 
 const ordersReducer = createReducer(initialState, {
   [setOrder.fulfilled]: (state, action) => action.payload,
+  [getUserOrders.fulfilled]: (state, action) => action.payload,
 });
 
 export default ordersReducer;

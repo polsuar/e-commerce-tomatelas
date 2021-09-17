@@ -77,6 +77,7 @@ const Login = () => {
         );
       } else {
         dispatch(getUserCart(data.payload.id));
+
         return data;
       }
     });
