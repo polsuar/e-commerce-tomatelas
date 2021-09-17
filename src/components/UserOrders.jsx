@@ -74,7 +74,7 @@ export default function AfterCompra() {
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={2}>
           {/* comienzo de map general */}
-          {orders?.map((order) => (
+          {orders[0]?.map((order) => (
             <Grid item xs={12} md={12}>
               <Card className={classes.card}>
                 <div className={classes.cardDetails}>

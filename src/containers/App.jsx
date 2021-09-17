@@ -18,15 +18,17 @@ import Admin from "../components/Admin";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
 import { getAllProducts } from "../store/products";
+import ForBidden from "../components/ForBidden";
 import AdminSingleProduct from "../components/AdminSingleProduct";
 import AdminNewProduct from "../components/AdminNewProduct";
 
 export default function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -53,7 +55,7 @@ export default function App() {
           </PrivateRoute>
 
           <PrivateRoute path="/admin">
-            <Admin />
+            {user.isAdmin ? <Admin /> : <ForBidden />}
           </PrivateRoute>
 
           <Route path="/login">
