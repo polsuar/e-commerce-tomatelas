@@ -22,6 +22,8 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   grey: {
@@ -131,14 +133,44 @@ const SingleProductView = ({ id }) => {
     console.info("You clicked a breadcrumb.");
   };
 
+  //Alert a carrito
+  const [carrito, setCarrito] = useState(false);
+
+  const handleOpenCarrito = () => {
+    setCarrito(true);
+  };
+
+  const handleCloseCarrito = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setCarrito(false);
+  };
+
+  //Alert a favs
+  const [favs, setFavs] = useState(false);
+
+  const handleOpenFavs = () => {
+    setFavs(true);
+  };
+
+  const handleCloseFavs = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setFavs(false);
+  };
+
   //Funcionalidad para AGREGAR AL CARRITO
   const addCar = (product) => {
     dispatch(addToLocalCart({ product, user }));
+    handleOpenCarrito();
   };
 
   //Funcionalidad para AGREGAR A FAVORITOS
   const addFav = (productId) => {
     dispatch(addFavorite({ userId: user.id, productId: productId }));
+    handleOpenFavs();
   };
 
   return (
@@ -219,9 +251,27 @@ const SingleProductView = ({ id }) => {
                     onClick={() => addCar(product)}
                   >
                     <AddShoppingCartIcon fontSize="large" />
+                    <Snackbar
+                      open={carrito}
+                      autoHideDuration={1500}
+                      onClose={handleCloseCarrito}
+                    >
+                      <Alert severity="success" color="info">
+                        Se agregó al Carrito!
+                      </Alert>
+                    </Snackbar>
                   </IconButton>
                   <IconButton color="primary">
                     <FavoriteIcon onClick={() => addFav(product.id)} />
+                    <Snackbar
+                      open={favs}
+                      autoHideDuration={1500}
+                      onClose={handleCloseFavs}
+                    >
+                      <Alert severity="success" color="info">
+                        Se agregó a Favoritos!
+                      </Alert>
+                    </Snackbar>
                   </IconButton>
                 </Grid>
               </Grid>
