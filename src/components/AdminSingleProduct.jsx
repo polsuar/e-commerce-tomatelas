@@ -79,18 +79,7 @@ const AdminSingleProduct = ({ id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const id = product.id;
-    // let data = {
-    //   name: edit.name,
-    //   volume: edit.volume,
-    //   brand: edit.brand,
-    //   stock: edit.stock,
-    //   img: edit.img,
-    //   price: edit.price,
-    //   category: edit.category,
-    // };
-
     dispatch(editProduct({ id, edit })).then(() => history.push("/admin"));
-    // history.push("/admin");
   };
 
   return (
