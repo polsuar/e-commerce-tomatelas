@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   Table,
@@ -13,9 +14,15 @@ import {
   Card,
   CardContent,
   Button,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,11 +41,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AfterCompra() {
+  const history = useHistory();
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const [envio, setEnvio] = useState(0);
   const [date, setDate] = useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+    history.push("/");
+  };
 
   const reducer = (acum, current) => acum + current.price * current.quantity;
   let total = cart ? cart.reduce(reducer, 0) : 0;
@@ -132,10 +153,16 @@ export default function AfterCompra() {
           variant="contained"
           color="primary"
           size="large"
+          onClick={handleClick}
         >
           Confirmar compra
         </Button>
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Compra realizada con éxito!
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }
