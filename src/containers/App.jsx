@@ -14,13 +14,14 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
 import Register from "./Register";
 import Profile from "../components/Profile";
-import Admin from "../components/Admin"
+import Admin from "../components/Admin";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
 import { useDispatch } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
+import { getAllProducts } from "../store/products";
 import AdminSingleProduct from "../components/AdminSingleProduct";
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
     if (user) dispatch(setLocalUser(user));
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) dispatch(setLocalCart(cart));
+    dispatch(getAllProducts());
   }, []);
 
   return (
