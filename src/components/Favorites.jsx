@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { removeFavorite, removeAllFavorites } from "../store/favorites";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+
+import Chip from "@material-ui/core/Chip";
 import {
   Typography,
   Table,
@@ -57,21 +59,6 @@ const Favorites = () => {
       {/* <Container maxWidth="lg" className={classes.container}> */}
 
       <Table size="small">
-        {favorites.length > 0 ? (
-          <TableRow>
-            <TableCell align="right" colSpan={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() => handleDeleteAll(user.id)}
-              >
-                <RemoveCircleOutline />
-              </Button>
-            </TableCell>
-          </TableRow>
-        ) : null}
-
         <TableBody>
           {favorites.length === 0 ? (
             <TableRow>
@@ -99,13 +86,28 @@ const Favorites = () => {
 
                 <TableCell align="right">{`$${product.price}`}</TableCell>
                 <TableCell align="right">
-                  <IconButton edge="end" color="inherit">
-                    <DeleteIcon onClick={() => handleDelete(product.id)} />
-                  </IconButton>
+                  <Chip
+                    label="Borrar"
+                    onDelete={() => handleDelete(product.id)}
+                    color="secondary"
+                    variant="outlined"
+                  />
                 </TableCell>
               </TableRow>
             </>
           ))}
+          {favorites.length > 0 ? (
+            <TableRow>
+              <TableCell align="center" colSpan={12}>
+                <Chip
+                  label="Borrar todos"
+                  onDelete={() => handleDeleteAll(user.id)}
+                  color="primary"
+                  variant="outlined"
+                />
+              </TableCell>
+            </TableRow>
+          ) : null}
         </TableBody>
       </Table>
       {/* </Container> */}

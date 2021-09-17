@@ -8,17 +8,21 @@ import {
 import Home from "./Home";
 import Navbar from "../components/Navbar";
 import Cart from "../components/Cart";
+import AfterCompra from "../components/AfterCompra";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeConfig";
 import Register from "./Register";
 import Profile from "../components/Profile";
+import Admin from "../components/Admin";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../containers/Login";
 import SingleProductView from "../components/SingleProductView";
 import { useDispatch } from "react-redux";
 import { setLocalUser } from "../store/users";
 import { setLocalCart } from "../store/cart";
+import { getAllProducts } from "../store/products";
+import AdminSingleProduct from "../components/AdminSingleProduct";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -28,6 +32,7 @@ export default function App() {
     if (user) dispatch(setLocalUser(user));
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) dispatch(setLocalCart(cart));
+    dispatch(getAllProducts());
   }, []);
 
   return (
@@ -46,6 +51,10 @@ export default function App() {
             <Profile />
           </PrivateRoute>
 
+          <PrivateRoute path="/admin">
+            <Admin />
+          </PrivateRoute>
+
           <Route path="/login">
             <Login />
           </Route>
@@ -54,12 +63,20 @@ export default function App() {
             <Cart />
           </Route>
 
+          <Route path="/confirmacion">
+            <AfterCompra />
+          </Route>
+
           <Route
             exact
             path="/products/:id"
             render={({ match }) => <SingleProductView id={match.params.id} />}
           />
-
+          <Route
+            exact
+            path="/edit/products/:id"
+            render={({ match }) => <AdminSingleProduct id={match.params.id} />}
+          />
           <Redirect from="/" to="/home" />
         </Switch>
       </ThemeProvider>

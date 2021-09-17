@@ -10,28 +10,31 @@ cartRoute.get("/:id", async (req, res) => {
 });
 
 cartRoute.put("/:id/add", async (req, res) => {
+  console.log("entre mal");
   // el producto ya debe tener la quantity seteada
   const products = req.body;
-  const cart = await Cart.findOne({ where: { userId: req.params.id } });
+  let cart = await Cart.findOne({ where: { userId: req.params.id } });
+  const userCart = cart.cart_items;
   let change;
-  cart.cart_items !== null
-    ? (change = await Cart.update(
-        { cart_items: [...cart.cart_items, ...products] },
+
+  change = products.length
+    ? await Cart.update(
+        { cart_items: [...userCart, ...products] },
         { where: { id: cart.id }, returning: true }
-      ))
-    : (change = await Cart.update(
-        { cart_items: products },
+      )
+    : await Cart.update(
+        { cart_items: [...userCart, products] },
         { where: { id: cart.id }, returning: true }
-      ));
+      );
 
   res.status(200).send(change[1]);
 });
 
 cartRoute.put("/:id/put", async (req, res) => {
-  const [product, quantity] = req.body;
+  const { productId, quantity } = req.body;
   const cart = await Cart.findOne({ where: { userId: req.params.id } });
   const change = cart.cart_items.map((item) => {
-    if (item.id === product.id) item.quantity = quantity;
+    if (item.id === productId) item.quantity = quantity;
     return item;
   });
 
@@ -51,9 +54,9 @@ cartRoute.delete("/:id/clear", (req, res) => {
 });
 
 cartRoute.put("/:id/delete", async (req, res) => {
-  const [product] = req.body;
+  const { productId } = req.body;
   const cart = await Cart.findOne({ where: { userId: req.params.id } });
-  const change = cart.cart_items.filter((item) => item.id !== product.id);
+  const change = cart.cart_items.filter((item) => item.id !== productId);
 
   const update = await Cart.update(
     { cart_items: change },

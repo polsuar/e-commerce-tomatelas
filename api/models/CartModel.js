@@ -8,6 +8,7 @@ Cart.init(
     cart_items: {
       type: S.JSONB,
       allowNull: true,
+      defaultValue: [],
     },
   },
   { sequelize: db, modelName: "cart" }
