@@ -64,7 +64,7 @@ export default function AfterCompra() {
     emailjs
       .send(
         "service_nwzoqrw",
-        "template_mrqbsy5",
+        "template_reczzzg",
         data,
         "user_XCxOcDMqNx5iPI6zMfMzI"
       )
@@ -83,12 +83,15 @@ export default function AfterCompra() {
     dispatch(setOrder({ date, user, cart, precioFinal })).then((res) => {
       const message = {
         bodyMessage:
-          "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, no manejés y asi nos cuidarnos entre todos!",
-        subjectMessage: "Compra realizada!",
+          "Gracias por tu compra, esperamos que disfrutes de tu pedido. Recorda que si tomás, es mejor que no manejes asi nos cuidarnos entre todos!",
         userName: user.userName,
         email: user.email,
-        order: res.payload,
+        orderNumber: res.payload.order_id,
+        price: res.payload.total_price,
+        created: res.payload.created,
+        state: res.payload.state,
       };
+      sendEmail(message);
     });
   };
 

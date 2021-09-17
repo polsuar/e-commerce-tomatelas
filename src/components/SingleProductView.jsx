@@ -176,9 +176,7 @@ const SingleProductView = ({ id }) => {
 
   //Funcionalidad para AGREGAR AL CARRITO
   const addCar = (product) => {
-    // product.quantity = quantity;
-    console.log(product, "-----PRODUCT");
-    dispatch(addToLocalCart({ product, user }));
+    dispatch(addToLocalCart(product));
     handleOpenCarrito();
   };
 
