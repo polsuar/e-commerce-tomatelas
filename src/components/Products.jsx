@@ -57,8 +57,35 @@ export default function Products() {
     return;
   };
 
+  //Alert a carrito
+  const [carrito, setCarrito] = useState(false);
+  const handleOpenCarrito = () => {
+    setCarrito(true);
+  };
+  const handleCloseCarrito = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setCarrito(false);
+  };
+
+  //Alert a favs
+  const [favs, setFavs] = useState(false);
+  const handleOpenFavs = () => {
+    setFavs(true);
+  };
+  const handleCloseFavs = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setFavs(false);
+  };
+  ////
+
   const handleClick = (product) => {
-    dispatch(addToLocalCart({ product, user }));
+    console.log("products");
+    dispatch(addToLocalCart(product));
+    handleOpenCarrito();
   };
 
   const addFav = (productId) => {
@@ -66,8 +93,10 @@ export default function Products() {
       setMessageInfo(
         "Debes estar logueado! \nPor favor, accede a tu cuenta..."
       );
+    } else {
+      dispatch(addFavorite({ userId: user.id, productId: productId }));
+      handleOpenFavs();
     }
-    dispatch(addFavorite({ userId: user.id, productId: productId }));
   };
 
   return (
@@ -116,9 +145,29 @@ export default function Products() {
                     onClick={() => handleClick(product)}
                   >
                     <AddShoppingCartIcon />
+
+                    <Snackbar
+                      open={carrito}
+                      autoHideDuration={1500}
+                      onClose={handleCloseCarrito}
+                    >
+                      <Alert severity="success" color="info">
+                        Se agregó al Carrito!
+                      </Alert>
+                    </Snackbar>
                   </IconButton>
                   <IconButton color="primary">
                     <FavoriteIcon onClick={() => addFav(product.id)} />
+
+                    <Snackbar
+                      open={favs}
+                      autoHideDuration={1500}
+                      onClose={handleCloseFavs}
+                    >
+                      <Alert severity="success" color="info">
+                        Se agregó a Favoritos!
+                      </Alert>
+                    </Snackbar>
                   </IconButton>
                 </CardActions>
               </Card>
