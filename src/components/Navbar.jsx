@@ -120,8 +120,6 @@ export default function Navbar() {
       console.log(value);
       dispatch(getAllProducts());
     }
-    //history ya esta definido.
-    //aca hay que hacer un history.push("/a donde este vista de productos buscados")
   };
   const handleLogout = (e) => {
     e.preventDefault();
@@ -140,12 +138,14 @@ export default function Navbar() {
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    > {user.isAdmin?(
-      <>
+    >
+      {" "}
+      {user.isAdmin ? (
+        <>
           <MenuItem onClick={handleMenuClose}>
             <Link to="/admin">Admin</Link>
           </MenuItem>
-      </>
+        </>
       ) : null}
       {token ? (
         <>
