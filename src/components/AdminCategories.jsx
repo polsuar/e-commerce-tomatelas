@@ -19,7 +19,7 @@ import {
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import { RemoveCircleOutline } from "@material-ui/icons";
-
+const axios = require("axios");
 const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(10),
@@ -36,20 +36,23 @@ const useStyles = makeStyles((theme) => ({
 const AdminProducts = () => {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const [category, setCategory] = useState([]);
+
   useEffect(() => {
-    dispatch(getAllProducts());
+    axios.get("/api/category").then((res) => {
+      return setCategory(res.data);
+    });
   }, []);
   const classes = useStyles();
 
   const handleClick = (id) => {
-    dispatch(getSelectedProduct(id))
+    dispatch(getSelectedProduct(id));
   };
 
   const handleDelete = (productId) => {
-    console.log(productId)
-    dispatch(removeProduct( productId ));
+    console.log(productId);
+    dispatch(removeProduct(productId));
   };
-
 
   return (
     <>
@@ -57,18 +60,21 @@ const AdminProducts = () => {
         <TableBody>
           <TableRow>
             <TableCell align="right">
-                <Link to={`/create/products/`}>
-              <Button variant="contained" color="primary" size="large">
+              <Link to={`/create/products/`}>
+                <Button variant="contained" color="primary" size="large">
                   Agregar Producto
-              </Button>
-                  </Link>
+                </Button>
+              </Link>
             </TableCell>
           </TableRow>
           {products?.map((product) => (
             <>
               <TableRow key={product.id}>
                 <TableCell>
-                  <Link onClick={()=>handleClick(product.id)} to={`/edit/products/${product.id}`}>
+                  <Link
+                    onClick={() => handleClick(product.id)}
+                    to={`/edit/products/${product.id}`}
+                  >
                     <Avatar
                       alt="Remy Sharp"
                       src={product.img}

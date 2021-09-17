@@ -52,10 +52,6 @@ export default function AfterCompra() {
   const [date, setDate] = useState("");
   const [open, setOpen] = React.useState(false);
 
-  const handleClickAlert = () => {
-    setOpen(true);
-  };
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -110,6 +106,7 @@ export default function AfterCompra() {
         created: res.payload.created,
         state: res.payload.state,
       };
+      setOpen(true);
       sendEmail(message);
     });
   };
@@ -191,7 +188,7 @@ export default function AfterCompra() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={handleClickAlert}
+          onClick={handleClick}
         >
           Confirmar compra
         </Button>
