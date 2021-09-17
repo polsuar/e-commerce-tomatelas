@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setOrder } from "../store/orders";
 import emailjs from "emailjs-com";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
   Table,
@@ -15,10 +16,15 @@ import {
   Card,
   CardContent,
   Button,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import RoomIcon from "@material-ui/icons/Room";
-import { useHistory } from "react-router";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,13 +43,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AfterCompra() {
+  const history = useHistory();
   const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [envio, setEnvio] = useState(0);
   const [date, setDate] = useState("");
-  const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickAlert = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+    history.push("/");
+  };
 
   const reducer = (acum, current) => acum + current.price * current.quantity;
   let total = cart ? cart.reduce(reducer, 0) : 0;
@@ -172,11 +191,16 @@ export default function AfterCompra() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={handleClick}
+          onClick={handleClickAlert}
         >
           Confirmar compra
         </Button>
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Compra realizada con éxito!
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }
